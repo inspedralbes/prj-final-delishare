@@ -1,6 +1,9 @@
-import './assets/main.css'
+import './assets/main.css';  // Si tienes estilos globales
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './router';  // Importamos el router
 
-import { createApp } from 'vue'
-import App from './App.vue'
-
-createApp(App).mount('#app')
+// Crear la instancia de Vue y usar Vue Router
+createApp(App)
+  .use(router)  // Usamos Vue Router
+  .mount('#app');  // Montamos la app en el div con id="app"

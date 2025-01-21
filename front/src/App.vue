@@ -1,59 +1,14 @@
-<script setup>
-import { ref } from 'vue';
-import HelloWorld from './components/HelloWorld.vue';
-import TheWelcome from './components/TheWelcome.vue';
-import LandingPage from './views/LandingPage.vue';
-
-// Variable para controlar qué vista se muestra
-const showLandingPage = ref(true);
-</script>
-
 <template>
   <div>
-    <!-- Renderiza el LandingPage si showLandingPage es verdadero -->
-    <LandingPage v-if="showLandingPage" />
-
-    <!-- Renderiza el contenido original si showLandingPage es falso -->
-    <div v-else>
-      <header>
-        <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-        <div class="wrapper">
-          <HelloWorld msg="You did it!" />
-        </div>
-      </header>
-
-      <main>
-        <TheWelcome />
-      </main>
-    </div>
+    <!-- Vue Router renderizará la vista según la ruta -->
+    <router-view></router-view>  <!-- Este es el lugar donde se renderiza la vista activa -->
   </div>
 </template>
 
+<script setup>
+// No es necesario controlar las vistas con showLandingPage, porque Vue Router se encarga de eso
+</script>
+
 <style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
+/* Estilos generales si es necesario */
 </style>

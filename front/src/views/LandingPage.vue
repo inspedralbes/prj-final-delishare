@@ -23,14 +23,19 @@
         </div>
       </section>
   
+      <!-- Botón de búsqueda que es la imagen de la lupa, redirige a SearchPage -->
+      <router-link to="/search">
+        <img src="@/assets/images/lupa.png" alt="Buscar" class="search-icon" />
+      </router-link>
+  
       <!-- Navbar -->
       <nav class="navbar">
         <ul>
-          <li><button>a</button></li>
-          <li><button>lupa</button></li>
-          <li><button>post</button></li>
-          <li><button>saved</button></li>
-          <li><button>yo</button></li>
+          <li><button><img src="@/assets/images/homee.png" alt="Home" /></button></li>
+          <li><router-link to="/search"><img src="@/assets/images/lupa.png" alt="Search" class="search-icon" /></router-link></li>
+          <li><button><img src="@/assets/images/mas.png" alt="Post" /></button></li>
+          <li><button><img src="@/assets/images/guardar.png" alt="Saved" /></button></li>
+          <li><button><img src="@/assets/images/perfil.png" alt="Profile" /></button></li>
         </ul>
       </nav>
   
@@ -43,7 +48,6 @@
   </template>
   
   <script>
-  // Importa las imágenes directamente
   import comidaImg from '@/assets/images/comida.jpg';
   import receta2Img from '@/assets/images/receta2.jpg';
   import receta3Img from '@/assets/images/receta3.jpg';
@@ -55,7 +59,6 @@
     data() {
       return {
         currentSlide: 0,
-        // Usar las imágenes importadas directamente
         carouselImages: [
           { src: comidaImg, alt: 'Receta 1' },
           { src: receta2Img, alt: 'Receta 2' },
@@ -163,17 +166,20 @@
   }
   
   .navbar button {
-    background-color: #ff6347;
-    color: white;
+    background-color: transparent;
     border: none;
-    padding: 10px 15px;
     cursor: pointer;
-    border-radius: 5px;
-    font-size: 14px;
+    padding: 0;
   }
   
-  .navbar button:hover {
-    background-color: #e55347;
+  .navbar img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+  }
+  
+  .navbar button:hover img {
+    opacity: 0.8;
   }
   
   /* Footer */
@@ -203,9 +209,10 @@
       grid-template-columns: repeat(2, 1fr); /* Dos columnas en tablets */
     }
   
-    .navbar button {
-      padding: 10px 20px;
-      font-size: 16px;
+    .navbar img {
+      width: 40px;
+      height: 40px;
+    }
   }
   
   @media (min-width: 1024px) {
@@ -220,7 +227,18 @@
     .carousel-images img {
       height: 400px;
     }
+  
+    .navbar img {
+      width: 50px;
+      height: 50px;
+    }
   }
-}
+  
+  /* Estilos específicos para el icono de búsqueda */
+  .search-icon {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+  }
   </style>
   

@@ -10,10 +10,9 @@ const routes = [
   // En el futuro, puedes agregar más rutas aquí si tienes más vistas
 ];
 
-// Aquí eliminamos la parte que hace referencia a `process.env.BASE_URL`
 // Usamos `createWebHistory()` sin argumentos
 const router = createRouter({
-  history: createWebHistory(),  // Usamos el historial de navegador sin el `process.env.BASE_URL`
+  history: createWebHistory(),  // Usamos el historial de navegador
   routes  // Rutas definidas
 });
 

@@ -1,4 +1,3 @@
-import './assets/main.css';  // Si tienes estilos globales
 import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';  // Importamos el router

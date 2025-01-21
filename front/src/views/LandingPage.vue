@@ -43,19 +43,28 @@
   </template>
   
   <script>
+  // Importa las imágenes directamente
+  import comidaImg from '@/assets/images/comida.jpg';
+  import receta2Img from '@/assets/images/receta2.jpg';
+  import receta3Img from '@/assets/images/receta3.jpg';
+  import reciente1Img from '@/assets/images/reciente1.jpg';
+  import reciente2Img from '@/assets/images/reciente2.jpg';
+  import reciente3Img from '@/assets/images/reciente3.jpg';
+  
   export default {
     data() {
       return {
         currentSlide: 0,
+        // Usar las imágenes importadas directamente
         carouselImages: [
-          { src: "receta1.jpg", alt: "Receta 1" },
-          { src: "receta2.jpg", alt: "Receta 2" },
-          { src: "receta3.jpg", alt: "Receta 3" },
+          { src: comidaImg, alt: 'Receta 1' },
+          { src: receta2Img, alt: 'Receta 2' },
+          { src: receta3Img, alt: 'Receta 3' },
         ],
         recentRecipes: [
-          { image: "reciente1.jpg", title: "Receta reciente 1" },
-          { image: "reciente2.jpg", title: "Receta reciente 2" },
-          { image: "reciente3.jpg", title: "Receta reciente 3" },
+          { image: reciente1Img, title: 'Receta reciente 1' },
+          { image: reciente2Img, title: 'Receta reciente 2' },
+          { image: reciente3Img, title: 'Receta reciente 3' },
         ],
       };
     },
@@ -92,7 +101,7 @@
   .carousel {
     position: relative;
     overflow: hidden;
-    height: 300px;
+    height: 200px; /* Ajuste para móviles */
   }
   
   .carousel-images {
@@ -102,7 +111,7 @@
   
   .carousel-images img {
     width: 100%;
-    height: 300px;
+    height: 200px; /* Ajuste para móviles */
     object-fit: cover;
   }
   
@@ -113,23 +122,21 @@
   }
   
   .recipe-grid {
-    display: flex;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: 1fr; /* Una columna en móviles */
     gap: 20px;
-    flex-wrap: wrap;
   }
   
   .recipe-card {
     border: 1px solid #ddd;
     border-radius: 8px;
-    width: 200px;
     overflow: hidden;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
   
   .recipe-card img {
     width: 100%;
-    height: 150px;
+    height: auto; /* Mantener proporción */
     object-fit: cover;
   }
   
@@ -151,21 +158,18 @@
     list-style-type: none;
     margin: 0;
     padding: 0;
-  }
-  
-  .navbar ul li {
-    display: inline;
-    margin: 0 15px;
+    display: flex;
+    justify-content: space-around; /* Espaciado uniforme */
   }
   
   .navbar button {
     background-color: #ff6347;
     color: white;
     border: none;
-    padding: 10px 20px;
+    padding: 10px 15px;
     cursor: pointer;
     border-radius: 5px;
-    font-size: 16px;
+    font-size: 14px;
   }
   
   .navbar button:hover {
@@ -184,5 +188,39 @@
     color: #ff6347;
     text-decoration: none;
   }
+  
+  /* Estilos para pantallas más grandes */
+  @media (min-width: 768px) {
+    .carousel {
+      height: 300px; /* Tamaño mayor para tablets */
+    }
+  
+    .carousel-images img {
+      height: 300px;
+    }
+  
+    .recipe-grid {
+      grid-template-columns: repeat(2, 1fr); /* Dos columnas en tablets */
+    }
+  
+    .navbar button {
+      padding: 10px 20px;
+      font-size: 16px;
+  }
+  
+  @media (min-width: 1024px) {
+    .recipe-grid {
+      grid-template-columns: repeat(3, 1fr); /* Tres columnas en pantallas grandes */
+    }
+  
+    .carousel {
+      height: 400px; /* Tamaño mayor para desktops */
+    }
+  
+    .carousel-images img {
+      height: 400px;
+    }
+  }
+}
   </style>
   

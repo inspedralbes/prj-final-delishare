@@ -38,7 +38,7 @@
         "carbohydrates": "50g"
       },
       "saved": false,
-      "liked": false,
+      "liked": [5, 12, 8],
       "created_at": "2025-01-10T12:00:00Z",
       "updated_at": "2025-01-15T12:00:00Z"
     },
@@ -77,7 +77,7 @@
         "carbohydrates": "45g"
       },
       "saved": false,
-      "liked": true,
+      "liked": [23, 15, 30],
       "created_at": "2025-01-12T13:00:00Z",
       "updated_at": "2025-01-14T15:00:00Z"
     },
@@ -118,7 +118,7 @@
         "carbohydrates": "30g"
       },
       "saved": true,
-      "liked": false,
+      "liked": [40, 25],
       "created_at": "2025-01-14T10:00:00Z",
       "updated_at": "2025-01-16T13:00:00Z"
     },
@@ -157,7 +157,7 @@
         "carbohydrates": "60g"
       },
       "saved": true,
-      "liked": true,
+      "liked": [50, 10, 35],
       "created_at": "2025-01-16T14:00:00Z",
       "updated_at": "2025-01-17T12:00:00Z"
     },
@@ -199,7 +199,7 @@
         "carbohydrates": "20g"
       },
       "saved": false,
-      "liked": true,
+      "liked": [18, 20, 22],
       "created_at": "2025-01-14T15:00:00Z",
       "updated_at": "2025-01-16T16:00:00Z"
     },
@@ -244,7 +244,7 @@
         "carbohydrates": "25g"
       },
       "saved": false,
-      "liked": true,
+      "liked": [55, 40],
       "created_at": "2025-01-18T09:00:00Z",
       "updated_at": "2025-01-19T14:00:00Z"
     },
@@ -282,9 +282,279 @@
         "carbohydrates": "10g"
       },
       "saved": true,
-      "liked": false,
+      "liked": [12, 7, 14],
       "created_at": "2025-01-20T12:00:00Z",
       "updated_at": "2025-01-21T14:00:00Z"
+    },
+    {
+      "id": 8,
+      "user_id": 113,
+      "recipe_id": 8,
+      "category_id": 1,
+      "cuisine_id": 3,
+      "title": "Greek Salad",
+      "description": "A vibrant Greek salad with cucumbers, tomatoes, olives, and feta.",
+      "ingredients": [
+        "1 cucumber",
+        "2 tomatoes",
+        "1/2 red onion",
+        "1/4 cup Kalamata olives",
+        "100g feta cheese",
+        "Olive oil",
+        "Lemon juice",
+        "Oregano",
+        "Salt",
+        "Pepper"
+      ],
+      "steps": [
+        "Chop the cucumber, tomatoes, and onion.",
+        "Combine with olives and crumbled feta in a bowl.",
+        "Drizzle with olive oil and lemon juice.",
+        "Season with oregano, salt, and pepper."
+      ],
+      "image": "/assets/images/greek_salad.jpg",
+      "prep_time": "10 minutes",
+      "cook_time": "0 minutes",
+      "servings": 2,
+      "nutrition": {
+        "calories": 250,
+        "protein": "10g",
+        "fat": "20g",
+        "carbohydrates": "15g"
+      },
+      "saved": true,
+      "liked": [8, 17],
+      "created_at": "2025-01-20T10:00:00Z",
+      "updated_at": "2025-01-21T13:00:00Z"
+    },
+    {
+      "id": 9,
+      "user_id": 114,
+      "recipe_id": 9,
+      "category_id": 2,
+      "cuisine_id": 6,
+      "title": "Paella",
+      "description": "A traditional Spanish dish with rice, seafood, and vegetables.",
+      "ingredients": [
+        "200g rice",
+        "300g seafood mix",
+        "1 onion",
+        "1 bell pepper",
+        "1 tomato",
+        "1/2 cup peas",
+        "1 teaspoon saffron",
+        "Olive oil",
+        "Salt",
+        "Pepper"
+      ],
+      "steps": [
+        "Sauté onion, bell pepper, and tomato in olive oil.",
+        "Add rice and cook for a minute.",
+        "Add seafood, peas, saffron, and water to cover rice.",
+        "Simmer until rice is cooked and liquid is absorbed."
+      ],
+      "image": "/assets/images/paella.jpg",
+      "prep_time": "15 minutes",
+      "cook_time": "25 minutes",
+      "servings": 4,
+      "nutrition": {
+        "calories": 550,
+        "protein": "30g",
+        "fat": "25g",
+        "carbohydrates": "60g"
+      },
+      "saved": false,
+      "liked": [25, 40],
+      "created_at": "2025-01-20T15:00:00Z",
+      "updated_at": "2025-01-21T12:00:00Z"
+    },
+    {
+      "id": 10,
+      "user_id": 115,
+      "recipe_id": 10,
+      "category_id": 1,
+      "cuisine_id": 5,
+      "title": "Caprese Toast",
+      "description": "A simple and delicious Caprese-style open-faced sandwich.",
+      "ingredients": [
+        "2 slices of bread",
+        "1 ball mozzarella",
+        "1 tomato",
+        "Basil",
+        "Olive oil",
+        "Balsamic vinegar",
+        "Salt",
+        "Pepper"
+      ],
+      "steps": [
+        "Toast the bread slices.",
+        "Top with sliced mozzarella, tomato, and basil.",
+        "Drizzle with olive oil and balsamic vinegar.",
+        "Season with salt and pepper."
+      ],
+      "image": "/assets/images/caprese_toast.jpg",
+      "prep_time": "5 minutes",
+      "cook_time": "5 minutes",
+      "servings": 2,
+      "nutrition": {
+        "calories": 350,
+        "protein": "15g",
+        "fat": "20g",
+        "carbohydrates": "35g"
+      },
+      "saved": false,
+      "liked": [14, 21],
+      "created_at": "2025-01-21T11:00:00Z",
+      "updated_at": "2025-01-22T10:00:00Z"
+    },
+    {
+      "id": 11,
+      "user_id": 116,
+      "recipe_id": 11,
+      "category_id": 3,
+      "cuisine_id": 4,
+      "title": "Vegetable Stir-Fry",
+      "description": "A colorful vegetable stir-fry with tofu and soy sauce.",
+      "ingredients": [
+        "200g tofu",
+        "1 zucchini",
+        "1 bell pepper",
+        "1 carrot",
+        "1 onion",
+        "Soy sauce",
+        "Olive oil",
+        "Salt",
+        "Pepper"
+      ],
+      "steps": [
+        "Slice tofu and vegetables.",
+        "Stir-fry tofu and vegetables in olive oil.",
+        "Add soy sauce and season with salt and pepper."
+      ],
+      "image": "/assets/images/vegetable_stirfry.jpg",
+      "prep_time": "10 minutes",
+      "cook_time": "15 minutes",
+      "servings": 2,
+      "nutrition": {
+        "calories": 300,
+        "protein": "15g",
+        "fat": "18g",
+        "carbohydrates": "25g"
+      },
+      "saved": true,
+      "liked": [3, 9],
+      "created_at": "2025-01-18T11:00:00Z",
+      "updated_at": "2025-01-20T10:00:00Z"
+    },
+    {
+      "id": 12,
+      "user_id": 117,
+      "recipe_id": 12,
+      "category_id": 2,
+      "cuisine_id": 1,
+      "title": "Spanish Omelette",
+      "description": "A classic Spanish tortilla with potatoes and onions.",
+      "ingredients": [
+        "3 potatoes",
+        "1 onion",
+        "4 eggs",
+        "Olive oil",
+        "Salt",
+        "Pepper"
+      ],
+      "steps": [
+        "Peel and slice potatoes and onion.",
+        "Fry in olive oil until soft.",
+        "Whisk eggs, then add to the pan.",
+        "Cook until eggs are set and golden brown."
+      ],
+      "image": "/assets/images/spanish_omelette.jpg",
+      "prep_time": "10 minutes",
+      "cook_time": "20 minutes",
+      "servings": 2,
+      "nutrition": {
+        "calories": 400,
+        "protein": "15g",
+        "fat": "25g",
+        "carbohydrates": "40g"
+      },
+      "saved": true,
+      "liked": [18, 2],
+      "created_at": "2025-01-19T10:00:00Z",
+      "updated_at": "2025-01-21T09:00:00Z"
+    },
+    {
+      "id": 13,
+      "user_id": 118,
+      "recipe_id": 13,
+      "category_id": 4,
+      "cuisine_id": 6,
+      "title": "Churros",
+      "description": "A sweet Spanish pastry served with chocolate dipping sauce.",
+      "ingredients": [
+        "200g flour",
+        "50g sugar",
+        "1 teaspoon vanilla extract",
+        "2 eggs",
+        "Olive oil",
+        "Cocoa powder",
+        "Sugar"
+      ],
+      "steps": [
+        "Mix flour, sugar, eggs, and vanilla extract.",
+        "Fry dough in olive oil to form churros.",
+        "Dust with sugar and serve with chocolate dipping sauce."
+      ],
+      "image": "/assets/images/churros.jpg",
+      "prep_time": "15 minutes",
+      "cook_time": "20 minutes",
+      "servings": 6,
+      "nutrition": {
+        "calories": 450,
+        "protein": "8g",
+        "fat": "25g",
+        "carbohydrates": "50g"
+      },
+      "saved": false,
+      "liked": [16, 22],
+      "created_at": "2025-01-20T14:00:00Z",
+      "updated_at": "2025-01-21T16:00:00Z"
+    },
+    {
+      "id": 14,
+      "user_id": 119,
+      "recipe_id": 14,
+      "category_id": 1,
+      "cuisine_id": 7,
+      "title": "Tacos",
+      "description": "Delicious Mexican tacos with seasoned beef and fresh toppings.",
+      "ingredients": [
+        "300g beef",
+        "Taco shells",
+        "Lettuce",
+        "Tomatoes",
+        "Onions",
+        "Cheese",
+        "Sour cream"
+      ],
+      "steps": [
+        "Cook beef with taco seasoning.",
+        "Fill taco shells with beef and toppings."
+      ],
+      "image": "/assets/images/tacos.jpg",
+      "prep_time": "10 minutes",
+      "cook_time": "10 minutes",
+      "servings": 4,
+      "nutrition": {
+        "calories": 400,
+        "protein": "30g",
+        "fat": "20g",
+        "carbohydrates": "30g"
+      },
+      "saved": false,
+      "liked": [3, 17],
+      "created_at": "2025-01-21T13:00:00Z",
+      "updated_at": "2025-01-22T11:00:00Z"
     }
   ]
 }

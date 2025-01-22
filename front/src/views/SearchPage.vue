@@ -164,25 +164,34 @@ export default {
   .filters button {
     width: 20%; /* Los botones ocupan el 20% del ancho */
   }
-
-  .search-results {
-    flex-wrap: wrap;  /* Los elementos de búsqueda se alinean en múltiples líneas */
-    justify-content: space-around;
-  }
-
-  .search-item {
-    width: 30%;  /* Ancho de los resultados más pequeño */
-  }
+  /* Estilos para los resultados de búsqueda - Mobile-first */
+.search-results {
+  display: flex;
+  flex-direction: column; /* Dirección columna para pantallas pequeñas */
+  align-items: center;
+  gap: 20px; /* Espaciado entre elementos */
 }
+
+/* Cada receta ocupa todo el ancho del contenedor en pantallas pequeñas */
+.search-item {
+  width: 100%;
+  max-width: 320px; /* Ancho máximo */
+}
+
+/* Media Queries para pantallas más grandes */
 
 /* En dispositivos mayores a 1024px (pantallas grandes) */
 @media (min-width: 1024px) {
-  .search-container input {
-    width: 50%;  /* Campo de búsqueda más grande */
+  .search-results {
+    flex-direction: row; /* Dirección fila para pantallas grandes */
+    flex-wrap: wrap;    /* Permitir múltiples líneas si hay muchas recetas */
+    justify-content: space-around; /* Espacio uniforme entre recetas */
   }
 
   .search-item {
-    width: 22%;  /* Resultados más pequeños y ajustados */
+    width: 22%; /* Las recetas se reducen de tamaño en pantallas grandes */
   }
+}
+
 }
 </style>

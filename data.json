@@ -1,0 +1,132 @@
+{
+    "recipes": [
+      {
+        "id": 1,
+        "usuario": "chef_john",
+        "titulo": "Espaguetis a la boloñesa",
+        "descripcion": "Un clásico italiano con salsa de carne casera.",
+        "imagen": "https://example.com/images/spaghetti_bolognese.jpg",
+        "ingredientes": ["espaguetis", "carne molida", "salsa de tomate", "cebolla", "ajo", "aceite de oliva", "sal", "pimienta"],
+        "cousine": "Italiana",
+        "tiempo_preparacion": 10,
+        "tiempo_coccion": 30,
+        "servings": 4,
+        "categoria": "Plato principal",
+        "steps": [
+          "Cocinar los espaguetis según las instrucciones del paquete.",
+          "Sofreír la cebolla y el ajo picados en aceite de oliva.",
+          "Agregar la carne molida y cocinar hasta dorar.",
+          "Incorporar la salsa de tomate y condimentar con sal y pimienta.",
+          "Mezclar los espaguetis con la salsa y servir."
+        ],
+        "nutrition": [
+          {"calories": 450},
+          {"protein": "25g"},
+          {"fat": "15g"},
+          {"carbohydrates": "60g"}
+        ]
+      },
+      {
+        "id": 2,
+        "usuario": "cocina_mexico",
+        "titulo": "Tacos de pollo",
+        "descripcion": "Tortillas de maíz rellenas de pollo jugoso y fresco.",
+        "imagen": "https://example.com/images/chicken_tacos.jpg",
+        "ingredientes": ["tortillas de maíz", "pollo desmenuzado", "cebolla", "cilantro", "limón", "salsa"],
+        "cousine": "Mexicana",
+        "tiempo_preparacion": 10,
+        "tiempo_coccion": 15,
+        "servings": 4,
+        "categoria": "Plato principal",
+        "steps": [
+          "Calentar las tortillas de maíz.",
+          "Rellenar con pollo desmenuzado.",
+          "Agregar cebolla picada, cilantro y un toque de limón.",
+          "Servir con salsa al gusto."
+        ],
+        "nutrition": [
+          {"calories": 250},
+          {"protein": "20g"},
+          {"fat": "8g"},
+          {"carbohydrates": "20g"}
+        ]
+      },
+      {
+        "id": 3,
+        "usuario": "sushi_lover",
+        "titulo": "Sushi de salmón",
+        "descripcion": "Deliciosos rolls de salmón fresco envueltos en alga nori.",
+        "imagen": "https://example.com/images/salmon_sushi.jpg",
+        "ingredientes": ["arroz para sushi", "salmón fresco", "alga nori", "vinagre de arroz", "azúcar", "sal", "salsa de soja", "wasabi"],
+        "cousine": "Japonesa",
+        "tiempo_preparacion": 30,
+        "tiempo_coccion": 30,
+        "servings": 2,
+        "categoria": "Aperitivo",
+        "steps": [
+          "Cocinar el arroz y mezclar con vinagre de arroz, azúcar y sal.",
+          "Colocar el arroz sobre el alga nori.",
+          "Agregar tiras de salmón fresco y enrollar.",
+          "Cortar en porciones y servir con salsa de soja y wasabi."
+        ],
+        "nutrition": [
+          {"calories": 350},
+          {"protein": "15g"},
+          {"fat": "5g"},
+          {"carbohydrates": "65g"}
+        ]
+      },
+      {
+        "id": 4,
+        "usuario": "healthy_eats",
+        "titulo": "Ensalada césar",
+        "descripcion": "Una ensalada clásica con pollo a la parrilla y aderezo casero.",
+        "imagen": "https://example.com/images/caesar_salad.jpg",
+        "ingredientes": ["lechuga romana", "crutones", "pollo a la parrilla", "queso parmesano", "aderezo césar"],
+        "cousine": "Internacional",
+        "tiempo_preparacion": 10,
+        "tiempo_coccion": 10,
+        "servings": 2,
+        "categoria": "Ensalada",
+        "steps": [
+          "Lavar y trocear la lechuga.",
+          "Agregar pollo a la parrilla en tiras.",
+          "Incorporar los crutones y el queso parmesano.",
+          "Aliñar con aderezo césar y mezclar bien."
+        ],
+        "nutrition": [
+          {"calories": 300},
+          {"protein": "25g"},
+          {"fat": "18g"},
+          {"carbohydrates": "10g"}
+        ]
+      },
+      {
+        "id": 5,
+        "usuario": "seafood_master",
+        "titulo": "Paella de mariscos",
+        "descripcion": "Un plato español tradicional lleno de sabor y mariscos frescos.",
+        "imagen": "https://example.com/images/seafood_paella.jpg",
+        "ingredientes": ["arroz", "caldo de pescado", "gambas", "mejillones", "calamares", "pimiento rojo", "azafrán", "ajo", "aceite de oliva"],
+        "cousine": "Española",
+        "tiempo_preparacion": 20,
+        "tiempo_coccion": 40,
+        "servings": 4,
+        "categoria": "Plato principal",
+        "steps": [
+          "Sofreír ajo y pimiento en aceite de oliva.",
+          "Agregar los mariscos y cocinar brevemente.",
+          "Incorporar el arroz y el caldo de pescado con azafrán.",
+          "Cocinar a fuego medio hasta que el arroz esté en su punto.",
+          "Dejar reposar unos minutos antes de servir."
+        ],
+        "nutrition": [
+          {"calories": 500},
+          {"protein": "30g"},
+          {"fat": "10g"},
+          {"carbohydrates": "75g"}
+        ]
+      }
+    ]
+  }
+  

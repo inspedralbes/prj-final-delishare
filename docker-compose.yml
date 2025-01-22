@@ -3,7 +3,7 @@ version: '3.8'
 services:
   app:
     build:
-      context: ./laravel
+      context: ./back
     container_name: laravel_app
     volumes:
       - ./laravel:/var/www/html
@@ -20,7 +20,7 @@ services:
 
   vue:
     build:
-      context: ./vue
+      context: ./front
     container_name: vue_app
     ports:
       - "8080:8080"

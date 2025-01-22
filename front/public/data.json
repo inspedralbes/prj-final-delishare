@@ -1,0 +1,192 @@
+{
+  "recipes": [
+    {
+      "id": 1,
+      "user_id": 106,
+      "category_id": 1,
+      "cuisine_id": 2,
+      "title": "Pasta Primavera",
+      "description": "A fresh, colorful pasta dish with seasonal vegetables.",
+      "ingredients": [
+        "200g pasta",
+        "1 zucchini",
+        "1 red bell pepper",
+        "1 yellow bell pepper",
+        "1/2 cup cherry tomatoes",
+        "2 cloves garlic",
+        "Olive oil",
+        "Parmesan cheese",
+        "Salt",
+        "Black pepper"
+      ],
+      "steps": [
+        "Cook pasta according to package instructions.",
+        "Slice zucchini and peppers, then sauté them with garlic in olive oil.",
+        "Add tomatoes and cook for 2-3 minutes.",
+        "Toss cooked pasta with vegetables and a bit of olive oil.",
+        "Top with Parmesan cheese and season with salt and pepper."
+      ],
+      "image": "/assets/images/comida.jpg",
+      "prep_time": "10 minutes",
+      "cook_time": "15 minutes",
+      "servings": 2,
+      "nutrition": {
+        "calories": 350,
+        "protein": "10g",
+        "fat": "12g",
+        "carbohydrates": "50g"
+      },
+      "created_at": "2025-01-10T12:00:00Z",
+      "updated_at": "2025-01-15T12:00:00Z"
+    },
+    {
+      "id": 2,
+      "user_id": 107,
+      "category_id": 3,
+      "cuisine_id": 5,
+      "title": "Sushi Rolls",
+      "description": "Japanese sushi rolls with fresh fish and vegetables.",
+      "ingredients": [
+        "2 cups sushi rice",
+        "3 sheets nori",
+        "200g sushi-grade salmon",
+        "1 cucumber",
+        "1 avocado",
+        "Soy sauce",
+        "Rice vinegar"
+      ],
+      "steps": [
+        "Cook sushi rice and season with rice vinegar.",
+        "Place nori sheet on a bamboo mat and spread rice evenly.",
+        "Add slices of salmon, cucumber, and avocado.",
+        "Roll tightly and slice into pieces.",
+        "Serve with soy sauce."
+      ],
+      "image": "/assets/images/receta2.jpg",
+      "prep_time": "20 minutes",
+      "cook_time": "10 minutes",
+      "servings": 2,
+      "nutrition": {
+        "calories": 450,
+        "protein": "25g",
+        "fat": "20g",
+        "carbohydrates": "45g"
+      },
+      "created_at": "2025-01-12T13:00:00Z",
+      "updated_at": "2025-01-14T15:00:00Z"
+    },
+    {
+      "id": 3,
+      "user_id": 108,
+      "category_id": 2,
+      "cuisine_id": 4,
+      "title": "Falafel",
+      "description": "Crispy, golden-brown chickpea fritters served with tahini sauce.",
+      "ingredients": [
+        "1 can chickpeas",
+        "1 small onion",
+        "2 cloves garlic",
+        "1 tablespoon cumin",
+        "1 tablespoon coriander",
+        "2 tablespoons flour",
+        "Salt",
+        "Pepper",
+        "Vegetable oil",
+        "Tahini sauce"
+      ],
+      "steps": [
+        "Mash chickpeas in a bowl and mix with finely chopped onion and garlic.",
+        "Add spices, flour, salt, and pepper and form into small balls.",
+        "Fry in vegetable oil until golden brown.",
+        "Serve with tahini sauce."
+      ],
+      "image": "/assets/images/falafel.jpg",
+      "prep_time": "15 minutes",
+      "cook_time": "15 minutes",
+      "servings": 4,
+      "nutrition": {
+        "calories": 300,
+        "protein": "12g",
+        "fat": "15g",
+        "carbohydrates": "30g"
+      },
+      "created_at": "2025-01-14T10:00:00Z",
+      "updated_at": "2025-01-16T13:00:00Z"
+    },
+    {
+      "id": 4,
+      "user_id": 109,
+      "category_id": 3,
+      "cuisine_id": 1,
+      "title": "Ravioli with Pesto",
+      "description": "Delicious ravioli served with a fragrant basil pesto sauce.",
+      "ingredients": [
+        "300g ravioli",
+        "1 cup fresh basil",
+        "1/4 cup pine nuts",
+        "1/2 cup Parmesan cheese",
+        "1/2 cup olive oil",
+        "2 cloves garlic",
+        "Salt",
+        "Pepper"
+      ],
+      "steps": [
+        "Cook ravioli according to package instructions.",
+        "Blend basil, pine nuts, garlic, Parmesan, and olive oil to make pesto.",
+        "Toss cooked ravioli with pesto sauce.",
+        "Season with salt and pepper to taste."
+      ],
+      "image": "/assets/images/ravioli_pesto.jpg",
+      "prep_time": "10 minutes",
+      "cook_time": "15 minutes",
+      "servings": 2,
+      "nutrition": {
+        "calories": 550,
+        "protein": "18g",
+        "fat": "25g",
+        "carbohydrates": "60g"
+      },
+      "created_at": "2025-01-16T14:00:00Z",
+      "updated_at": "2025-01-17T12:00:00Z"
+    },
+    {
+      "id": 5,
+      "user_id": 110,
+      "category_id": 4,
+      "cuisine_id": 2,
+      "title": "Shakshuka",
+      "description": "Poached eggs in a spiced tomato sauce with peppers and onions.",
+      "ingredients": [
+        "2 eggs",
+        "2 tomatoes",
+        "1 onion",
+        "1 bell pepper",
+        "2 cloves garlic",
+        "1 teaspoon cumin",
+        "1 teaspoon paprika",
+        "Olive oil",
+        "Salt",
+        "Pepper"
+      ],
+      "steps": [
+        "Sauté onion, garlic, and bell pepper in olive oil.",
+        "Add tomatoes and spices, cook until soft.",
+        "Make small wells in sauce and crack eggs into them.",
+        "Cover and cook until eggs are poached.",
+        "Season with salt and pepper."
+      ],
+      "image": "/assets/images/shakshuka.jpg",
+      "prep_time": "10 minutes",
+      "cook_time": "20 minutes",
+      "servings": 2,
+      "nutrition": {
+        "calories": 300,
+        "protein": "15g",
+        "fat": "20g",
+        "carbohydrates": "20g"
+      },
+      "created_at": "2025-01-14T15:00:00Z",
+      "updated_at": "2025-01-16T16:00:00Z"
+    }
+  ]
+}

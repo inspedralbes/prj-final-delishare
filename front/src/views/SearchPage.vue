@@ -23,16 +23,22 @@
       </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-      <p>&copy; 2025 Recetas Deliciosas | Diseñado con amor</p>
-      <p>Síguenos en <a href="#">Instagram</a></p>
-    </footer>
+   
+
+    <!-- Navbar en la parte inferior -->
+    <Navbar />
   </div>
 </template>
 
 <script>
+// Importa el componente Navbar
+import Navbar from '@/components/Navbar.vue';
+
 export default {
+  name: 'SearchPage',
+  components: {
+    Navbar, // Registra el componente Navbar
+  },
   data() {
     return {
       searchQuery: '',

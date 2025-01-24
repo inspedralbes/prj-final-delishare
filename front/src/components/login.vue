@@ -4,44 +4,41 @@
             <img src="/img/LogoSample_ByTailorBrandsGRANDE.jpg" alt="">
             <h3>Iniciar Sesión</h3>
             <form @submit.prevent="handleLogin" class="login-form">
-                <div class="form-group">
-                    <label for="user">Usuari</label>
-                    <input type="user" id="user" v-model="user" class="form-control" placeholder="pacoGameplays09"
-                        required />
-                </div>
-                <div class="form-group">
-                    <label for="password">Contrasenya</label>
-                    <input type="password" id="password" v-model="password" class="form-control" placeholder="****"
-                        required />
-                </div>
-                <button type="submit" class="btn-submit" @click="handleLogin">Iniciar Sessió</button>
-                <p class="forgot-password">
-                    <a href="/register">¿Has oblidat la contrasenya?</a>
-                </p>
+            <div class="form-group">
+                <label for="user">Usuari</label>
+                <input type="user" id="user" v-model="user" class="form-control" placeholder="pacoGameplays09"
+                required />
+            </div>
+            <div class="form-group">
+                <label for="password">Contrasenya</label>
+                <input type="password" id="password" v-model="password" class="form-control" placeholder="****"
+                required />
+            </div>
+            <button type="submit" class="btn-submit" @click="handleLogin">Iniciar Sessió</button>
+            <p class="forgot-password">
+                <a href="/register">¿Has oblidat la contrasenya?</a>
+            </p>
             </form>
         </div>
-    </div>
-</template>
+        </div>
+    </template>
 
-<script>
-export default {
-    name: "Login",
-    data() {
+    <script>
+    export default {
+        name: "Login",
+        data() {
         return {
             user: "",
             password: "",
-            hashedPassword: "",
         };
-    },
-    methods: {
+        },
+        methods: {
         handleLogin() {
-            console.log("Correo:", this.user);
+            console.log("user:", this.user);
             console.log("Contraseña:", this.password);
-            const bcrypt = require('bcryptjs');
-            this.hashedPassword = bcrypt.hashSync(this.password, 10);
             const user = {
-                user: this.user,
-                password: this.hashedPassword,
+            user: this.user,
+            password: this.password,
             };
 
             fetch("http://localhost:8000/api/login", {

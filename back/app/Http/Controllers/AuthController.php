@@ -26,7 +26,7 @@ class AuthController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => $request->password,
+            'password' => Hash::make($request->password),
         ]);
 
         // Generar un token único y guardarlo en el usuario
@@ -50,7 +50,7 @@ class AuthController extends Controller
 
         $user = User::where('name', $request->name)->first();
 
-        if (!$user || $request->password !== $user->password) {
+        if (!$user || !Hash::check($request->password, $user->password)) {
             return response()->json(['message' => 'Credenciales inválidas'], 401);
         }
 

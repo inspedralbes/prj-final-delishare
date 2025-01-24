@@ -1,244 +1,353 @@
 <template>
-    <div>
-      <!-- Header -->
-      <header class="header">
-        <h1>DeliShare</h1>
-      </header>
-  
-      <!-- Carrusel de imágenes -->
-      <div class="carousel">
-        <div class="carousel-images" :style="{ transform: `translateX(-${currentSlide * 100}%)` }">
-          <img v-for="(image, index) in carouselImages" :key="index" :src="image.src" :alt="image.alt">
-        </div>
+  <div class="page-container">
+    <!-- Header -->
+    <header class="header">
+      <h1>DeliShare</h1>
+    </header>
+
+    <!-- Carrusel de imágenes -->
+    <div class="carousel">
+      <div class="carousel-images" :style="{ transform: `translateX(-${currentSlide * 100}%)` }">
+        <img v-for="(image, index) in carouselImages" :key="index" :src="image.src" :alt="image.alt">
       </div>
-  
-      <!-- Recetas recientes -->
+    </div>
+
+    <!-- Recetas más likes -->
+    <div class="likes">
       <section class="recent-recipes">
-        <h2>Recetas Recientes</h2>
-        <div class="recipe-grid">
-          <div class="recipe-card" v-for="(recipe, index) in recentRecipes" :key="index">
-            <img :src="recipe.image" :alt="recipe.title">
-            <p>{{ recipe.title }}</p>
+        <h2>Más Likes</h2>
+        <div class="carousel-container">
+          <button class="carousel-arrow left" @click="moveSlide('left', 'likes')">←</button>
+          <div class="recipe-carousel">
+            <div
+              class="recipe-card"
+              v-for="(recipe, index) in displayedLikeRecipes"
+              :key="index"
+            >
+              <img :src="recipe.image" :alt="recipe.title" class="recipe-image">
+              <div class="recipe-info">
+                <p class="recipe-title">{{ recipe.title }}</p>
+              </div>
+            </div>
           </div>
+          <button class="carousel-arrow right" @click="moveSlide('right', 'likes')">→</button>
         </div>
       </section>
-  
-      <!-- Botón de búsqueda que es la imagen de la lupa, redirige a SearchPage -->
-      <router-link to="/search">
-        <img src="@/assets/images/lupa.png" alt="Buscar" class="search-icon" />
-      </router-link>
-  
-      <!-- Navbar -->
-      <nav class="navbar">
-        <ul>
-          <li><button><img src="@/assets/images/homee.png" alt="Home" /></button></li>
-          <li><router-link to="/search"><img src="@/assets/images/lupa.png" alt="Search" class="search-icon" /></router-link></li>
-          <li><button><img src="@/assets/images/mas.png" alt="Post" /></button></li>
-          <li><button><img src="@/assets/images/guardar.png" alt="Saved" /></button></li>
-          <li><button><img src="@/assets/images/perfil.png" alt="Profile" /></button></li>
-        </ul>
-      </nav>
-  
-      <!-- Footer -->
-      <footer class="footer">
-        <p>&copy; 2025 Recetas Deliciosas | Diseñado con amor</p>
-        <p>Síguenos en <a href="#">Instagram</a></p>
-      </footer>
     </div>
-  </template>
-  
-  <script>
-  import comidaImg from '@/assets/images/comida.jpg';
-  import receta2Img from '@/assets/images/receta2.jpg';
-  import receta3Img from '@/assets/images/receta3.jpg';
-  import reciente1Img from '@/assets/images/reciente1.jpg';
-  import reciente2Img from '@/assets/images/reciente2.jpg';
-  import reciente3Img from '@/assets/images/reciente3.jpg';
-  
-  export default {
-    data() {
-      return {
-        currentSlide: 0,
-        carouselImages: [
-          { src: comidaImg, alt: 'Receta 1' },
-          { src: receta2Img, alt: 'Receta 2' },
-          { src: receta3Img, alt: 'Receta 3' },
-        ],
-        recentRecipes: [
-          { image: reciente1Img, title: 'Receta reciente 1' },
-          { image: reciente2Img, title: 'Receta reciente 2' },
-          { image: reciente3Img, title: 'Receta reciente 3' },
-        ],
-      };
+
+    <!-- Recetas más recientes -->
+    <div class="recents">
+      <section class="recent-recipes">
+        <h2>Más Recientes</h2>
+        <div class="carousel-container">
+          <button class="carousel-arrow left" @click="moveSlide('left', 'recents')">←</button>
+          <div class="recipe-carousel">
+            <div
+              class="recipe-card"
+              v-for="(recipe, index) in displayedRecentRecipes"
+              :key="index"
+            >
+              <img :src="recipe.image" :alt="recipe.title" class="recipe-image">
+              <div class="recipe-info">
+                <p class="recipe-title">{{ recipe.title }}</p>
+              </div>
+            </div>
+          </div>
+          <button class="carousel-arrow right" @click="moveSlide('right', 'recents')">→</button>
+        </div>
+      </section>
+    </div>
+
+    <!-- Navbar -->
+    <Navbar />
+  </div>
+</template>
+
+<script>
+import Navbar from '@/components/Navbar.vue';
+import comidaImg from '@/assets/images/comida.jpg';
+import receta2Img from '@/assets/images/receta2.jpg';
+import receta3Img from '@/assets/images/receta3.jpg';
+
+export default {
+  components: {
+    Navbar,
+  },
+  data() {
+    return {
+      currentSlide: 0,
+      currentSlideLikes: 0,
+      currentSlideRecents: 0,
+      carouselImages: [
+        { src: comidaImg, alt: 'Receta 1' },
+        { src: receta2Img, alt: 'Receta 2' },
+        { src: receta3Img, alt: 'Receta 3' },
+      ],
+      recipes: [],
+      sortedLikeRecipes: [], // Recetas ordenadas por likes
+      sortedRecentRecipes: [], // Recetas ordenadas por fecha más reciente
+      displayedLikeRecipes: [], // Recetas visibles en "Más Likes"
+      displayedRecentRecipes: [], // Recetas visibles en "Más Recientes"
+      recipesPerPage: 3,
+      totalRecipesToShow: 9,
+    };
+  },
+  mounted() {
+    fetch('/data.json')
+      .then(response => response.json())
+      .then(data => {
+        this.recipes = data.recipes;
+
+        // Recetas más likes
+        this.sortedLikeRecipes = this.recipes
+          .map(recipe => ({
+            ...recipe,
+            totalLikes: recipe.liked.reduce((a, b) => a + b, 0), // Sumar likes
+          }))
+          .sort((a, b) => b.totalLikes - a.totalLikes)
+          .slice(0, this.totalRecipesToShow);
+
+        // Recetas más recientes
+        this.sortedRecentRecipes = [...this.recipes]
+          .sort((a, b) => new Date(b.date) - new Date(a.date)) // Ordenar por fecha descendente
+          .slice(0, this.totalRecipesToShow);
+
+        // Inicializar las recetas visibles
+        this.updateDisplayedLikeRecipes();
+        this.updateDisplayedRecentRecipes();
+      })
+      .catch(error => {
+        console.error('Error loading data.json:', error);
+      });
+
+    this.startCarousel();
+  },
+  methods: {
+    startCarousel() {
+      setInterval(() => {
+        this.currentSlide = (this.currentSlide + 1) % this.carouselImages.length;
+      }, 3000);
     },
-    mounted() {
-      this.startCarousel();
+    moveSlide(direction, type) {
+      if (type === 'likes') {
+        const maxSlideIndex = Math.ceil(this.sortedLikeRecipes.length / this.recipesPerPage) - 1;
+        if (direction === 'left') {
+          this.currentSlideLikes = Math.max(0, this.currentSlideLikes - 1);
+        } else {
+          this.currentSlideLikes = Math.min(maxSlideIndex, this.currentSlideLikes + 1);
+        }
+        this.updateDisplayedLikeRecipes();
+      } else if (type === 'recents') {
+        const maxSlideIndex = Math.ceil(this.sortedRecentRecipes.length / this.recipesPerPage) - 1;
+        if (direction === 'left') {
+          this.currentSlideRecents = Math.max(0, this.currentSlideRecents - 1);
+        } else {
+          this.currentSlideRecents = Math.min(maxSlideIndex, this.currentSlideRecents + 1);
+        }
+        this.updateDisplayedRecentRecipes();
+      }
     },
-    methods: {
-      startCarousel() {
-        setInterval(() => {
-          this.currentSlide = (this.currentSlide + 1) % this.carouselImages.length;
-        }, 3000); // Cambia cada 3 segundos
-      },
+    updateDisplayedLikeRecipes() {
+      const startIndex = this.currentSlideLikes * this.recipesPerPage;
+      this.displayedLikeRecipes = this.sortedLikeRecipes.slice(
+        startIndex,
+        startIndex + this.recipesPerPage
+      );
     },
-  };
-  </script>
-  
-  <style scoped>
-  /* Estilos Generales */
-  body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  .header {
-    background-color: #ff6347;
-    color: white;
-    text-align: center;
-    padding: 20px 0;
-  }
-  
-  /* Carrusel */
-  .carousel {
-    position: relative;
-    overflow: hidden;
-    height: 200px; /* Ajuste para móviles */
-  }
-  
-  .carousel-images {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
-  }
-  
+    updateDisplayedRecentRecipes() {
+      const startIndex = this.currentSlideRecents * this.recipesPerPage;
+      this.displayedRecentRecipes = this.sortedRecentRecipes.slice(
+        startIndex,
+        startIndex + this.recipesPerPage
+      );
+    },
+  },
+};
+</script>
+<style scoped>
+/* Estilos base para dispositivos móviles (Mobile-first) */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.carousel {
+  position: relative;
+  overflow: hidden;
+  height: 220px;
+}
+
+.carousel-images {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.carousel-images img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.carousel-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+  justify-content: center;
+  width: 100%;
+}
+
+.recipe-carousel {
+  display: flex;
+  overflow: hidden;
+  width: calc(100% - 50px);
+}
+
+.recipe-card {
+  margin: 0 6px;
+  width: 100%;
+  max-width: 100px;
+  height: 100px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  transition: transform 0.3s ease-in-out;
+  font-size: 10px;
+}
+
+.recipe-card:hover {
+  transform: scale(1.05);
+}
+
+.recipe-image {
+  width: 100%;
+  height: 60%;
+  object-fit: cover;
+}
+
+.recipe-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 40%;
+}
+
+.recipe-title {
+  font-weight: bold;
+  font-size: 12px;
+  color: #333;
+  text-align: center;
+}
+
+.carousel-arrow {
+  background-color: transparent;
+  border: none;
+  font-size: 1em;
+  cursor: pointer;
+  color: #FF6F61;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.carousel-arrow.left {
+  left: 0;
+}
+
+.carousel-arrow.right {
+  right: 0;
+}
+
+/* Estilo para añadir espacio entre las recetas recientes y el navbar */
+.recents {
+  margin-bottom: 20px;
+}
+
+/* Media Query para pantallas más grandes (Tablets y Desktops) */
+@media (min-width: 768px) {
+  /* Ajustar el tamaño de la imagen del carrusel */
   .carousel-images img {
-    width: 100%;
-    height: 200px; /* Ajuste para móviles */
-    object-fit: cover;
+    height: 300px;
   }
-  
-  /* Recetas recientes */
-  .recent-recipes {
-    text-align: center;
-    padding: 20px;
-  }
-  
-  .recipe-grid {
-    display: grid;
-    grid-template-columns: 1fr; /* Una columna en móviles */
-    gap: 20px;
-  }
-  
+
+  /* Ajustar el tamaño de las tarjetas de recetas */
   .recipe-card {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 150px;
+    height: 150px;
+    font-size: 14px;
   }
-  
-  .recipe-card img {
-    width: 100%;
-    height: auto; /* Mantener proporción */
-    object-fit: cover;
+
+  .recipe-title {
+    font-size: 14px;
   }
-  
-  .recipe-card p {
-    margin: 0;
-    padding: 10px;
-    text-align: center;
-    background-color: #f8f8f8;
+
+  /* Hacer las flechas del carrusel un poco más grandes */
+  .carousel-arrow {
+    font-size: 1.5em;
   }
-  
-  /* Navbar */
-  .navbar {
-    background-color: #333;
-    padding: 10px 0;
-    text-align: center;
+}
+
+/* Media Query para pantallas de escritorio más grandes (Desktops y Monitores grandes) *//* Media Query para pantallas de escritorio más grandes (Desktops y Monitores grandes) */
+/* Media Query para pantallas de escritorio más grandes (Desktops y Monitores grandes) *//* Media Query para pantallas de escritorio más grandes (Desktops y Monitores grandes) */
+@media (min-width: 1024px) {
+  /* Ajustar el tamaño de la imagen del carrusel */
+  .carousel-images img {
+    height: 450px; /* Un poco más alto para hacerlo más impactante */
   }
-  
-  .navbar ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+
+  /* Ajustar el tamaño de las tarjetas de recetas */
+  .recipe-card {
+    max-width: 350px; /* Hacer las tarjetas un poco más grandes */
+    height: 350px;
+    font-size: 18px; /* Mejorar la legibilidad */
+  }
+
+  .recipe-title {
+    font-size: 18px; /* Aumentar el tamaño de la fuente del título */
+  }
+
+  /* Mejorar la visibilidad de las flechas del carrusel */
+  .carousel-arrow {
+    font-size: 2.5em; /* Aumentar tamaño para mejor acceso */
+    padding: 10px; /* Añadir algo de padding para hacer los botones más accesibles */
+  }
+
+  /* Asegurarse de que los márgenes entre los elementos sean coherentes */
+  .recipe-carousel {
+    gap: 15px; /* Añadir espacio entre las tarjetas para una mejor distribución */
+    justify-content: center; /* Centrar las tarjetas en el contenedor */
+  }
+
+  /* Mejorar el espaciado del contenedor de las recetas recientes */
+  .recents {
+    margin-bottom: 40px; /* Asegurar más espacio hacia el final de la sección */
+  }
+
+  /* Hacer el título "DeliShare" más grande y centrado */
+  .header h1 {
+    font-size: 3.5em; /* Aumentar tamaño del título */
+    text-align: center; /* Centrar el título */
+    margin: 30px 0; /* Añadir espacio superior e inferior */
+  }
+
+  /* Centrar el contenedor de las tarjetas de recetas */
+  .carousel-container {
     display: flex;
-    justify-content: space-around; /* Espaciado uniforme */
+    align-items: center;
+    position: relative;
+    justify-content: center; /* Asegurarse de que todo esté centrado */
+    width: 100%;
   }
-  
-  .navbar button {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-  }
-  
-  .navbar img {
-    width: 30px;
-    height: 30px;
-    object-fit: contain;
-  }
-  
-  .navbar button:hover img {
-    opacity: 0.8;
-  }
-  
-  /* Footer */
-  .footer {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 10px 0;
-  }
-  
-  .footer a {
-    color: #ff6347;
-    text-decoration: none;
-  }
-  
-  /* Estilos para pantallas más grandes */
-  @media (min-width: 768px) {
-    .carousel {
-      height: 300px; /* Tamaño mayor para tablets */
-    }
-  
-    .carousel-images img {
-      height: 300px;
-    }
-  
-    .recipe-grid {
-      grid-template-columns: repeat(2, 1fr); /* Dos columnas en tablets */
-    }
-  
-    .navbar img {
-      width: 40px;
-      height: 40px;
-    }
-  }
-  
-  @media (min-width: 1024px) {
-    .recipe-grid {
-      grid-template-columns: repeat(3, 1fr); /* Tres columnas en pantallas grandes */
-    }
-  
-    .carousel {
-      height: 400px; /* Tamaño mayor para desktops */
-    }
-  
-    .carousel-images img {
-      height: 400px;
-    }
-  
-    .navbar img {
-      width: 50px;
-      height: 50px;
-    }
-  }
-  
-  /* Estilos específicos para el icono de búsqueda */
-  .search-icon {
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
-  }
-  </style>
-  
+}
+
+
+</style>
+

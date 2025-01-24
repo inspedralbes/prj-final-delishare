@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import LandingPage from '../views/LandingPage.vue';
 import SearchPage from '../views/SearchPage.vue';
 import Login from "../components/login.vue";
+import register from '../components/register.vue';
 
 const routes = [
   {
@@ -18,7 +19,13 @@ const routes = [
     path: '/login',  // Ruta de login
     name: 'LoginPage',
     component: Login,  // El componente que se renderiza para el login
+  },
+  {
+    path: '/register',  // Ruta de registro
+    name: 'RegisterPage',
+    component: register ,  // El componente que se renderiza para el registro
   }
+
 ];
 
 const router = createRouter({

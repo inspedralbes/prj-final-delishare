@@ -29,6 +29,8 @@
 </template>
 
 <script>
+import bcrypt from 'bcryptjs';
+
 export default {
     name: "Login",
     data() {
@@ -221,4 +223,3 @@ input.form-control:focus {
     }
 }
 </style>
-

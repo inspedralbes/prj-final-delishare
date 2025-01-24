@@ -5,16 +5,16 @@
             <h3>Iniciar Sesión</h3>
             <form @submit.prevent="handleLogin" class="login-form">
                 <div class="form-group">
-                    <label for="email">Correu Electrònic</label>
-                    <input type="email" id="email" v-model="email" class="form-control" placeholder="usuari@exemple.com"
+                    <label for="user">Usuari</label>
+                    <input type="user" id="user" v-model="user" class="form-control" placeholder="pacoGameplays09"
                         required />
                 </div>
                 <div class="form-group">
                     <label for="password">Contrasenya</label>
-                    <input type="password" id="password" v-model="password" class="form-control" placeholder="********"
+                    <input type="password" id="password" v-model="password" class="form-control" placeholder="****"
                         required />
                 </div>
-                <button type="submit" class="btn-submit">Iniciar Sessió</button>
+                <button type="submit" class="btn-submit" @click="handleLogin">Iniciar Sessió</button>
                 <p class="forgot-password">
                     <a href="/register">¿Has oblidat la contrasenya?</a>
                 </p>
@@ -28,23 +28,23 @@ export default {
     name: "Login",
     data() {
         return {
-            email: "",
+            user: "",
             password: "",
             hashedPassword: "",
         };
     },
     methods: {
         handleLogin() {
-            console.log("Correo:", this.email);
+            console.log("Correo:", this.user);
             console.log("Contraseña:", this.password);
             const bcrypt = require('bcryptjs');
             this.hashedPassword = bcrypt.hashSync(this.password, 10);
             const user = {
-                email: this.email,
+                user: this.user,
                 password: this.hashedPassword,
             };
 
-            fetch("http://localhost:8000/login", {
+            fetch("http://localhost:8000/api/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

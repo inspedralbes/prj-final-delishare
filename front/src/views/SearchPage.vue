@@ -21,21 +21,13 @@
         </div>
       </div>
     </div>
-
-    <!-- Navbar en la parte inferior -->
-    <Navbar />
   </div>
 </template>
 
 <script>
-// Importa el componente Navbar
-import Navbar from '@/components/Navbar.vue';
-
 export default {
   name: 'SearchPage',
-  components: {
-    Navbar, // Registra el componente Navbar
-  },
+
   data() {
     return {
       searchQuery: '',
@@ -68,51 +60,57 @@ export default {
 </script>
 
 <style scoped>
-/* Estilos para la página de búsqueda */
-
-/* Contenedor principal del buscador */
 .search-container {
   padding: 20px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Estilo del input */
 .search-container input {
   padding: 10px;
   width: 100%;
   max-width: 400px;
   margin-bottom: 20px;
-  border: 1px solid #ccc;
+  border: 1px solid #343330;
   border-radius: 5px;
+  transition: border-color 0.3s ease;
 }
 
-/* Estilos para los botones de filtros */
+.search-container input:focus {
+  border-color: #4CAF50; /* Verde oscuro */
+  outline: none;
+}
+
 .filters {
   display: flex;
-  flex-direction: column;  /* Flex dirección columna para pantallas pequeñas */
-  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .filters button {
   padding: 10px 15px;
-  background-color: #ff6347;
+  background-color: #388E3C; /* Verde oscuro */
   color: white;
   border: none;
   cursor: pointer;
-  margin: 5px 0;
-  width: 80%;  /* Botones ocupando el 80% del ancho */
+  margin: 5px;
+  min-width: 100px;
 }
 
 .filters button:hover {
-  background-color: #e55347;
+  background-color: #2C6B29; /* Verde más oscuro */
 }
 
-/* Estilos para los resultados de búsqueda (cards) */
 .search-results {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 columnas */
-  gap: 20px; /* Espacio entre las tarjetas */
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
   padding: 20px;
+  margin-bottom: 40px;
 }
 
 .search-item {
@@ -123,9 +121,9 @@ export default {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  max-width: 350px; /* Tamaño de la tarjeta para pantallas grandes */
-  height: 350px; /* Altura fija para tarjetas */
-  font-size: 14px; /* Tamaño de fuente para pantallas grandes */
+  max-width: 350px;
+  height: 350px;
+  font-size: 14px;
 }
 
 .search-item img {
@@ -139,20 +137,24 @@ export default {
 }
 
 .search-item h3 {
-  font-size: 1.2rem;
+  font-size: 1rem;
   margin: 0;
 }
 
-/* Media Query para pantallas más pequeñas (móviles) */
 @media (max-width: 768px) {
   .search-results {
-    grid-template-columns: repeat(2, 1fr); /* 2 columnas en dispositivos más pequeños */
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .search-item {
-    max-width: 150px; /* Tamaño de la tarjeta para pantallas móviles */
+    max-width: 150px;
     height: 150px;
-    font-size: 14px; /* Tamaño de fuente más pequeño para móviles */
+    font-size: 14px;
+  }
+
+  .filters button {
+    min-width: 80px;
+    border-radius: 9px;
   }
 }
 </style>

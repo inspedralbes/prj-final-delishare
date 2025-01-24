@@ -85,14 +85,6 @@
   </script>
   
   <style scoped>
-  /* Estilos Generales */
-  body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
   .header {
     background-color: #ff6347;
     color: white;

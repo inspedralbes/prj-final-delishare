@@ -82,14 +82,8 @@ export default {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-image: url("../../img/image.png");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
     font-family: 'Roboto', sans-serif;
-    /* Fuente de Google Fonts */
     overflow: hidden;
-    /* Evita que el contenido se desborde */
 }
 
 
@@ -217,18 +211,3 @@ input.form-control:focus {
 }
 </style>
 
-<style>
-/* Estilos globales para el body */
-body {
-  margin: 0;
-  padding: 0;
-  height: 100vh;
-  width: 100vw;
-  background-image: url('../../img/image.png');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  overflow: hidden;
-  font-family: 'Roboto', sans-serif;
-}
-</style>

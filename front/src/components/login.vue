@@ -76,10 +76,6 @@ export default {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-image: url("../../img/image.png");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
     font-family: 'Roboto', sans-serif;
     overflow: hidden;
 }

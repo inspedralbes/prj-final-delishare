@@ -81,9 +81,7 @@ export default {
     background-position: center;
     background-repeat: no-repeat;
     font-family: 'Roboto', sans-serif;
-    /* Fuente de Google Fonts */
     overflow: hidden;
-    /* Evita que el contenido se desborde */
 }
 
 

@@ -1,13 +1,13 @@
 <template>
     <div class="login-container">
         <div class="login-card">
-            <img src="../../img/LogoSample_ByTailorBrandsGRANDE.jpg" alt="">
+            <img src="/img/LogoSample_ByTailorBrandsGRANDE.jpg" alt="">
             <h3>Iniciar Sesión</h3>
             <form @submit.prevent="handleLogin" class="login-form">
                 <div class="form-group">
                     <label for="email">Correu Electrònic</label>
-                    <input type="email" id="email" v-model="email" class="form-control"
-                        placeholder="usuari@exemple.com" required />
+                    <input type="email" id="email" v-model="email" class="form-control" placeholder="usuari@exemple.com"
+                        required />
                 </div>
                 <div class="form-group">
                     <label for="password">Contrasenya</label>
@@ -68,18 +68,25 @@ export default {
 
 
 <style scoped>
-
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100vw;
+    font-family: 'Roboto', sans-serif;
+}
 
 /* Estilos generales */
 .login-container {
+    background-image: url('/img/image.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-image: url("../../img/image.png");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
     font-family: 'Roboto', sans-serif;
     overflow: hidden;
 }
@@ -211,16 +218,4 @@ input.form-control:focus {
 
 <style>
 /* Estilos globales para el body */
-body {
-  margin: 0;
-  padding: 0;
-  height: 100vh;
-  width: 100vw;
-  background-image: url('../../img/image.png');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  overflow: hidden;
-  font-family: 'Roboto', sans-serif;
-}
 </style>

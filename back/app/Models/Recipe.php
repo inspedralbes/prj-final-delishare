@@ -39,6 +39,9 @@ class Recipe extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class)->withPivot('saved', 'liked');
+        return $this->belongsToMany(User::class, 'recipe_user')
+                    ->withPivot('saved', 'liked')
+                    ->withTimestamps();
     }
+    
 }

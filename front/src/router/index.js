@@ -1,36 +1,17 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import LandingPage from '../views/LandingPage.vue';
-import SearchPage from '../views/SearchPage.vue';
-import Login from "../components/login.vue";
-import register from '../components/register.vue';
+import RecipesTable from '@/components/RecipesTable.vue'; // Ajusta si el archivo tiene otro nombre o ruta
 
 const routes = [
   {
-    path: '/',  // Ruta principal
-    name: 'LandingPage',
-    component: LandingPage,  // El componente que se renderiza para esta ruta
+    path: '/recipes',
+    name: 'RecipesTable',
+    component: RecipesTable,
   },
-  {
-    path: '/search',  // Ruta de búsqueda
-    name: 'SearchPage',
-    component: SearchPage,  // El componente que se renderiza para la búsqueda
-  },
-  {
-    path: '/login',  // Ruta de login
-    name: 'LoginPage',
-    component: Login,  // El componente que se renderiza para el login
-  },
-  {
-    path: '/register',  // Ruta de registro
-    name: 'RegisterPage',
-    component: register ,  // El componente que se renderiza para el registro
-  }
-
 ];
 
 const router = createRouter({
-  history: createWebHistory(),  // Usamos el historial de navegador
-  routes,  // Rutas definidas
+  history: createWebHistory(), // Usa el historial del navegador para manejar rutas
+  routes,
 });
 
 export default router;

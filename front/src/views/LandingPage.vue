@@ -16,6 +16,7 @@
     <div class="likes">
       <section class="recent-recipes">
         <h2>Más Likes</h2>
+        
         <div class="carousel-container">
           <button class="carousel-arrow left" @click="moveSlide('left', 'likes')">←</button>
           <div class="recipe-carousel">
@@ -62,9 +63,7 @@
 </template>
 
 <script>
-import comidaImg from '@/assets/images/comida.jpg';
-import receta2Img from '@/assets/images/receta2.jpg';
-import receta3Img from '@/assets/images/receta3.jpg';
+import communicationManager from '@/components/services/communicationManager';
 
 export default {
   data() {
@@ -72,11 +71,6 @@ export default {
       currentSlide: 0,
       currentSlideLikes: 0,
       currentSlideRecents: 0,
-      carouselImages: [
-        { src: comidaImg, alt: 'Receta 1' },
-        { src: receta2Img, alt: 'Receta 2' },
-        { src: receta3Img, alt: 'Receta 3' },
-      ],
       recipes: [],
       sortedLikeRecipes: [],
       sortedRecentRecipes: [],
@@ -86,30 +80,31 @@ export default {
       totalRecipesToShow: 9,
     };
   },
-  mounted() {
-    fetch('/data.json')
-      .then(response => response.json())
-      .then(data => {
-        this.recipes = data.recipes;
+  async created() {
+    try {
+      // Cargar recetas desde el backend
+      const data = await communicationManager.fetchRecipes();
+      this.recipes = data;
 
-        this.sortedLikeRecipes = this.recipes
-          .map(recipe => ({
-            ...recipe,
-            totalLikes: recipe.liked.reduce((a, b) => a + b, 0),
-          }))
-          .sort((a, b) => b.totalLikes - a.totalLikes)
-          .slice(0, this.totalRecipesToShow);
+      // Ordenar por likes
+      this.sortedLikeRecipes = this.recipes
+        .map(recipe => ({
+          ...recipe,
+          totalLikes: recipe.likes_count || 0,
+        }))
+        .sort((a, b) => b.totalLikes - a.totalLikes)
+        .slice(0, this.totalRecipesToShow);
 
-        this.sortedRecentRecipes = [...this.recipes]
-          .sort((a, b) => new Date(b.date) - new Date(a.date))
-          .slice(0, this.totalRecipesToShow);
+      // Ordenar por fecha más reciente (asumiendo que `created_at` está en formato ISO)
+      this.sortedRecentRecipes = [...this.recipes]
+        .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+        .slice(0, this.totalRecipesToShow);
 
-        this.updateDisplayedLikeRecipes();
-        this.updateDisplayedRecentRecipes();
-      })
-      .catch(error => {
-        console.error('Error loading data.json:', error);
-      });
+      this.updateDisplayedLikeRecipes();
+      this.updateDisplayedRecentRecipes();
+    } catch (error) {
+      console.error('Error fetching recipes from the backend:', error);
+    }
 
     this.startCarousel();
   },
@@ -157,6 +152,7 @@ export default {
 </script>
 
 <style scoped>
+/* Estilos iguales al código anterior */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
@@ -273,15 +269,15 @@ h2 {
 }
 
 .recents {
-  margin-bottom: 40px; /* Aumenta el margen inferior para la sección "Más Recientes" */
+  margin-bottom: 40px;
 }
 
 .recents .recipe-card {
-  margin-bottom: 20px; /* Añade espacio solo a las tarjetas de "Más Recientes" */
+  margin-bottom: 20px;
 }
 
 .likes .recipe-card {
-  margin-bottom: 0; /* No añadir espacio abajo de las tarjetas de "Más Likes" */
+  margin-bottom: 0;
 }
 
 @media (min-width: 768px) {

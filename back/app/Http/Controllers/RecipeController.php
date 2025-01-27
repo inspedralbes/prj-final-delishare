@@ -33,6 +33,8 @@ class RecipeController extends Controller
         'cook_time' => 'required|integer',
         'servings' => 'required|integer',
         'nutrition' => 'nullable|array',  // Make sure to validate nutrition as an array
+        'image' => 'nullable|string', // Acepta texto o se puede dejar vacío
+
     ]);
 
     // Store the recipe, including the nutrition data if available
@@ -58,6 +60,8 @@ public function update(Request $request, $id)
         'cook_time' => 'required|integer',
         'servings' => 'required|integer',
         'nutrition' => 'nullable|array',  // Handle nutrition field if available
+        'image' => 'nullable|string', // Acepta texto o se puede dejar vacío
+
     ]);
 
     $recipe->update($data);

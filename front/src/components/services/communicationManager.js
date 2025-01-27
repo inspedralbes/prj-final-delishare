@@ -5,7 +5,7 @@ const apiClient = axios.create({
   baseURL: 'http://127.0.0.1:8000/api', // Cambiar si la URL base es distinta
   headers: {
     'Content-Type': 'application/json',
-    Authorization: `Bearer 1|5dkljePtMDYtdJjCZcX89iZxWnxWkSV8Xxmx88ot9aab677b`,
+    Authorization: `Bearer 1|EMPGBMhJwKHHi6e7REsxWArKi3RpdV5QC3gLrHWK284fc2ab`,
 
   },
 

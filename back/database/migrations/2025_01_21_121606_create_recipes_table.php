@@ -16,12 +16,12 @@ class CreateRecipesTable extends Migration
             $table->text('description');
             $table->json('ingredients');
             $table->json('steps');
-            $table->string('image')->nullable();
+            $table->string('image')->default(''); // O también puede ser ->nullable();
             $table->integer('prep_time');
             $table->integer('cook_time');
             $table->integer('servings');
             $table->json('nutrition')->nullable();
-            $table->integer('likes_count')->default(0); // Contador de likes
+            $table->integer('likes_count')->default(0); 
             $table->timestamps();
         });
     }

@@ -1,8 +1,9 @@
 <template>
   <nav class="navbar">
     <ul>
-      <li><button><img src="/assets/images/homee.png" alt="Home" /></button></li>
+      <li><router-link to="/"><img src="/assets/images/homee.png" alt="Home"  /></router-link></li>
       <li><router-link to="/search"><img src="/assets/images/lupa.png" alt="Search" class="search-icon" /></router-link></li>
+
       <li><button><img src="/assets/images/mas.png" alt="Post" /></button></li>
       <li><button><img src="/assets/images/guardar.png" alt="Saved" /></button></li>
       <li><button><img src="/assets/images/perfil.png" alt="Profile" /></button></li>

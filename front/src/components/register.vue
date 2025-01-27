@@ -29,7 +29,6 @@
 </template>
 
 <script>
-import bcrypt from 'bcryptjs';
 
 export default {
     name: "Login",

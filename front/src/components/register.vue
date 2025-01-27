@@ -29,6 +29,7 @@
 
 <script>
 import router from '@/router';
+import { useAuthStore } from '../stores/useAuthStore';
 
 export default {
     name: "Login",

@@ -25,6 +25,7 @@
 
 <script>
 import router from '@/router';
+import { useAuthStore } from '../stores/useAuthStore.js';
 
 export default {
     name: "Login",
@@ -69,6 +70,8 @@ export default {
                     return response.json();
                 })
                 .then((data) => {
+                    useAuthStore.setUser(data.user);
+                    useAuthStore.setToken(data.token);
                     console.log("Respuesta del servidor:", data);
                 })
                 .catch((error) => {

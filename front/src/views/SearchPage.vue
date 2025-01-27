@@ -7,7 +7,6 @@
         <button>Tiempo</button>
         <button>Categoría</button>
         <button>Cuisine</button>
-        <button>Imágenes</button>
         <button>Usuario</button>
       </div>
     </div>
@@ -88,8 +87,12 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5px; /* Espacio entre botones */
+  flex-wrap: nowrap; /* No permite que los botones salten de línea */
+  overflow-x: auto; /* Agrega un desplazamiento horizontal si es necesario */
 }
+
 
 .filters button {
   padding: 10px 15px;

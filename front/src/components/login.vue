@@ -1,7 +1,7 @@
 <template>
     <div class="login-container">
         <div class="login-card">
-            <img src="/img/LogoSample_ByTailorBrandsGRANDE.jpg" alt="">
+            <img src="/img/LogoSample_ByTailorBrands.jpg" alt="">
             <h3>Iniciar Sesión</h3>
             <form @submit.prevent="handleLogin" class="login-form">
                 <div class="form-group">

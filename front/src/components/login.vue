@@ -1,27 +1,22 @@
 <template>
-    <div class="register-container">
-        <div class="register-card">
-            <img src="../../img/LogoSample_ByTailorBrandsGRANDE.jpg" alt="">
+    <div class="login-container">
+        <div class="login-card">
+            <img src="/img/LogoSample_ByTailorBrands.jpg" alt="">
             <h3>Iniciar Sesión</h3>
-            <form @submit.prevent="register" class="register-form">
-                <div class="form-group">
-                    <label for="user">Nom d'usuari</label>
-                    <input type="user" id="user" v-model="user" class="form-control"
-                        placeholder="username" required />
-                </div>
+            <form @submit.prevent="handleLogin" class="login-form">
                 <div class="form-group">
                     <label for="email">Correu Electrònic</label>
-                    <input type="email" id="email" v-model="email" class="form-control"
-                        placeholder="mail@exemple.com" required />
+                    <input type="email" id="email" v-model="email" class="form-control" placeholder="usuari@exemple.com"
+                        required />
                 </div>
                 <div class="form-group">
                     <label for="password">Contrasenya</label>
                     <input type="password" id="password" v-model="password" class="form-control" placeholder="********"
                         required />
                 </div>
-                <button type="submit" class="btn-submit">Registrar-me</button>
+                <button type="submit" class="btn-submit">Iniciar Sessió</button>
                 <p class="forgot-password">
-                    <a href="/login">¿Ja tens un compte?</a>
+                    <a href="/register">¿No tens un compte?</a>
                 </p>
             </form>
         </div>
@@ -29,12 +24,10 @@
 </template>
 
 <script>
-
 export default {
     name: "Login",
     data() {
         return {
-            user: "",
             email: "",
             password: "",
         };
@@ -48,7 +41,7 @@ export default {
                 password: this.password,
             };
 
-            fetch("http://localhost:8000/register", {
+            fetch("http://localhost:8000/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -81,7 +74,7 @@ body {
 }
 
 /* Estilos generales */
-.register-container {
+.login-container {
     background-image: url('/img/image.png');
     background-size: cover;
     background-repeat: no-repeat;
@@ -96,7 +89,7 @@ body {
 }
 
 
-.register-card {
+.login-card {
     background: #ffffff;
     padding: 2rem 1.5rem;
     border-radius: 8px;
@@ -104,10 +97,10 @@ body {
     width: 100%;
     max-width: 250px;
     text-align: center;
-    height: 550px;
+    height: 475px;
 }
 
-.register-title {
+.login-title {
     margin-bottom: 2rem;
     font-size: 1.6rem;
     font-weight: 600;
@@ -115,7 +108,7 @@ body {
 }
 
 /* Asegurando que los inputs estén centrados */
-.register-form {
+.login-form {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -195,11 +188,11 @@ input.form-control:focus {
 
 /* Media queries */
 @media (min-width: 768px) {
-    .register-card {
+    .login-card {
         padding: 2.5rem 2rem;
     }
 
-    .register-title {
+    .login-title {
         font-size: 1.8rem;
     }
 
@@ -214,8 +207,12 @@ input.form-control:focus {
 }
 
 @media (min-width: 992px) {
-    .register-card {
+    .login-card {
         max-width: 450px;
     }
 }
+</style>
+
+<style>
+/* Estilos globales para el body */
 </style>

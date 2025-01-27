@@ -17,3 +17,10 @@ Llistat d'alguns dels punts que han de quedar explicats en aquesta carpeta. Pode
  * Aplicació Android
  * Altres elements importants.
  * ...
+Paleta de colores
+
+/* SCSS HEX */
+$jet: #343330ff;
+$light-green: #9ee37dff;
+$kelly-green: #63c132ff;
+$india-green: #358600ff;

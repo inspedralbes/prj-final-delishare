@@ -1,7 +1,7 @@
 <template>
     <div class="register-container">
         <div class="register-card">
-            <img src="../../img/LogoSample_ByTailorBrandsGRANDE.jpg" alt="">
+            <img src="/img/LogoSample_ByTailorBrandsGRANDE.jpg" alt="">
             <h3>Iniciar Sesión</h3>
             <form @submit.prevent="register" class="register-form">
                 <div class="form-group">
@@ -38,21 +38,18 @@ export default {
             user: "",
             email: "",
             password: "",
-            hashedPassword: "",
         };
     },
     methods: {
         handleLogin() {
             console.log("Correo:", this.email);
             console.log("Contraseña:", this.password);
-            const bcrypt = require('bcryptjs');
-            this.hashedPassword = bcrypt.hashSync(this.password, 10);
             const user = {
                 email: this.email,
-                password: this.hashedPassword,
+                password: this.password,
             };
 
-            fetch("http://localhost:8000/register", {
+            fetch("http://localhost:8000/api/register/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

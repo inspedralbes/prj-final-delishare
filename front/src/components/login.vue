@@ -41,7 +41,7 @@
             password: this.password,
             };
 
-            fetch("http://localhost:8000/api/login", {
+            fetch("http://localhost:8000/api/login/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

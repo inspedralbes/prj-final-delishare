@@ -2,7 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router';
 import LandingPage from '../views/LandingPage.vue';
 import SearchPage from '../views/SearchPage.vue';
 import Login from "../components/login.vue";
-import register from '../components/register.vue';
+import Register from '../components/register.vue';
+import SavedPage from '../views/SavedPage.vue'; // Importamos el nuevo componente
 
 const routes = [
   {
@@ -23,9 +24,13 @@ const routes = [
   {
     path: '/register',  // Ruta de registro
     name: 'RegisterPage',
-    component: register ,  // El componente que se renderiza para el registro
-  }
-
+    component: Register,  // El componente que se renderiza para el registro
+  },
+  {
+    path: '/saved',  // Nueva ruta de recetas guardadas
+    name: 'SavedPage',
+    component: SavedPage,  // El componente que se renderiza para las recetas guardadas
+  },
 ];
 
 const router = createRouter({

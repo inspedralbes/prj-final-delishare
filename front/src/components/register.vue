@@ -29,6 +29,7 @@
 </template>
 
 <script>
+
 export default {
     name: "Login",
     data() {
@@ -36,18 +37,15 @@ export default {
             user: "",
             email: "",
             password: "",
-            hashedPassword: "",
         };
     },
     methods: {
         handleLogin() {
             console.log("Correo:", this.email);
             console.log("Contraseña:", this.password);
-            const bcrypt = require('bcryptjs');
-            this.hashedPassword = bcrypt.hashSync(this.password, 10);
             const user = {
                 email: this.email,
-                password: this.hashedPassword,
+                password: this.password,
             };
 
             fetch("http://localhost:8000/register", {
@@ -221,4 +219,3 @@ input.form-control:focus {
     }
 }
 </style>
-

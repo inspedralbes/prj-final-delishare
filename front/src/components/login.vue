@@ -16,7 +16,7 @@
                 </div>
                 <button type="submit" class="btn-submit">Iniciar Sessió</button>
                 <p class="forgot-password">
-                    <a href="/register">¿Has oblidat la contrasenya?</a>
+                    <a href="/register">¿No tens un compte?</a>
                 </p>
             </form>
         </div>
@@ -30,18 +30,15 @@ export default {
         return {
             email: "",
             password: "",
-            hashedPassword: "",
         };
     },
     methods: {
         handleLogin() {
             console.log("Correo:", this.email);
             console.log("Contraseña:", this.password);
-            const bcrypt = require('bcryptjs');
-            this.hashedPassword = bcrypt.hashSync(this.password, 10);
             const user = {
                 email: this.email,
-                password: this.hashedPassword,
+                password: this.password,
             };
 
             fetch("http://localhost:8000/login", {

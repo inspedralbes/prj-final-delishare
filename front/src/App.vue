@@ -1,15 +1,36 @@
 <template>
   <nav class="navbar">
     <ul>
-      <li><button><img src="/assets/images/homee.png" alt="Home" /></button></li>
-      <li><router-link to="/search"><img src="/assets/images/lupa.png" alt="Search" class="search-icon" /></router-link></li>
-      <li><button><img src="/assets/images/mas.png" alt="Post" /></button></li>
-      <li><button><img src="/assets/images/guardar.png" alt="Saved" /></button></li>
-      <li><button><img src="/assets/images/perfil.png" alt="Profile" /></button></li>
+      <!-- Botones para redirigir a distintas páginas -->
+      <li>
+        <router-link to="/">
+          <img src="/assets/images/homee.png" alt="Home" />
+        </router-link>
+      </li>
+      <li>
+        <router-link to="/search">
+          <img src="/assets/images/lupa.png" alt="Search" class="search-icon" />
+        </router-link>
+      </li>
+      <li>
+        <button>
+          <img src="/assets/images/mas.png" alt="Post" />
+        </button>
+      </li>
+      <li>
+        <router-link to="/saved">
+          <img src="/assets/images/guardar.png" alt="Saved" />
+        </router-link>
+      </li>
+      <li>
+        <button>
+          <img src="/assets/images/perfil.png" alt="Profile" />
+        </button>
+      </li>
     </ul>
   </nav>
   <div id="app">
-    <router-view></router-view> <!-- Este es el lugar donde se renderiza la vista activa -->
+    <router-view></router-view> 
   </div>
 </template>
 
@@ -17,7 +38,6 @@
 export default {
   name: 'Navbar',
 };
-
 </script>
 
 <style scoped>
@@ -25,11 +45,11 @@ export default {
   background-color: #343330;
   padding: 10px 0;
   text-align: center;
-  position: fixed; /* Fija el navbar */
-  bottom: 0; /* Lo posiciona en la parte inferior */
+  position: fixed; 
+  bottom: 0; 
   left: 0;
-  width: 100%; /* Asegura que ocupe todo el ancho */
-  z-index: 1000; /* Lo coloca por encima de otros elementos */
+  width: 100%; 
+  z-index: 1000; 
 }
 
 .navbar ul {
@@ -37,7 +57,7 @@ export default {
   margin: 0;
   padding: 0;
   display: flex;
-  justify-content: space-around; /* Espaciado uniforme */
+  justify-content: space-around;
 }
 
 .navbar button {
@@ -53,8 +73,8 @@ export default {
   object-fit: contain;
 }
 
-.navbar button:hover img {
+.navbar button:hover img,
+.navbar a:hover img {
   opacity: 0.8;
 }
 </style>
-

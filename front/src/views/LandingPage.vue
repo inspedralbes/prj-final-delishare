@@ -67,6 +67,7 @@ import receta2Img from '@/assets/images/receta2.jpg';
 import receta3Img from '@/assets/images/receta3.jpg';
 
 export default {
+ 
   data() {
     return {
       currentSlide: 0,
@@ -167,8 +168,8 @@ body {
   min-height: 100vh;
   background-color: #f5f5f5;
   color: #343330;
-  margin-bottom: 30px;
-  margin-top: 20px;
+  margin-bottom: 40px;  /* Añadir más margen en la parte inferior */
+
 }
 
 .carousel {
@@ -186,6 +187,7 @@ body {
   width: 100%;
   height: 220px;
   object-fit: cover;
+  border-radius: 8px;
 }
 
 .carousel-container {
@@ -200,7 +202,7 @@ body {
   display: flex;
   overflow: hidden;
   width: calc(100% - 50px);
-  margin-bottom: 20px;
+  margin-bottom: 40px;
   align-items: center;
 }
 
@@ -273,15 +275,7 @@ h2 {
 }
 
 .recents {
-  margin-bottom: 40px; /* Aumenta el margen inferior para la sección "Más Recientes" */
-}
-
-.recents .recipe-card {
-  margin-bottom: 20px; /* Añade espacio solo a las tarjetas de "Más Recientes" */
-}
-
-.likes .recipe-card {
-  margin-bottom: 0; /* No añadir espacio abajo de las tarjetas de "Más Likes" */
+  margin-bottom: 20px;
 }
 
 @media (min-width: 768px) {

@@ -31,6 +31,12 @@ const routes = [
     name: 'SavedPage',
     component: SavedPage,  // El componente que se renderiza para las recetas guardadas
   },
+  {
+    path: '/recipe/:id',  // Ruta para los detalles de la receta
+    name: 'RecipeDetailPage',
+    component: () => import('../views/RecipeDetailPage.vue'),  // Componente que mostrará los detalles de la receta
+  }
+  
 ];
 
 const router = createRouter({

@@ -4,6 +4,7 @@
     <div class="search-container">
       <input type="text" v-model="searchQuery" placeholder="Busca tu receta..." />
       <div class="filters">
+        <button v-on:click="obtenerDatos">Obtener Recetas</button>
         <button>Tiempo</button>
         <button>Categoría</button>
         <button>Cuisine</button>
@@ -24,37 +25,26 @@
 </template>
 
 <script>
+import axios from 'axios';
+const tokenMomentaneo = '6|BjgfMGOvaXJigKE5pt3HOnVZ2WujSE0x9XIW3eB8d940c528';
+const route = 'http://127.0.0.1:8000/api/getAllRecipes';
+
+const obtenerDatos = async () => {
+  try {
+    const response = await axios.get(route, {
+      headers: {
+        Authorization: `Bearer ${tokenMomentaneo}`
+      }
+    });
+    console.log(response.data);
+  } catch (error) {
+    console.error('Error al obtener los datos:', error);
+  }
+};
+obtenerDatos()
+
 export default {
   name: 'SearchPage',
-
-  data() {
-    return {
-      searchQuery: '',
-      recipes: [
-        { image: new URL('@/assets/images/receta1.jpg', import.meta.url).href, description: 'Deliciosa receta de pasta', title: 'Pasta a la Bolognesa' },
-        { image: new URL('@/assets/images/receta2.jpg', import.meta.url).href, description: 'Deliciosa receta de ensalada', title: 'Ensalada Griega' },
-        { image: new URL('@/assets/images/receta3.jpg', import.meta.url).href, description: 'Receta fácil de pollo al horno', title: 'Pollo al Horno' },
-        { image: new URL('@/assets/images/receta4.jpg', import.meta.url).href, description: 'Receta vegetariana con quinoa', title: 'Quinoa Veggie' },
-        { image: new URL('@/assets/images/receta5.jpg', import.meta.url).href, description: 'Deliciosa pizza margarita', title: 'Pizza Margarita' },
-        { image: new URL('@/assets/images/receta6.jpg', import.meta.url).href, description: 'Receta de tacos de pescado', title: 'Tacos de Pescado' },
-        { image: new URL('@/assets/images/receta7.jpg', import.meta.url).href, description: 'Sopa fácil y saludable', title: 'Sopa de Tomate' },
-        { image: new URL('@/assets/images/receta8.jpg', import.meta.url).href, description: 'Deliciosos brownies de chocolate', title: 'Brownies' },
-        { image: new URL('@/assets/images/receta9.jpg', import.meta.url).href, description: 'Tarta de manzana casera', title: 'Tarta de Manzana' },
-      ],
-    };
-  },
-  computed: {
-    filteredRecipes() {
-      return this.recipes.filter((recipe) => 
-        recipe.title.toLowerCase().includes(this.searchQuery.toLowerCase())
-      );
-    },
-  },
-  methods: {
-    saveRecipe(recipe) {
-      console.log('Guardando receta:', recipe.title);
-    },
-  },
 };
 </script>
 

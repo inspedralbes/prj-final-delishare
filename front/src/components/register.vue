@@ -68,6 +68,9 @@ export default {
                     return response.json();
                 })
                 .then((data) => {
+                    const authStore = useAuthStore();
+                    authStore.setUser(data.user);
+                    authStore.setToken(data.token);
                     console.log("Respuesta del servidor:", data);
                 })
                 .catch((error) => {

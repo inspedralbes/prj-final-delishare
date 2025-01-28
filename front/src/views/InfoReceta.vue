@@ -39,6 +39,11 @@
   <script>
   import communicationManager from '@/components/services/communicationManager';
   
+  // Importar imágenes aleatorias para la receta
+  import img1 from '@/assets/images/receta1.jpg';
+  import img2 from '@/assets/images/receta2.jpg';
+  import img3 from '@/assets/images/receta3.jpg';
+  
   export default {
     data() {
       return {
@@ -60,11 +65,19 @@
       try {
         const data = await communicationManager.fetchRecipeDetails(recipeId); // Función para obtener los detalles
         this.recipe = data;
+        
+        // Asignar una imagen aleatoria a la receta
+        this.randomizeImage();
       } catch (error) {
         console.error('Error fetching recipe details:', error);
       }
     },
     methods: {
+      randomizeImage() {
+        // Seleccionar una imagen aleatoria de las imágenes disponibles para la receta
+        const randomImage = [img1, img2, img3][Math.floor(Math.random() * 3)];
+        this.recipe.image = randomImage;  // Asignar la imagen aleatoria a la receta
+      },
       goBack() {
         this.$router.go(-1); // Volver a la página anterior
       },
@@ -204,3 +217,4 @@
     }
   }
   </style>
+  

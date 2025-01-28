@@ -353,8 +353,8 @@ h2 {
   }
 
   .recipe-card {
-    max-width: 150px;
-    height: 150px;
+    max-width: 90px;
+    height: 90px;
     font-size: 14px;
   }
 
@@ -373,8 +373,8 @@ h2 {
   }
 
   .recipe-card {
-    max-width: 350px;
-    height: 350px;
+    max-width: 250px;
+    height: 250px;
     font-size: 18px;
   }
 
@@ -403,12 +403,5 @@ h2 {
     display: block;
   }
 
-  .carousel-container {
-    display: flex;
-    align-items: center;
-    position: relative;
-    justify-content: center;
-    width: 100%;
-  }
 }
 </style>

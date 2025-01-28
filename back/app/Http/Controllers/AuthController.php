@@ -106,5 +106,12 @@ class AuthController extends Controller
     $usuario->update(['password' => Hash::make($request->nueva_contrasena)]);
     return response()->json(['mensaje' => 'Contraseña actualizada correctamente.'], 200);
  }
+ public function getAllUsers()
+{
+    $users = User::all();
 
+    return response()->json([
+        'users' => $users,
+    ], 200);
+}
 }

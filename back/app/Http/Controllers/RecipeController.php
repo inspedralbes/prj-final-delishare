@@ -138,5 +138,12 @@ public function update(Request $request, $id)
     
         return response()->json(['message' => 'Recipe unliked successfully']);
     }
+    public function getAllRecipes()
+    {
+       $recipes = Recipe::all();
+       return response()->json([
+        'recipes' => $recipes,
+    ], 200);
+    }
     
 }

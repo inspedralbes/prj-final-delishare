@@ -53,3 +53,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::middleware('auth:sanctum')->post('/cambiarContra', [AuthController::class, 'cambiarContra']);
 //ruta para cambiar contra- http://127.0.0.1:8000/api/cambiarContra
+
+
+//Ruta para obtener todos los usuarios("Hazta hacer el filtro")
+Route::get('/getAllUsers', [AuthController::class, 'getAllUsers']);
+Route::get('/getAllRecipes', [RecipeController::class, 'getAllRecipes']);
+

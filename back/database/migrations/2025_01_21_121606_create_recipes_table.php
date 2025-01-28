@@ -1,8 +1,6 @@
 <?php
 use Illuminate\Database\Migrations\Migration;
-
 use Illuminate\Database\Schema\Blueprint;
-
 use Illuminate\Support\Facades\Schema;
 
 class CreateRecipesTable extends Migration
@@ -18,11 +16,12 @@ class CreateRecipesTable extends Migration
             $table->text('description');
             $table->json('ingredients');
             $table->json('steps');
-            $table->string('image')->nullable();
+            $table->string('image')->default(''); // O también puede ser ->nullable();
             $table->integer('prep_time');
             $table->integer('cook_time');
             $table->integer('servings');
             $table->json('nutrition')->nullable();
+            $table->integer('likes_count')->default(0); 
             $table->timestamps();
         });
     }
@@ -32,4 +31,3 @@ class CreateRecipesTable extends Migration
         Schema::dropIfExists('recipes');
     }
 }
-

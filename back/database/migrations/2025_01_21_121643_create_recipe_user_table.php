@@ -1,10 +1,7 @@
 <?php
 use Illuminate\Database\Migrations\Migration;
-
 use Illuminate\Database\Schema\Blueprint;
-
 use Illuminate\Support\Facades\Schema;
-
 
 class CreateRecipeUserTable extends Migration
 {
@@ -15,7 +12,7 @@ class CreateRecipeUserTable extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('recipe_id')->constrained()->onDelete('cascade');
             $table->boolean('saved')->default(false);
-            $table->boolean('liked')->default(false);
+            $table->boolean('liked')->default(false); // Indica si el usuario ha dado like
             $table->timestamps();
         });
     }

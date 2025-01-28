@@ -1,36 +1,11 @@
 <?php
-
 return [
-
-    /*
-    |--------------------------------------------------------------------------
-    | Laravel CORS Options
-    |--------------------------------------------------------------------------
-    |
-    | The allowed_methods and allowed_origins options are case-insensitive.
-    |
-    | You don't need to use both allowed_origins and allowed_origins_patterns.
-    | If one of the strings passed matches, it is considered a valid origin.
-    |
-    | If array('*') is provided to allowed_methods, allowed_origins or allowed_headers
-    | all methods / origins / headers are allowed.
-    |
-    */
-
-    'paths' => ['api/*', 'login', 'sanctum/csrf-cookie'],
-
-    'allowed_methods' => ['*'],
-
-    'allowed_origins' => ['*', 'http://localhost:5173'],
-
+    'paths' => ['api/*'],
+    'allowed_methods' => ['*'], // Permitir todos los métodos (puedes restringirlo si es necesario)
+    'allowed_origins' => ['http://localhost:5173'], // Cambia esto al dominio de tu frontend
     'allowed_origins_patterns' => [],
-
     'allowed_headers' => ['*'],
-
     'exposed_headers' => [],
-
     'max_age' => 0,
-
-    'supports_credentials' => false,
-
+    'supports_credentials' => true, // Necesario para withCredentials
 ];

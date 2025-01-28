@@ -6,7 +6,15 @@ import register from '../components/register.vue';
 import Profile from '../components/profile.vue';
 import { useAuthStore } from "@/stores/useAuthStore";
 
+import RecipesTable from '@/components/RecipesTable.vue'; // Ajusta si el archivo tiene otro nombre o ruta
+import LandingPage from '@/views/LandingPage.vue';
+import SearchPage from '@/views/SearchPage.vue';
 const routes = [
+  {
+    path: '/recipes',
+    name: 'RecipesTable',
+    component: RecipesTable,
+  },
   {
     path: '/',  // Ruta principal
     name: 'LandingPage',
@@ -38,11 +46,23 @@ const routes = [
     meta: { requiresAuth: true },
   }
 
+  
 ];
 
 const router = createRouter({
-  history: createWebHistory(),  // Usamos el historial de navegador
-  routes,  // Rutas definidas
+  history: createWebHistory(), // Usa el historial del navegador para manejar rutas
+  routes,
+});
+
+router.beforeEach((to, from, next) => {
+  const authStore = useAuthStore();
+
+  if (to.meta.requiresAuth && !authStore.isLoggedIn()) {
+      // Si la ruta requiere autenticación y el usuario no está logueado, redirige al login
+      return next({ name: "LoginPage" });
+  }
+
+  next(); // Permite la navegación si no hay restricciones
 });
 
 router.beforeEach((to, from, next) => {

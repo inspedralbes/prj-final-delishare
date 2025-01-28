@@ -2,7 +2,7 @@
   <div class="page-container">
     <!-- Header -->
     <header class="header">
-      <h1>DeliShare</h1>
+      <img src="@/assets/images/delishare-logo.jpg" alt="DeliShare Logo" class="header-logo">
     </header>
 
     <!-- Carrusel de imágenes -->
@@ -16,6 +16,7 @@
     <div class="likes">
       <section class="recent-recipes">
         <h2>Más Likes</h2>
+        
         <div class="carousel-container">
           <button class="carousel-arrow left" @click="moveSlide('left', 'likes')">←</button>
           <div class="recipe-carousel">
@@ -58,67 +59,52 @@
       </section>
     </div>
 
-    <!-- Navbar -->
-    <Navbar />
   </div>
 </template>
 
 <script>
-import Navbar from '@/components/Navbar.vue';
-import comidaImg from '@/assets/images/comida.jpg';
-import receta2Img from '@/assets/images/receta2.jpg';
-import receta3Img from '@/assets/images/receta3.jpg';
+import communicationManager from '@/components/services/communicationManager';
 
 export default {
-  components: {
-    Navbar,
-  },
   data() {
     return {
       currentSlide: 0,
       currentSlideLikes: 0,
       currentSlideRecents: 0,
-      carouselImages: [
-        { src: comidaImg, alt: 'Receta 1' },
-        { src: receta2Img, alt: 'Receta 2' },
-        { src: receta3Img, alt: 'Receta 3' },
-      ],
       recipes: [],
-      sortedLikeRecipes: [], // Recetas ordenadas por likes
-      sortedRecentRecipes: [], // Recetas ordenadas por fecha más reciente
-      displayedLikeRecipes: [], // Recetas visibles en "Más Likes"
-      displayedRecentRecipes: [], // Recetas visibles en "Más Recientes"
+      sortedLikeRecipes: [],
+      sortedRecentRecipes: [],
+      displayedLikeRecipes: [],
+      displayedRecentRecipes: [],
       recipesPerPage: 3,
       totalRecipesToShow: 9,
     };
   },
-  mounted() {
-    fetch('/data.json')
-      .then(response => response.json())
-      .then(data => {
-        this.recipes = data.recipes;
+  async created() {
+    try {
+      // Cargar recetas desde el backend
+      const data = await communicationManager.fetchRecipes();
+      this.recipes = data;
 
-        // Recetas más likes
-        this.sortedLikeRecipes = this.recipes
-          .map(recipe => ({
-            ...recipe,
-            totalLikes: recipe.liked.reduce((a, b) => a + b, 0), // Sumar likes
-          }))
-          .sort((a, b) => b.totalLikes - a.totalLikes)
-          .slice(0, this.totalRecipesToShow);
+      // Ordenar por likes
+      this.sortedLikeRecipes = this.recipes
+        .map(recipe => ({
+          ...recipe,
+          totalLikes: recipe.likes_count || 0,
+        }))
+        .sort((a, b) => b.totalLikes - a.totalLikes)
+        .slice(0, this.totalRecipesToShow);
 
-        // Recetas más recientes
-        this.sortedRecentRecipes = [...this.recipes]
-          .sort((a, b) => new Date(b.date) - new Date(a.date)) // Ordenar por fecha descendente
-          .slice(0, this.totalRecipesToShow);
+      // Ordenar por fecha más reciente (asumiendo que `created_at` está en formato ISO)
+      this.sortedRecentRecipes = [...this.recipes]
+        .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+        .slice(0, this.totalRecipesToShow);
 
-        // Inicializar las recetas visibles
-        this.updateDisplayedLikeRecipes();
-        this.updateDisplayedRecentRecipes();
-      })
-      .catch(error => {
-        console.error('Error loading data.json:', error);
-      });
+      this.updateDisplayedLikeRecipes();
+      this.updateDisplayedRecentRecipes();
+    } catch (error) {
+      console.error('Error fetching recipes from the backend:', error);
+    }
 
     this.startCarousel();
   },
@@ -164,8 +150,9 @@ export default {
   },
 };
 </script>
+
 <style scoped>
-/* Estilos base para dispositivos móviles (Mobile-first) */
+/* Estilos iguales al código anterior */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
@@ -174,6 +161,10 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background-color: #f5f5f5;
+  color: #343330;
+  margin-bottom: 30px;
+  margin-top: 20px;
 }
 
 .carousel {
@@ -191,7 +182,6 @@ body {
   width: 100%;
   height: 220px;
   object-fit: cover;
-  border-radius: 8px;
 }
 
 .carousel-container {
@@ -206,6 +196,8 @@ body {
   display: flex;
   overflow: hidden;
   width: calc(100% - 50px);
+  margin-bottom: 20px;
+  align-items: center;
 }
 
 .recipe-card {
@@ -213,12 +205,11 @@ body {
   width: 100%;
   max-width: 100px;
   height: 100px;
-  border: 1px solid #ddd;
+  border: 1px solid #343330;
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-  background-color: #fff;
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, background-color 0.3s;
   font-size: 10px;
 }
 
@@ -242,7 +233,7 @@ body {
 .recipe-title {
   font-weight: bold;
   font-size: 12px;
-  color: #333;
+  color: #343330;
   text-align: center;
 }
 
@@ -251,11 +242,15 @@ body {
   border: none;
   font-size: 1em;
   cursor: pointer;
-  color: #FF6F61;
+  color: #63c132;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   z-index: 1;
+}
+
+.carousel-arrow:hover {
+  color: #358600;
 }
 
 .carousel-arrow.left {
@@ -266,19 +261,30 @@ body {
   right: 0;
 }
 
-/* Estilo para añadir espacio entre las recetas recientes y el navbar */
-.recents {
+h2 {
+  text-align: center;
+  color: #358600;
+  font-size: 1.5em;
   margin-bottom: 20px;
 }
 
-/* Media Query para pantallas más grandes (Tablets y Desktops) */
+.recents {
+  margin-bottom: 40px;
+}
+
+.recents .recipe-card {
+  margin-bottom: 20px;
+}
+
+.likes .recipe-card {
+  margin-bottom: 0;
+}
+
 @media (min-width: 768px) {
-  /* Ajustar el tamaño de la imagen del carrusel */
   .carousel-images img {
     height: 300px;
   }
 
-  /* Ajustar el tamaño de las tarjetas de recetas */
   .recipe-card {
     max-width: 150px;
     height: 150px;
@@ -289,65 +295,53 @@ body {
     font-size: 14px;
   }
 
-  /* Hacer las flechas del carrusel un poco más grandes */
   .carousel-arrow {
     font-size: 1.5em;
   }
 }
 
-/* Media Query para pantallas de escritorio más grandes (Desktops y Monitores grandes) *//* Media Query para pantallas de escritorio más grandes (Desktops y Monitores grandes) */
-/* Media Query para pantallas de escritorio más grandes (Desktops y Monitores grandes) *//* Media Query para pantallas de escritorio más grandes (Desktops y Monitores grandes) */
 @media (min-width: 1024px) {
-  /* Ajustar el tamaño de la imagen del carrusel */
   .carousel-images img {
-    height: 450px; /* Un poco más alto para hacerlo más impactante */
+    height: 450px;
   }
 
-  /* Ajustar el tamaño de las tarjetas de recetas */
   .recipe-card {
-    max-width: 350px; /* Hacer las tarjetas un poco más grandes */
+    max-width: 350px;
     height: 350px;
-    font-size: 18px; /* Mejorar la legibilidad */
+    font-size: 18px;
   }
 
   .recipe-title {
-    font-size: 18px; /* Aumentar el tamaño de la fuente del título */
+    font-size: 18px;
   }
 
-  /* Mejorar la visibilidad de las flechas del carrusel */
   .carousel-arrow {
-    font-size: 2.5em; /* Aumentar tamaño para mejor acceso */
-    padding: 10px; /* Añadir algo de padding para hacer los botones más accesibles */
+    font-size: 2.5em;
+    padding: 10px;
   }
 
-  /* Asegurarse de que los márgenes entre los elementos sean coherentes */
   .recipe-carousel {
-    gap: 15px; /* Añadir espacio entre las tarjetas para una mejor distribución */
-    justify-content: center; /* Centrar las tarjetas en el contenedor */
+    gap: 15px;
+    justify-content: center;
   }
 
-  /* Mejorar el espaciado del contenedor de las recetas recientes */
   .recents {
-    margin-bottom: 40px; /* Asegurar más espacio hacia el final de la sección */
+    margin-bottom: 40px;
   }
 
-  /* Hacer el título "DeliShare" más grande y centrado */
-  .header h1 {
-    font-size: 3.5em; /* Aumentar tamaño del título */
-    text-align: center; /* Centrar el título */
-    margin: 30px 0; /* Añadir espacio superior e inferior */
+  .header-logo {
+    max-width: 100%;
+    height: auto;
+    max-height: 120px;
+    display: block;
   }
 
-  /* Centrar el contenedor de las tarjetas de recetas */
   .carousel-container {
     display: flex;
     align-items: center;
     position: relative;
-    justify-content: center; /* Asegurarse de que todo esté centrado */
+    justify-content: center;
     width: 100%;
   }
 }
-
-
 </style>
-

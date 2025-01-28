@@ -6,7 +6,7 @@
 
       <li><button><img src="/assets/images/mas.png" alt="Post" /></button></li>
       <li><button><img src="/assets/images/guardar.png" alt="Saved" /></button></li>
-      <li><button><img src="/assets/images/perfil.png" alt="Profile" /></button></li>
+      <li><router-link to="/profile"><img src="/assets/images/perfil.png" alt="Profile" /></router-link></li>
     </ul>
   </nav>
   <div id="app">

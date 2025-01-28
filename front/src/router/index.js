@@ -1,11 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import LandingPage from '../views/LandingPage.vue';
-import SearchPage from '../views/SearchPage.vue';
-import Login from "../components/login.vue";
-import register from '../components/register.vue';
-import Profile from '../components/profile.vue';
+import Login from "@/components/login.vue";
+import register from '@/components/register.vue';
+import Profile from '@/components/profile.vue';
 import { useAuthStore } from "@/stores/useAuthStore";
-
 import RecipesTable from '@/components/RecipesTable.vue'; // Ajusta si el archivo tiene otro nombre o ruta
 import LandingPage from '@/views/LandingPage.vue';
 import SearchPage from '@/views/SearchPage.vue';

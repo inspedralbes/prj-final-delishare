@@ -1,24 +1,16 @@
-import { reactive } from 'vue';
+import { defineStore } from 'pinia';
 
-const state = reactive({
-    user: null,
-    token: null,
+export const useAuthStore = defineStore('auth', {
+    state: () => ({
+        user: null,
+        token: null,
+    }),
+    actions: {
+        setUser(user) {
+            this.user = user;
+        },
+        setToken(token) {
+            this.token = token;
+        },
+    },
 });
-
-const setUser = (user) => {
-    state.user = user;
-};
-
-const setToken = (token) => {
-    state.token = token;
-};
-
-const useAuthStore = () => {
-    return {
-        state,
-        setUser,
-        setToken,
-    };
-};
-
-export { useAuthStore };

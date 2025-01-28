@@ -70,8 +70,9 @@ export default {
                     return response.json();
                 })
                 .then((data) => {
-                    useAuthStore.setUser(data.user);
-                    useAuthStore.setToken(data.token);
+                    const authStore = useAuthStore();
+                    authStore.setUser(data.user);
+                    authStore.setToken(data.token);
                     console.log("Respuesta del servidor:", data);
                 })
                 .catch((error) => {

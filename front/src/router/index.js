@@ -8,6 +8,7 @@ import RecipesTable from '@/components/RecipesTable.vue'; // Ajusta si el archiv
 import LandingPage from '@/views/LandingPage.vue';
 import SearchPage from '@/views/SearchPage.vue';
 import InfoReceta from '@/views/InfoReceta.vue'; // Importa el componente de la página de detalles
+import AgregarReceta from '@/views/AgregarReceta.vue'; // Importa el componente de la página de detalles
 
 const routes = [
   {
@@ -29,6 +30,12 @@ const routes = [
     meta: { requiresAuth: true },
 
   },
+  {
+    path: '/agregar',
+    name: 'AgregarReceta',
+    component: AgregarReceta,  // El componente que se renderiza para la búsqueda
+    meta: { requiresAuth: true },
+  },  
   {
     path: '/login',  // Ruta de login
     name: 'LoginPage',

@@ -20,16 +20,17 @@ Route::middleware('auth:sanctum')->get('/cuisines/{id}', [CuisineController::cla
 Route::middleware('auth:sanctum')->put('/cuisines/{id}', [CuisineController::class, 'update']);
 Route::middleware('auth:sanctum')->delete('/cuisines/{id}', [CuisineController::class, 'destroy']);
 
-
-
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/recipes/{id}', [RecipeController::class, 'show']);
     Route::post('/recipes', [RecipeController::class, 'store']);
     Route::put('/recipes/{id}', [RecipeController::class, 'update']);
     Route::delete('/recipes/{id}', [RecipeController::class, 'destroy']);
     Route::get('/recipes', [RecipeController::class, 'index']);
-
+    
 });
+
+// Ruta para buscar recetas
+Route::middleware('auth:sanctum')->get('/recipes/search', [RecipeController::class, 'search']);
 
 // Ruta para dar like a una receta
 Route::middleware('auth:sanctum')->post('/recipes/{id}/like', [RecipeController::class, 'likeRecipe']);
@@ -42,17 +43,14 @@ Route::get('/', function () {
 });
 
 // Registro
-Route::post('register', [AuthController::class, 'register']);
+Route::post('/register', [AuthController::class, 'register']);
 
-Route::post('login', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'login']);
 
 // Rutas protegidas con autenticación
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/updatePerfile', [AuthController::class, 'updatePerfil']);
-});   //ruta para update peril- http://127.0.0.1:8000/api/updatePerfile
+});
 
 Route::middleware('auth:sanctum')->post('/cambiarContra', [AuthController::class, 'cambiarContra']);
-//ruta para cambiar contra- http://127.0.0.1:8000/api/cambiarContra
 
-//Rutas para hacer busquedas
-Route::middleware('auth:sanctum')->get('/recipes/search', [RecipeController::class, 'search']);

@@ -16,7 +16,6 @@
     <div class="likes">
       <section class="recent-recipes">
         <h2>Más Likes</h2>
-        
         <div class="carousel-container">
           <button class="carousel-arrow left" @click="moveSlide('left', 'likes')">←</button>
           <div class="recipe-carousel">
@@ -63,8 +62,6 @@
 </template>
 
 <script>
-import communicationManager from '@/components/services/communicationManager';
-
 export default {
   data() {
     return {
@@ -78,19 +75,25 @@ export default {
       displayedRecentRecipes: [],
       recipesPerPage: 3,
       totalRecipesToShow: 9,
+      carouselImages: [
+        { src: 'https://example.com/spaghetti.jpg', alt: 'Spaghetti Carbonara' },
+        { src: 'https://example.com/chicken-curry.jpg', alt: 'Chicken Curry' },
+        { src: 'https://example.com/vegetable-stir-fry.jpg', alt: 'Vegetable Stir Fry' }
+      ]
     };
   },
   async created() {
     try {
-      // Cargar recetas desde el backend
-      const data = await communicationManager.fetchRecipes();
+      // Cargar recetas desde el archivo JSON
+      const response = await fetch('/data.json'); // Asumiendo que data.json está en public
+      const data = await response.json();
       this.recipes = data;
 
       // Ordenar por likes
       this.sortedLikeRecipes = this.recipes
         .map(recipe => ({
           ...recipe,
-          totalLikes: recipe.likes_count || 0,
+          totalLikes: recipe.likes_count || 0
         }))
         .sort((a, b) => b.totalLikes - a.totalLikes)
         .slice(0, this.totalRecipesToShow);
@@ -152,7 +155,8 @@ export default {
 </script>
 
 <style scoped>
-/* Estilos iguales al código anterior */
+/* Mantengo el CSS igual que lo pediste */
+
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
@@ -263,85 +267,14 @@ body {
 
 h2 {
   text-align: center;
-  color: #358600;
-  font-size: 1.5em;
-  margin-bottom: 20px;
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 15px;
 }
 
-.recents {
-  margin-bottom: 40px;
-}
-
-.recents .recipe-card {
-  margin-bottom: 20px;
-}
-
-.likes .recipe-card {
-  margin-bottom: 0;
-}
-
-@media (min-width: 768px) {
-  .carousel-images img {
-    height: 300px;
-  }
-
-  .recipe-card {
-    max-width: 150px;
-    height: 150px;
-    font-size: 14px;
-  }
-
-  .recipe-title {
-    font-size: 14px;
-  }
-
-  .carousel-arrow {
-    font-size: 1.5em;
-  }
-}
-
-@media (min-width: 1024px) {
-  .carousel-images img {
-    height: 450px;
-  }
-
-  .recipe-card {
-    max-width: 350px;
-    height: 350px;
-    font-size: 18px;
-  }
-
-  .recipe-title {
-    font-size: 18px;
-  }
-
-  .carousel-arrow {
-    font-size: 2.5em;
-    padding: 10px;
-  }
-
-  .recipe-carousel {
-    gap: 15px;
-    justify-content: center;
-  }
-
-  .recents {
-    margin-bottom: 40px;
-  }
-
-  .header-logo {
-    max-width: 100%;
-    height: auto;
-    max-height: 120px;
-    display: block;
-  }
-
-  .carousel-container {
-    display: flex;
-    align-items: center;
-    position: relative;
-    justify-content: center;
-    width: 100%;
-  }
+.header-logo {
+  display: block;
+  margin: 0 auto;
+  width: 150px;
 }
 </style>

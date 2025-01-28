@@ -6,50 +6,47 @@ use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CuisineController;
 
-// Categorías
-Route::middleware('auth:sanctum')->post('/categories', [CategoryController::class, 'store']);
-Route::middleware('auth:sanctum')->get('/categories', [CategoryController::class, 'index']);
-Route::middleware('auth:sanctum')->get('/categories/{id}', [CategoryController::class, 'show']);
-Route::middleware('auth:sanctum')->put('/categories/{id}', [CategoryController::class, 'update']);
-Route::middleware('auth:sanctum')->delete('/categories/{id}', [CategoryController::class, 'destroy']);
-
-// Cocinas
-Route::middleware('auth:sanctum')->post('/cuisines', [CuisineController::class, 'store']);
-Route::middleware('auth:sanctum')->get('/cuisines', [CuisineController::class, 'index']);
-Route::middleware('auth:sanctum')->get('/cuisines/{id}', [CuisineController::class, 'show']);
-Route::middleware('auth:sanctum')->put('/cuisines/{id}', [CuisineController::class, 'update']);
-Route::middleware('auth:sanctum')->delete('/cuisines/{id}', [CuisineController::class, 'destroy']);
-
-
-
+// Rutas protegidas por middleware 'auth:sanctum'
 Route::middleware('auth:sanctum')->group(function () {
+    // Categorías
+    Route::post('/categories', [CategoryController::class, 'store']);
+    Route::get('/categories', [CategoryController::class, 'index']);
+    Route::get('/categories/{id}', [CategoryController::class, 'show']);
+    Route::put('/categories/{id}', [CategoryController::class, 'update']);
+    Route::delete('/categories/{id}', [CategoryController::class, 'destroy']);
+
+    // Cocinas
+    Route::post('/cuisines', [CuisineController::class, 'store']);
+    Route::get('/cuisines', [CuisineController::class, 'index']);
+    Route::get('/cuisines/{id}', [CuisineController::class, 'show']);
+    Route::put('/cuisines/{id}', [CuisineController::class, 'update']);
+    Route::delete('/cuisines/{id}', [CuisineController::class, 'destroy']);
+
+    // Recetas
+    Route::get('/recipes', [RecipeController::class, 'index']);
     Route::get('/recipes/{id}', [RecipeController::class, 'show']);
     Route::post('/recipes', [RecipeController::class, 'store']);
     Route::put('/recipes/{id}', [RecipeController::class, 'update']);
     Route::delete('/recipes/{id}', [RecipeController::class, 'destroy']);
-    Route::get('/recipes', [RecipeController::class, 'index']);
 
+    // Rutas para dar y quitar "like" a recetas
+    Route::post('/recipes/{id}/like', [RecipeController::class, 'likeRecipe']);
+    Route::post('/recipes/{id}/unlike', [RecipeController::class, 'unlikeRecipe']);
+
+    // Rutas protegidas para perfil de usuario
+    Route::post('/updatePerfile', [AuthController::class, 'updatePerfil']); // Actualizar perfil
+    Route::post('/cambiarContra', [AuthController::class, 'cambiarContra']); // Cambiar contraseña
 });
 
-// Ruta para dar like a una receta
-Route::middleware('auth:sanctum')->post('/recipes/{id}/like', [RecipeController::class, 'likeRecipe']);
+// Rutas públicas
+// Buscar y filtrar recetas con filtros avanzados
+Route::get('/recipes/filter', [RecipeController::class, 'filterAndSearch']);
 
-// Ruta para quitar like a una receta
-Route::middleware('auth:sanctum')->post('/recipes/{id}/unlike', [RecipeController::class, 'unlikeRecipe']);
+// Autenticación
+Route::post('register', [AuthController::class, 'register']);
+Route::post('login', [AuthController::class, 'login']);
 
+// Ruta de bienvenida
 Route::get('/', function () {
     return view('welcome');
 });
-
-// Registro
-Route::post('register', [AuthController::class, 'register']);
-
-Route::post('login', [AuthController::class, 'login']);
-
-// Rutas protegidas con autenticación
-Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/updatePerfile', [AuthController::class, 'updatePerfil']);
-});   //ruta para update peril- http://127.0.0.1:8000/api/updatePerfile
-
-Route::middleware('auth:sanctum')->post('/cambiarContra', [AuthController::class, 'cambiarContra']);
-//ruta para cambiar contra- http://127.0.0.1:8000/api/cambiarContra

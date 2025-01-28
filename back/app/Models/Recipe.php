@@ -2,24 +2,23 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-
 use Illuminate\Database\Eloquent\Model;
 
 class Recipe extends Model
 {
-    use HasFactory;
-
     protected $fillable = [
-        'user_id', 'category_id', 'cuisine_id', 'title', 'description', 
-        'ingredients', 'steps', 'image', 'prep_time', 'cook_time', 
-        'servings', 'nutrition'
-    ];
-
-    protected $casts = [
-        'ingredients' => 'array',
-        'steps' => 'array',
-        'nutrition' => 'array',
+        'user_id',
+        'category_id',
+        'cuisine_id',
+        'title',
+        'description',
+        'ingredients',
+        'steps',
+        'image',
+        'prep_time',
+        'cook_time',
+        'servings',
+        'nutrition',
     ];
 
     public function user()
@@ -37,11 +36,34 @@ class Recipe extends Model
         return $this->belongsTo(Cuisine::class);
     }
 
-    public function users()
+    public function scopeFilter($query, $filters)
     {
-        return $this->belongsToMany(User::class, 'recipe_user')
-                    ->withPivot('saved', 'liked')
-                    ->withTimestamps();
-    }
+        if (isset($filters['category_id'])) {
+            $query->where('category_id', $filters['category_id']);
+        }
     
+        if (isset($filters['cuisine_id'])) {
+            $query->where('cuisine_id', $filters['cuisine_id']);
+        }
+    
+        if (isset($filters['user_id'])) {
+            $query->where('user_id', $filters['user_id']);
+        }
+    
+        if (isset($filters['max_time'])) {
+            $query->where('prep_time', '<=', $filters['max_time'])
+                  ->orWhere('cook_time', '<=', $filters['max_time']);
+        }
+    
+        if (isset($filters['search'])) {
+            $query->where('title', 'like', '%' . $filters['search'] . '%')
+                  ->orWhere('description', 'like', '%' . $filters['search'] . '%');
+        }
+    
+        if (isset($filters['sort']) && isset($filters['direction'])) {
+            $query->orderBy($filters['sort'], $filters['direction']);
+        }
+    
+        return $query;
+    }
 }

@@ -1,12 +1,12 @@
 <template>
   <nav class="navbar">
     <ul>
-      <li><router-link to="/"><img src="/assets/images/homee.png" alt="Home"  /></router-link></li>
-      <li><router-link to="/search"><img src="/assets/images/lupa.png" alt="Search" class="search-icon" /></router-link></li>
+      <li><router-link to="/"><img src="../public/img/house.svg" alt="Home"  /></router-link></li>
+      <li><router-link to="/search"><img src="../public/img/search.svg" alt="Search" class="search-icon" /></router-link></li>
 
-      <li><button><img src="/assets/images/mas.png" alt="Post" /></button></li>
-      <li><button><img src="/assets/images/guardar.png" alt="Saved" /></button></li>
-      <li><router-link to="/profile"><img src="/assets/images/perfil.png" alt="Profile" /></router-link></li>
+      <li><button><img src="../public/img/plus-circle.svg" alt="Post" /></button></li>
+      <li><button><img src="../public/img/bookmark.svg" alt="Saved" /></button></li>
+      <li><router-link to="/profile"><img src="../public/img/person-circle.svg" alt="Profile" /></router-link></li>
     </ul>
   </nav>
   <div id="app">

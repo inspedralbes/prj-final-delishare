@@ -144,13 +144,21 @@ public function update(Request $request, $id)
        return response()->json([
         'recipes' => $recipes,
     ], 200);
-    }
-    public function filterByCategory ($id)
-    {
-        $recipes = Recipe::where('category_id', $id)->get();
-        return response()->json([
-            'recipes' => $recipes,
-        ], 200);
-    }
+        }
+        public function filterByCategory ($id)
+        {
+            $recipes = Recipe::where('category_id', $id)->get();
+            return response()->json([
+                'recipes' => $recipes,
+            ], 200);
+        }
     
+
+public function filterByTime($time)
+{
+    $recipes = Recipe::whereRaw('cook_time + prep_time <= ?', [$time])->get();
+    return response()->json([
+        'recipes' => $recipes,
+    ], 200);
+}
 }

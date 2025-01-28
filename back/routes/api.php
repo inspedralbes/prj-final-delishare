@@ -58,4 +58,4 @@ Route::middleware('auth:sanctum')->post('/cambiarContra', [AuthController::class
 //Ruta para obtener todos los usuarios("Hazta hacer el filtro")
 Route::get('/getAllUsers', [AuthController::class, 'getAllUsers']);
 Route::get('/getAllRecipes', [RecipeController::class, 'getAllRecipes']);
-
+Route::get('/filterByCategory/{id}', [RecipeController::class, 'filterByCategory']);

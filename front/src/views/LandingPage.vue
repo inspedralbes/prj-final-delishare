@@ -16,7 +16,6 @@
     <div class="likes">
       <section class="recent-recipes">
         <h2>Más Likes</h2>
-        
         <div class="carousel-container">
           <button class="carousel-arrow left" @click="moveSlide('left', 'likes')">←</button>
           <div class="recipe-carousel">
@@ -25,10 +24,13 @@
               v-for="(recipe, index) in displayedLikeRecipes"
               :key="index"
             >
-              <img :src="recipe.image" :alt="recipe.title" class="recipe-image">
-              <div class="recipe-info">
-                <p class="recipe-title">{{ recipe.title }}</p>
-              </div>
+              <!-- Enlace a la página de detalles de la receta -->
+              <router-link :to="{ name: 'InfoReceta', params: { recipeId: recipe.id } }" class="recipe-link">
+                <img :src="recipe.image" :alt="recipe.title" class="recipe-image">
+                <div class="recipe-info">
+                  <p class="recipe-title">{{ recipe.title }}</p>
+                </div>
+              </router-link>
             </div>
           </div>
           <button class="carousel-arrow right" @click="moveSlide('right', 'likes')">→</button>
@@ -48,17 +50,19 @@
               v-for="(recipe, index) in displayedRecentRecipes"
               :key="index"
             >
-              <img :src="recipe.image" :alt="recipe.title" class="recipe-image">
-              <div class="recipe-info">
-                <p class="recipe-title">{{ recipe.title }}</p>
-              </div>
+              <!-- Enlace a la página de detalles de la receta -->
+              <router-link :to="{ name: 'InfoReceta', params: { recipeId: recipe.id } }" class="recipe-link">
+                <img :src="recipe.image" :alt="recipe.title" class="recipe-image">
+                <div class="recipe-info">
+                  <p class="recipe-title">{{ recipe.title }}</p>
+                </div>
+              </router-link>
             </div>
           </div>
           <button class="carousel-arrow right" @click="moveSlide('right', 'recents')">→</button>
         </div>
       </section>
     </div>
-
   </div>
 </template>
 
@@ -278,6 +282,14 @@ h2 {
 
 .likes .recipe-card {
   margin-bottom: 0;
+}
+
+.recipe-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 @media (min-width: 768px) {

@@ -138,5 +138,34 @@ public function update(Request $request, $id)
     
         return response()->json(['message' => 'Recipe unliked successfully']);
     }
+
+    public function search(Request $request)
+{
+    $query = Recipe::query();
+
+    // Filtros opcionales
+    if ($request->has('category_id')) {
+        $query->where('category_id', $request->category_id);
+    }
+
+    if ($request->has('cuisine_id')) {
+        $query->where('cuisine_id', $request->cuisine_id);
+    }
+
+    if ($request->has('user_id')) {
+        $query->where('user_id', $request->user_id);
+    }
+
+    if ($request->has('max_time')) {
+        $query->whereRaw('(prep_time + cook_time) <= ?', [$request->max_time]);
+    }
+
+    if ($request->has('title')) {
+        $query->where('title', 'like', '%' . $request->title . '%');
+    }
+
+    return $query->with(['user', 'category', 'cuisine'])->get();
+}
+
     
 }

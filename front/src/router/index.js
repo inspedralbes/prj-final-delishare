@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import LandingPage from '../views/LandingPage.vue';
-import SearchPage from '../views/SearchPage.vue';
+
 import Login from "../components/login.vue";
 import register from '../components/register.vue';
 import { useAuthStore } from "@/stores/useAuthStore";
@@ -38,8 +37,7 @@ const routes = [
   {
     path: '/register',  // Ruta de registro
     name: 'RegisterPage',
-    component: register ,  // El componente que se renderiza para el registro
-  }
+    component: register ,  // El componente que se renderiza para el registr
 
   
   },

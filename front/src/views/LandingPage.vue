@@ -8,11 +8,17 @@
     <!-- Carrusel de imágenes -->
     <div class="carousel">
       <div class="carousel-images" :style="{ transform: `translateX(-${currentSlide * 100}%)` }">
-        <img v-for="(image, index) in carouselImages" :key="index" :src="image.src" :alt="image.alt">
+        <img v-for="(image, index) in carouselImages" 
+             :key="index" 
+             v-show="currentSlide === index" 
+             :src="image.src" 
+             :alt="image.alt">
       </div>
+      <button class="carousel-arrow left" @click="moveSlide('left')">←</button>
+      <button class="carousel-arrow right" @click="moveSlide('right')">→</button>
     </div>
 
-    <!-- Recetas más likes -->
+    <!-- Recetas más likes y más recientes -->
     <div class="likes">
       <section class="recent-recipes">
         <h2>Más Likes</h2>
@@ -38,7 +44,6 @@
       </section>
     </div>
 
-    <!-- Recetas más recientes -->
     <div class="recents">
       <section class="recent-recipes">
         <h2>Más Recientes</h2>
@@ -67,6 +72,11 @@
 </template>
 
 <script>
+// Importación estática de imágenes
+import img1 from '@/assets/images/receta1.jpg';
+import img2 from '@/assets/images/receta2.jpg';
+import img3 from '@/assets/images/receta3.jpg';
+
 import communicationManager from '@/components/services/communicationManager';
 
 export default {
@@ -82,8 +92,15 @@ export default {
       displayedRecentRecipes: [],
       recipesPerPage: 3,
       totalRecipesToShow: 9,
+      // Usar las imágenes de las recetas
+      carouselImages: [
+        { src: img1, alt: 'Imagen de Receta 1' },
+        { src: img2, alt: 'Imagen de Receta 2' },
+        { src: img3, alt: 'Imagen de Receta 3' }
+      ]
     };
   },
+
   async created() {
     try {
       // Cargar recetas desde el backend
@@ -99,25 +116,59 @@ export default {
         .sort((a, b) => b.totalLikes - a.totalLikes)
         .slice(0, this.totalRecipesToShow);
 
-      // Ordenar por fecha más reciente (asumiendo que `created_at` está en formato ISO)
+      // Ordenar por fecha más reciente
       this.sortedRecentRecipes = [...this.recipes]
         .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
         .slice(0, this.totalRecipesToShow);
 
+      // Asignar imágenes aleatorias a todas las recetas
+      this.randomizeImages();
+
+      // Actualizar las recetas que se mostrarán
       this.updateDisplayedLikeRecipes();
       this.updateDisplayedRecentRecipes();
+
+      // Mezclar las imágenes del carrusel
+      this.shuffleCarouselImages();
     } catch (error) {
       console.error('Error fetching recipes from the backend:', error);
     }
 
     this.startCarousel();
   },
+
   methods: {
+    // Método para mezclar las imágenes del carrusel
+    shuffleCarouselImages() {
+      for (let i = this.carouselImages.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [this.carouselImages[i], this.carouselImages[j]] = [this.carouselImages[j], this.carouselImages[i]];
+      }
+    },
+
+    // Método para asignar imágenes aleatorias a todas las recetas
+    randomizeImages() {
+      this.recipes.forEach(recipe => {
+        // Seleccionar una imagen aleatoria de las imágenes disponibles para la receta
+        const randomImage = [img1, img2, img3][Math.floor(Math.random() * 3)];
+        recipe.image = randomImage;  // Asegúrate de que la receta tiene la imagen asignada
+      });
+    },
+
     startCarousel() {
       setInterval(() => {
-        this.currentSlide = (this.currentSlide + 1) % this.carouselImages.length;
+        this.moveSlide('right');  // Mueve la imagen automáticamente cada 3 segundos
       }, 3000);
     },
+    
+    moveSlide(direction) {
+      if (direction === 'left') {
+        this.currentSlide = (this.currentSlide - 1 + this.carouselImages.length) % this.carouselImages.length;
+      } else if (direction === 'right') {
+        this.currentSlide = (this.currentSlide + 1) % this.carouselImages.length;
+      }
+    },
+
     moveSlide(direction, type) {
       if (type === 'likes') {
         const maxSlideIndex = Math.ceil(this.sortedLikeRecipes.length / this.recipesPerPage) - 1;
@@ -137,6 +188,7 @@ export default {
         this.updateDisplayedRecentRecipes();
       }
     },
+
     updateDisplayedLikeRecipes() {
       const startIndex = this.currentSlideLikes * this.recipesPerPage;
       this.displayedLikeRecipes = this.sortedLikeRecipes.slice(
@@ -144,6 +196,7 @@ export default {
         startIndex + this.recipesPerPage
       );
     },
+
     updateDisplayedRecentRecipes() {
       const startIndex = this.currentSlideRecents * this.recipesPerPage;
       this.displayedRecentRecipes = this.sortedRecentRecipes.slice(
@@ -151,9 +204,11 @@ export default {
         startIndex + this.recipesPerPage
       );
     },
-  },
+  }
 };
 </script>
+
+
 
 <style scoped>
 /* Estilos iguales al código anterior */
@@ -298,8 +353,8 @@ h2 {
   }
 
   .recipe-card {
-    max-width: 150px;
-    height: 150px;
+    max-width: 90px;
+    height: 90px;
     font-size: 14px;
   }
 
@@ -318,8 +373,8 @@ h2 {
   }
 
   .recipe-card {
-    max-width: 350px;
-    height: 350px;
+    max-width: 250px;
+    height: 250px;
     font-size: 18px;
   }
 
@@ -348,12 +403,5 @@ h2 {
     display: block;
   }
 
-  .carousel-container {
-    display: flex;
-    align-items: center;
-    position: relative;
-    justify-content: center;
-    width: 100%;
-  }
 }
 </style>

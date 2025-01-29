@@ -5,7 +5,7 @@ const apiClient = axios.create({
   baseURL: 'http://127.0.0.1:8000/api', // Cambiar si la URL base es distinta
   headers: {
     'Content-Type': 'application/json',
-    Authorization: `Bearer 1|WBkqGmk64JdtAlmrJfjIHDiLuOT1OGtuRdg2UPSh4b9e67b4`,
+    Authorization: `Bearer 2|vKwbWV4iY6O8GttukxDXKOoSUvX7UbeViQii8j1Kc5f1b0b1`,
 
   },
 
@@ -48,6 +48,15 @@ fetchRecipeDetails(recipeId) {
     .then(response => response.data)
     .catch(error => {
       console.error('Error fetching recipe details:', error);
+      throw error;
+    });
+},
+ // Crear una nueva receta
+ createRecipe(recipeData) {
+  return apiClient.post('/recipes', recipeData)
+    .then(response => response.data)
+    .catch(error => {
+      console.error('Error creating recipe:', error);
       throw error;
     });
 }

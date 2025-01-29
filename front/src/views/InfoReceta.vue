@@ -37,7 +37,7 @@
   </template>
   
   <script>
-  import communicationManager from '@/components/services/communicationManager';
+  import communicationManager from '@/services/communicationManager';
   
   export default {
     data() {

@@ -59,6 +59,23 @@ fetchRecipeDetails(recipeId) {
       console.error('Error creating recipe:', error);
       throw error;
     });
+},
+register(userData) {
+  return apiClient.post('/register', userData)
+    .then(response => response.data)
+    .catch(error => {
+      console.error('Error registering user:', error);
+      throw error;
+    });
+},
+
+login(userData) {
+  return apiClient.post('/login', userData)
+    .then(response => response.data)
+    .catch(error => {
+      console.error('Error logging in:', error);
+      throw error;
+    });
 }
 };
 

@@ -12,11 +12,15 @@ const routes = [
     path: '/recipes',
     name: 'RecipesTable',
     component: RecipesTable,
+    meta: { requiresAuth: true },
+
   },
   {
     path: '/',  // Ruta principal
     name: 'LandingPage',
     component: LandingPage,  // El componente que se renderiza para esta ruta
+    meta: { requiresAuth: true },
+
   },  
   {
     path: '/agregar',

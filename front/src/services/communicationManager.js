@@ -2,18 +2,26 @@ import axios from 'axios';
 
 // Configuración base de Axios
 const apiClient = axios.create({
-  baseURL: 'http://127.0.0.1:8000/api', // Cambiar si la URL base es distinta
+  baseURL: 'http://127.0.0.1:8000/api',
   headers: {
     'Content-Type': 'application/json',
-    Authorization: `Bearer 2|vKwbWV4iY6O8GttukxDXKOoSUvX7UbeViQii8j1Kc5f1b0b1`,
-
   },
-
   withCredentials: true, // Habilita el envío de cookies
 });
 
+// Interceptor para agregar el token a cada solicitud
+apiClient.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token'); // Obtiene el token
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`; // Agrega el token en los headers
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
 const communicationManager = {
-  // Obtener todas las recetas
   fetchRecipes() {
     return apiClient.get('/recipes')
       .then(response => response.data)
@@ -23,7 +31,6 @@ const communicationManager = {
       });
   },
 
-  // Obtener todas las categorías
   fetchCategories() {
     return apiClient.get('/categories')
       .then(response => response.data)
@@ -33,7 +40,6 @@ const communicationManager = {
       });
   },
 
-  // Obtener todas las cocinas
   fetchCuisines() {
     return apiClient.get('/cuisines')
       .then(response => response.data)
@@ -42,41 +48,42 @@ const communicationManager = {
         throw error;
       });
   },
-  // Obtener los detalles de una receta por ID
-fetchRecipeDetails(recipeId) {
-  return apiClient.get(`/recipes/${recipeId}`)
-    .then(response => response.data)
-    .catch(error => {
-      console.error('Error fetching recipe details:', error);
-      throw error;
-    });
-},
- // Crear una nueva receta
- createRecipe(recipeData) {
-  return apiClient.post('/recipes', recipeData)
-    .then(response => response.data)
-    .catch(error => {
-      console.error('Error creating recipe:', error);
-      throw error;
-    });
-},
-register(userData) {
-  return apiClient.post('/register', userData)
-    .then(response => response.data)
-    .catch(error => {
-      console.error('Error registering user:', error);
-      throw error;
-    });
-},
 
-login(userData) {
-  return apiClient.post('/login', userData)
-    .then(response => response.data)
-    .catch(error => {
-      console.error('Error logging in:', error);
-      throw error;
-    });
-}
+  fetchRecipeDetails(recipeId) {
+    return apiClient.get(`/recipes/${recipeId}`)
+      .then(response => response.data)
+      .catch(error => {
+        console.error('Error fetching recipe details:', error);
+        throw error;
+      });
+  },
+
+  createRecipe(recipeData) {
+    return apiClient.post('/recipes', recipeData)
+      .then(response => response.data)
+      .catch(error => {
+        console.error('Error creating recipe:', error);
+        throw error;
+      });
+  },
+
+  register(userData) {
+    return apiClient.post('/register', userData)
+      .then(response => response.data)
+      .catch(error => {
+        console.error('Error registering user:', error);
+        throw error;
+      });
+  },
+
+  login(userData) {
+    return apiClient.post('/login', userData)
+      .then(response => response.data)
+      .catch(error => {
+        console.error('Error logging in:', error);
+        throw error;
+      });
+  }
 };
 
 export default communicationManager;

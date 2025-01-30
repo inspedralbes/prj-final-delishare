@@ -145,6 +145,7 @@ public function update(Request $request, $id)
         'recipes' => $recipes,
     ], 200);
         }
+        
         public function filterByCategory ($id)
         {
             $recipes = Recipe::where('category_id', $id)->get();

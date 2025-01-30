@@ -134,19 +134,18 @@ h1 {
 }
 
 .recipe-card {
-  width: 100%;
-  max-width: 220px; /* Tamaño ajustado */
-  height: 250px; /* Ajuste de altura */
+  width: 100px;
+  max-width: 220px;
+  height: 150px;
   border: 1px solid #343330;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease-in-out, background-color 0.3s;
   text-align: center;
-  margin: 0 10px; /* Margen izquierdo y derecho */
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
-/* Hacer que la tarjeta sea clickeable */
+
 .recipe-card .recipe-link {
   display: block;
   text-decoration: none;
@@ -191,11 +190,7 @@ h1 {
     grid-template-columns: repeat(3, 1fr); /* 3 columnas en pantallas medianas */
   }
 
-  .recipe-card {
-    max-width: 200px; /* Ajustado para no ser tan grandes */
-    height: 250px;
-    font-size: 14px;
-  }
+
 
   .recipe-title {
     font-size: 14px;
@@ -211,6 +206,7 @@ h1 {
     max-width: 220px;
     height: 250px;
     font-size: 16px;
+    
   }
 
   .recipe-title {

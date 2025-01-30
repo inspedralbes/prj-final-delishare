@@ -1,17 +1,23 @@
 import { createApp } from 'vue';
 import App from './App.vue';
-import router from './router'; // Importamos el router
+import router from './router';
 import { createPinia } from 'pinia';
 
-// Crear la instancia de Vue y usar Vue Router y Pinia
+// Importamos jQuery correctamente
+import $ from 'jquery';
+import 'https://code.jquery.com/jquery-3.4.1.slim.min.js';
+
+// Hacemos jQuery disponible globalmente 
+window.$ = $;
+
+// Crear la instancia de Vue
 const app = createApp(App);
-
-app.use(router);  // Usamos Vue Router
-app.use(createPinia());  // Usamos Pinia
-
-const app = createApp(App);  // 🟢 Crear la instancia de Vue
+// Crear la instancia de Pinia
 const pinia = createPinia();
 
-app.use(pinia);   // 🟢 Ahora sí podemos usar Pinia en la app
-app.use(router);  // 🟢 Agregamos Vue Router
-app.mount('#app');  // 🟢 Montamos la aplicación
+// Usar los plugins
+app.use(pinia);
+app.use(router);
+
+// Montar la aplicación
+app.mount('#app');

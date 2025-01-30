@@ -26,7 +26,7 @@
 
 <script>
 import axios from 'axios';
-const tokenMomentaneo = '6|BjgfMGOvaXJigKE5pt3HOnVZ2WujSE0x9XIW3eB8d940c528';
+const tokenMomentaneo = '10|xuzgcmFeWTsAd1D1DrAKuRWjDiQaXCOEUeFFtfzAd8fc8e8b';
 const route = 'http://127.0.0.1:8000/api/getAllRecipes';
 
 const obtenerDatos = async () => {

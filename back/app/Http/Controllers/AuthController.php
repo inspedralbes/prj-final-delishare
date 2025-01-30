@@ -111,30 +111,30 @@ class AuthController extends Controller
 
     public function userStats(Request $request)
     {
-        // Obtener el usuario autenticado a través del token
-        $user = $request->user();
-        echo $user;
+        $user = auth()->user(); // Obtiene el usuario autenticado
 
         if (!$user) {
-            return response()->json(['message' => 'Usuario no autenticado'], 401);
+            return response()->json(['error' => 'No autenticado'], 401);
         }
 
-        $postCount = $user->posts()->count();
-        $totalLikes = $user->posts()->withCount('likes')->get()->sum('likes_count');
-        $totalSaves = $user->posts()->withCount('saves')->get()->sum('saves_count');
-        $posts = $user->posts()->get();
-        $profileImage = $user->profile_image;
-        $userName = $user->name;
-        $userDescription = $user->description;
-
         return response()->json([
-            'post_count' => $postCount,
-            'total_likes' => $totalLikes,
-            'total_saves' => $totalSaves,
-            'posts' => $posts,
-            'profile_image' => $profileImage,
-            'user_name' => $userName,
-            'user_description' => $userDescription,
-        ]);
+            'post_count' => $user->recipes()->count(),
+            'total_likes' => $user->recipes()->withCount([
+                'users as likes_count' => function ($query) {
+                    $query->where('liked', true);
+                }
+            ])->get()->sum('likes_count'),
+            'total_saves' => $user->recipes()->withCount([
+                'users as saves_count' => function ($query) {
+                    $query->where('saved', true);
+                }
+            ])->get()->sum('saves_count'),
+            'posts' => $user->recipes()->get(),
+            'profile_image' => $user->profile_photo_path,
+            'user_name' => $user->name,
+            'user_description' => $user->description,
+        ], 200);
+
     }
+
 }

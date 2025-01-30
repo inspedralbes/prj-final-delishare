@@ -14,21 +14,21 @@
         <div class="profile-stats">
             <div>
                 <span class="stat-number">{{ user.posts }}</span>
-                <p>Publicaciones</p>
+                <p>Publicacions</p>
             </div>
             <div>
                 <span class="stat-number">{{ user.followers }}</span>
-                <p>Seguidores</p>
+                <p>Likes</p>
             </div>
             <div>
                 <span class="stat-number">{{ user.following }}</span>
-                <p>Siguiendo</p>
+                <p>Guardats</p>
             </div>
         </div>
 
         <!-- Galería de publicaciones -->
         <div class="profile-gallery">
-            <h2>Tus publicaciones</h2>
+            <h2>Les teves publicacions</h2>
             <div class="gallery-grid">
                 <div v-for="(post, index) in user.postsData" :key="index" class="gallery-item">
                     <img :src="post.image" :alt="'Post ' + (index + 1)" />
@@ -50,8 +50,8 @@ export default {
                 bio: "",
                 image: "",
                 posts: 0,
-                followers: 0,
-                following: 0,
+                total_likes: 0,
+                total_saves: 0,
                 postsData: [],
             },
         };
@@ -85,18 +85,18 @@ export default {
                 const data = await response.json();
                 console.log(data);
                 
-                // this.user = {
-                //     name: data.user_name,
-                //     bio: data.user_description,
-                //     image: data.profile_image,
-                //     posts: data.post_count,
-                //     followers: data.total_likes,
-                //     following: data.total_saves,
-                //     postsData: data.posts.map(post => ({
-                //         image: post.image,
-                //         title: post.title,
-                //     })),
-                // };
+                 this.user = {
+                     name: data.user_name,
+                     bio: data.user_description || "Aquest usuari no té cap descripció.",
+                     image: data.profile_image || "../../public/img/profile.jpeg",
+                     posts: data.post_count,
+                     followers: data.total_likes,
+                     following: data.total_saves,
+                     postsData: data.posts.map(post => ({
+                         image: post.image,
+                         title: post.title,
+                     })),
+                 };
             } catch (error) {
                 console.error("Error al obtener los datos del usuario:", error);
             }

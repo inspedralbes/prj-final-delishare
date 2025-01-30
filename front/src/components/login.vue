@@ -5,8 +5,8 @@
             <h3>Iniciar Sesión</h3>
             <form @submit.prevent="handleLogin" class="login-form">
                 <div class="form-group">
-                    <label for="email">Correu Electrònic</label>
-                    <input type="email" id="email" v-model="email" class="form-control" placeholder="usuari@exemple.com"
+                    <label for="user">Usuari</label>
+                    <input type="text" id="user" v-model="user" class="form-control" placeholder="nom usuari"
                         required />
                 </div>
                 <div class="form-group">
@@ -24,42 +24,65 @@
 </template>
 
 <script>
+import router from '@/router';
+import { useAuthStore } from '../stores/useAuthStore.js';
+
 export default {
     name: "Login",
     data() {
         return {
-            email: "",
+            user: "",
             password: "",
         };
     },
     methods: {
         handleLogin() {
-            console.log("Correo:", this.email);
+            console.log("Usuario:", this.user);
             console.log("Contraseña:", this.password);
-            const user = {
-                email: this.email,
+
+            // Verificar que los valores de user y password no sean undefined
+            if (!this.user || !this.password) {
+                console.error("El usuario o la contraseña están vacíos.");
+                return;
+            }
+
+            const UsrLogin = {
+                user: this.user,
                 password: this.password,
             };
 
-            fetch("http://localhost:8000/login", {
+            console.log("UsrLogin:", UsrLogin);
+
+            fetch("http://localhost:8000/api/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(user),
+                body: JSON.stringify(UsrLogin),
             })
-                .then((response) => response.json())
+                .then((response) => {
+                    if (!response.ok) {
+                        // Manejar errores HTTP
+                        return response.text().then((text) => {
+                            throw new Error(`HTTP error! status: ${response.status}, message: ${text}`);
+                        });
+                    }
+                    return response.json();
+                })
                 .then((data) => {
+                    const authStore = useAuthStore();
+                    authStore.setUser(data.user);
+                    authStore.setToken(data.token);
                     console.log("Respuesta del servidor:", data);
                 })
                 .catch((error) => {
                     console.error("Error:", error);
                 });
+
+            router.push("/");
         },
     },
-
 };
-
 </script>
 
 

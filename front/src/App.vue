@@ -7,6 +7,7 @@
 
 <script>
 import Navbar from './components/Navbar.vue';
+import { useAuthStore } from './stores/useAuthStore';
 
 export default {
   name: 'App',

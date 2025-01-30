@@ -1,91 +1,51 @@
-<template>
-    <div class="login-container">
-        <div class="login-card">
-            <img src="/img/LogoSample_ByTailorBrands.jpg" alt="">
-            <h3>Iniciar Sesión</h3>
-            <form @submit.prevent="handleLogin" class="login-form">
-                <div class="form-group">
-                    <label for="user">Usuari</label>
-                    <input type="text" id="user" v-model="user" class="form-control" placeholder="nom usuari"
-                        required />
-                </div>
-                <div class="form-group">
-                    <label for="password">Contrasenya</label>
-                    <input type="password" id="password" v-model="password" class="form-control" placeholder="********"
-                        required />
-                </div>
-                <button type="submit" class="btn-submit">Iniciar Sessió</button>
-                <p class="forgot-password">
-                    <a href="/register">¿No tens un compte?</a>
-                </p>
-            </form>
-        </div>
-    </div>
-</template>
+<script setup>
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import communicationManager from '@/services/communicationManager'; // Importamos communicationManager
 
-<script>
-import router from '@/router';
-import { useAuthStore } from '../stores/useAuthStore.js';
+const router = useRouter();
 
-export default {
-    name: "Login",
-    data() {
-        return {
-            user: "",
-            password: "",
-        };
-    },
-    methods: {
-        handleLogin() {
-            console.log("Usuario:", this.user);
-            console.log("Contraseña:", this.password);
+const form = ref({
+  name: '',    // Cambié email a name porque usas 'name' como identificador para login
+  password: ''
+});
 
-            // Verificar que los valores de user y password no sean undefined
-            if (!this.user || !this.password) {
-                console.error("El usuario o la contraseña están vacíos.");
-                return;
-            }
+const errorMessage = ref('');
 
-            const UsrLogin = {
-                user: this.user,
-                password: this.password,
-            };
+const handleLogin = async () => {
+  try {
+    // Usamos el método login de communicationManager
+    const response = await communicationManager.login(form.value);
 
-            console.log("UsrLogin:", UsrLogin);
+    // Guardar token en localStorage
+    const token = response.token;
+    localStorage.setItem('token', token);
 
-            fetch("http://localhost:8000/api/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(UsrLogin),
-            })
-                .then((response) => {
-                    if (!response.ok) {
-                        // Manejar errores HTTP
-                        return response.text().then((text) => {
-                            throw new Error(`HTTP error! status: ${response.status}, message: ${text}`);
-                        });
-                    }
-                    return response.json();
-                })
-                .then((data) => {
-                    const authStore = useAuthStore();
-                    authStore.setUser(data.user);
-                    authStore.setToken(data.token);
-                    console.log("Respuesta del servidor:", data);
-                })
-                .catch((error) => {
-                    console.error("Error:", error);
-                });
+    // Mostrar el token en consola
+    console.log("Token de usuario:", token);
 
-            router.push("/");
-        },
-    },
+    // Redirigir a la landing page
+    router.push('/'); 
+  } catch (error) {
+    console.error("Error en login:", error.response?.data);
+    // Mensaje de error en caso de fallo
+    errorMessage.value = error.response?.data?.message || "Credenciales incorrectas o token inválido.";
+  }
 };
 </script>
 
-
+<template>
+  <div>
+    <h2>Iniciar Sesión</h2>
+    <form @submit.prevent="handleLogin">
+      <!-- Se usa 'name' como campo de entrada -->
+      <input type="text" v-model="form.name" placeholder="Nombre de usuario" required />
+      <input type="password" v-model="form.password" placeholder="Contraseña" required />
+      <button type="submit">Iniciar sesión</button>
+    </form>
+    <p v-if="errorMessage" style="color: red;">{{ errorMessage }}</p>
+  </div>
+</template>
 
 <style scoped>
 body {
@@ -110,7 +70,6 @@ body {
     font-family: 'Roboto', sans-serif;
     overflow: hidden;
 }
-
 
 .login-card {
     background: #ffffff;
@@ -234,8 +193,4 @@ input.form-control:focus {
         max-width: 450px;
     }
 }
-</style>
-
-<style>
-/* Estilos globales para el body */
 </style>

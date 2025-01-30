@@ -1,91 +1,43 @@
-<template>
-    <div class="register-container">
-        <div class="register-card">
-            <img src="../../img/LogoSample_ByTailorBrandsGRANDE.jpg" alt="">
-            <h3>Registra't i comença a compartir!</h3>
-            <form @submit.prevent="register" class="register-form">
-                <div class="form-group">
-                    <label for="user">Nom d'usuari</label>
-                    <input type="user" id="user" v-model="user" class="form-control" placeholder="username" required />
-                </div>
-                <div class="form-group">
-                    <label for="email">Correu Electrònic</label>
-                    <input type="email" id="email" v-model="email" class="form-control" placeholder="mail@exemple.com"
-                        required />
-                </div>
-                <div class="form-group">
-                    <label for="password">Contrasenya</label>
-                    <input type="password" id="password" v-model="password" class="form-control" placeholder="********"
-                        required />
-                </div>
-                <button type="submit" class="btn-submit">Registrar-me</button>
-                <p class="forgot-password">
-                    <a href="/login">¿Ja tens un compte?</a>
-                </p>
-            </form>
-        </div>
-    </div>
-</template>
+<script setup>
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useAuthStore } from '@/stores/authStore'; // Importar el store
+import communicationManager from '@/services/communicationManager';
 
-<script>
-import router from '@/router';
-import { useAuthStore } from '../stores/useAuthStore';
+const router = useRouter();
+const authStore = useAuthStore(); // Usar el store de autenticación
 
-export default {
-    name: "Login",
-    data() {
-        return {
-            user: "",
-            email: "",
-            password: "",
-        };
-    },
-    methods: {
-        register() {
-            console.log("Correo:", this.email);
-            console.log("user:", this.user);
-            console.log("Contraseña:", this.password);
-            const UsrRegister = {
-                email: this.email,
-                user: this.user,
-                password: this.password,
-            };
+const form = ref({
+  name: '',
+  email: '',
+  password: ''
+});
 
-            fetch("http://localhost:8000/api/register", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(UsrRegister),
-            })
-                .then((response) => {
-                    if (!response.ok) {
-                        // Manejar errores HTTP
-                        return response.text().then((text) => {
-                            throw new Error(`HTTP error! status: ${response.status}, message: ${text}`);
-                        });
-                    }
-                    return response.json();
-                })
-                .then((data) => {
-                    const authStore = useAuthStore();
-                    authStore.setUser(data.user);
-                    authStore.setToken(data.token);
-                    console.log("Respuesta del servidor:", data);
-                })
-                .catch((error) => {
-                    console.error("Error:", error);
-                });
-
-            router.push("/");
-        },
-    },
-
+const handleRegister = async () => {
+  try {
+    const response = await communicationManager.register(form.value);
+    console.log("Registro exitoso:", response);
+    // Usar Pinia para actualizar el token
+    authStore.setToken(response.token);
+    router.push('/login');
+  } catch (error) {
+    console.error("Error en registro:", error.response?.data);
+  }
 };
-
 </script>
 
 
+<template>
+  <div>
+    <h2>Registro</h2>
+    <form @submit.prevent="handleRegister">
+      <input type="text" v-model="form.name" placeholder="Nombre" required />
+      <input type="email" v-model="form.email" placeholder="Correo electrónico" required />
+      <input type="password" v-model="form.password" placeholder="Contraseña" required />
+      <button type="submit">Registrarse</button>
+    </form>
+  </div>
+</template>
 
 <style scoped>
 body {

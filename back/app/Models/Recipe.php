@@ -43,5 +43,10 @@ class Recipe extends Model
                     ->withPivot('saved', 'liked')
                     ->withTimestamps();
     }
+    public function usersWhoSaved()
+{
+    return $this->belongsToMany(User::class, 'recipe_user')->withPivot('saved', 'liked')->where('saved', true);
+}
+
     
 }

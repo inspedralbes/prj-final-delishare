@@ -72,7 +72,7 @@
 </template>
 
 <script>
-// Importación estática de imágenes
+//  imágenes
 import img1 from '@/assets/images/receta1.jpg';
 import img2 from '@/assets/images/receta2.jpg';
 import img3 from '@/assets/images/receta3.jpg';
@@ -149,15 +149,14 @@ export default {
     // Método para asignar imágenes aleatorias a todas las recetas
     randomizeImages() {
       this.recipes.forEach(recipe => {
-        // Seleccionar una imagen aleatoria de las imágenes disponibles para la receta
         const randomImage = [img1, img2, img3][Math.floor(Math.random() * 3)];
-        recipe.image = randomImage;  // Asegúrate de que la receta tiene la imagen asignada
+        recipe.image = randomImage;  
       });
     },
 
     startCarousel() {
       setInterval(() => {
-        this.moveSlide('right');  // Mueve la imagen automáticamente cada 3 segundos
+        this.moveSlide('right');  
       }, 3000);
     },
     
@@ -211,7 +210,6 @@ export default {
 
 
 <style scoped>
-/* Estilos iguales al código anterior */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;

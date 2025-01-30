@@ -1,13 +1,12 @@
 <template>
   <div id="app">
     <Navbar />
-    <router-view></router-view> <!-- Este es el lugar donde se renderiza la vista activa -->
+    <router-view></router-view> 
   </div>
 </template>
 
 <script>
 import Navbar from './components/Navbar.vue';
-import { useAuthStore } from './stores/useAuthStore';
 
 export default {
   name: 'App',
@@ -18,5 +17,4 @@ export default {
 </script>
 
 <style>
-/* Aquí puedes agregar estilos globales, si es necesario */
 </style>

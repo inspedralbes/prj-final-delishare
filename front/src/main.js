@@ -3,11 +3,11 @@ import App from './App.vue';
 import router from './router';
 import { createPinia } from 'pinia';
 
-// Importamos jQuery correctamente
+// importar jQuery correctamente
 import $ from 'jquery';
 import 'https://code.jquery.com/jquery-3.4.1.slim.min.js';
 
-// Hacemos jQuery disponible globalmente 
+// jQuery disponible globalmente 
 window.$ = $;
 
 // Crear la instancia de Vue

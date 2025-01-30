@@ -1,10 +1,11 @@
 <?php
-
+use Illuminate\Http\Request; 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CuisineController;
+use App\Http\Controllers\SavedRecipeController;
 
 // Categorías
 Route::middleware('auth:sanctum')->post('/categories', [CategoryController::class, 'store']);
@@ -61,3 +62,11 @@ Route::get('/getAllRecipes', [RecipeController::class, 'getAllRecipes']);
 Route::get('/filterByCategory/{id}', [RecipeController::class, 'filterByCategory']);
 
 Route::get('/filterByTime/{time}',[RecipeController::class,'filterByTime']);
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/saved-recipes', [SavedRecipeController::class, 'index']);
+    Route::post('/saved-recipes/toggle/{recipeId}', [SavedRecipeController::class, 'toggleSave']);
+});
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) { // ✅ Pasa $request como parámetro
+    return response()->json($request->user());
+});

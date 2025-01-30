@@ -1,4 +1,3 @@
-
 import { createRouter, createWebHistory } from 'vue-router';
 import RecipesTable from '@/components/RecipesTable.vue'; // Ajusta si el archivo tiene otro nombre o ruta
 import LandingPage from '@/views/LandingPage.vue';
@@ -7,7 +6,7 @@ import InfoReceta from '@/views/InfoReceta.vue'; // Importa el componente de la 
 import AgregarReceta from '@/views/AgregarReceta.vue'; // Importa el componente de la página de detalles
 import login from '@/components/login.vue'; // Ajusta si el archivo tiene otro nombre o ruta
 import register from '@/components/register.vue'; // Ajusta si el archivo tiene otro nombre o ruta
-
+import Guardadas from '@/views/Guardadas.vue';
 const routes = [
   {
     path: '/recipes',
@@ -15,7 +14,7 @@ const routes = [
     component: RecipesTable,
   },
   {
-    path: '/',  // Ruta principal
+    path: '/recetas',  // Ruta principal
     name: 'LandingPage',
     component: LandingPage,  // El componente que se renderiza para esta ruta
   },  
@@ -31,7 +30,7 @@ const routes = [
     component: SearchPage,  // El componente que se renderiza para la búsqueda
   },
   {
-    path: '/login',  // Ruta con el parámetro de id de la receta
+    path: '/',  // Ruta con el parámetro de id de la receta
     name: 'login',
     component: login,
     props: true, // Habilita pasar el parámetro `recipeId` como prop al componente
@@ -47,6 +46,12 @@ const routes = [
     name: 'InfoReceta',
     component: InfoReceta,
     props: true, // Habilita pasar el parámetro `recipeId` como prop al componente
+  },
+  {
+    path: '/guardar',
+    name: 'Guardadas',
+    component: Guardadas,
+    meta: { requiresAuth: true },
   }
 ];
 
@@ -56,10 +61,3 @@ const router = createRouter({
 });
 
 export default router;
-
-
-
-
-
-
-

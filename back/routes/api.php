@@ -59,5 +59,6 @@ Route::middleware('auth:sanctum')->post('/cambiarContra', [AuthController::class
 Route::get('/getAllUsers', [AuthController::class, 'getAllUsers']);
 Route::get('/getAllRecipes', [RecipeController::class, 'getAllRecipes']);
 Route::get('/filterByCategory/{id}', [RecipeController::class, 'filterByCategory']);
+Route::get('/filterByCuisine/{id}', [RecipeController::class, 'filterByCuisine']);
 
 Route::get('/filterByTime/{time}',[RecipeController::class,'filterByTime']);

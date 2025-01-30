@@ -161,4 +161,13 @@ public function filterByTime($time)
         'recipes' => $recipes,
     ], 200);
 }
+
+public function filterByCuisine($id){
+    $recipes = Recipe::where('cuisine_id', $id)->get();
+
+    return response()->json([
+        'recipes' => $recipes,
+    ], 200);
+}
+
 }

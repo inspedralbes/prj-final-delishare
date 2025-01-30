@@ -2,6 +2,11 @@
   <div class="search-page">
     <h1>Recetas Disponibles</h1>
 
+    <!-- Campo de búsqueda -->
+    <div class="search-bar">
+      <input type="text" v-model="searchQuery" placeholder="Buscar recetas..." />
+    </div>
+
     <!-- Mostrar mensaje de carga mientras se obtienen las recetas -->
     <div v-if="loading" class="loading">
       Cargando recetas...
@@ -9,12 +14,12 @@
 
     <!-- Mostrar las recetas cuando se han cargado -->
     <div v-else>
-      <div v-if="recipes.length === 0" class="no-recipes">
+      <div v-if="filteredRecipes.length === 0" class="no-recipes">
         No hay recetas disponibles.
       </div>
 
       <div class="recipe-list">
-        <div v-for="recipe in recipes" :key="recipe.id" class="recipe-card">
+        <div v-for="recipe in filteredRecipes" :key="recipe.id" class="recipe-card">
           <!-- Enlace a la página de detalles de la receta -->
           <router-link :to="{ name: 'InfoReceta', params: { recipeId: recipe.id } }" class="recipe-link">
             <!-- Imagen de la receta -->
@@ -37,7 +42,8 @@ export default {
   data() {
     return {
       loading: true, // Para indicar si estamos cargando las recetas
-      recipes: [] // Aquí se guardarán las recetas
+      recipes: [], // Aquí se guardarán las recetas
+      searchQuery: '' // Término de búsqueda
     };
   },
   mounted() {
@@ -56,6 +62,15 @@ export default {
       } finally {
         this.loading = false; // Ya se cargaron las recetas
       }
+    }
+  },
+  computed: {
+    // Computed property para filtrar las recetas basadas en la búsqueda
+    filteredRecipes() {
+      return this.recipes.filter(recipe => 
+        recipe.title.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+        (recipe.description && recipe.description.toLowerCase().includes(this.searchQuery.toLowerCase()))
+      );
     }
   }
 };
@@ -77,14 +92,39 @@ body {
   margin-top: 20px;
 }
 
-h2 {
+h1 {
   text-align: center;
   color: #358600;
-  font-size: 1.5em;
+  font-size: 2em;
   margin-bottom: 20px;
 }
 
-/* Grid de recetas */
+.search-bar {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.search-bar input {
+  padding: 10px;
+  width: 70%;
+  max-width: 400px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+.loading {
+  text-align: center;
+  font-size: 1.2em;
+  color: #358600;
+}
+
+.no-recipes {
+  text-align: center;
+  font-size: 1.2em;
+  color: #666;
+}
+
 .recipe-list {
   display: grid;
   grid-template-columns: repeat(3, 1fr); /* 3 columnas */

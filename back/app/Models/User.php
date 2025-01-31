@@ -10,16 +10,18 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory;
 
     protected $fillable = [
-        'name', 
-        'email', 
-        'password', 
-        'personal_access_token', 
+        'name',
+        'profile_photo_path',
+        'description',
+        'email',
+        'password',
+        'personal_access_token',
     ];
 
     protected $hidden = [
-        'password', 
-        'remember_token', 
-        'personal_access_token', 
+        'password',
+        'remember_token',
+        'personal_access_token',
     ];
 
     protected $casts = [
@@ -34,4 +36,9 @@ public function savedRecipes()
         ->wherePivot('saved', true);  // Filtro por recetas guardadas
 }
 
+
+    public function recipes()
+    {
+        return $this->hasMany(Recipe::class);
+    }
 }

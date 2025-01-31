@@ -47,29 +47,31 @@ class AuthController extends Controller
     // Login de usuario
     public function login(Request $request)
     {
+        // Validar los datos de entrada
+        $request->validate([
+            'user' => 'required|string',
+            'password' => 'required|string',
+        ]);
 
-        $user = User::where('name', $request->name)->first();
-
-        if (!$user || !Hash::check($request->password, $user->password)) {
+        // Verifica si las credenciales son válidas
+        if (!auth()->attempt(['name' => $request->user, 'password' => $request->password])) {
             return response()->json(['message' => 'Credenciales inválidas'], 401);
         }
 
-        if (!$user->personal_access_token) {
-            $token = $user->createToken('auth_token')->plainTextToken;
-            $user->update(['personal_access_token' => $token]);
-        } else {
-            $token = $user->personal_access_token;
-        }
+        // Obtén el usuario autenticado
+        $user = auth()->user();
+
+        // Crea el token si el usuario no lo tiene
+        $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
-        'user' => [
-        'id_user' => $user->id,         
-        'name' => $user->name, 
-        'email' => $user->email,        
-        
-    ],
-    'token' => $token,
-        ],201);
+            'user' => [
+                'id_user' => $user->id,
+                'user' => $user->name,
+                'email' => $user->email,
+            ],
+            'token' => $token,
+        ], 201);
     }
 
     public function user(Request $request)
@@ -98,14 +100,14 @@ class AuthController extends Controller
     }
   
     public function cambiarContra(Request $request)
- {
-    $usuario = $request->user();
-    if (!Hash::check($request->contrasena_actual, $usuario->password)) {
-        return response()->json(['mensaje' => 'La contraseña actual es incorrecta.'], 403);
+    {
+        $usuario = $request->user();
+        if (!Hash::check($request->contrasena_actual, $usuario->password)) {
+            return response()->json(['mensaje' => 'La contraseña actual es incorrecta.'], 403);
+        }
+        $usuario->update(['password' => Hash::make($request->nueva_contrasena)]);
+        return response()->json(['mensaje' => 'Contraseña actualizada correctamente.'], 200);
     }
-    $usuario->update(['password' => Hash::make($request->nueva_contrasena)]);
-    return response()->json(['mensaje' => 'Contraseña actualizada correctamente.'], 200);
- }
 
 
 
@@ -117,4 +119,32 @@ class AuthController extends Controller
         'users' => $users,
     ], 200);
 }
+    public function userStats(Request $request)
+    {
+        $user = auth()->user(); // Obtiene el usuario autenticado
+
+        if (!$user) {
+            return response()->json(['error' => 'No autenticado'], 401);
+        }
+
+        return response()->json([
+            'post_count' => $user->recipes()->count(),
+            'total_likes' => $user->recipes()->withCount([
+                'users as likes_count' => function ($query) {
+                    $query->where('liked', true);
+                }
+            ])->get()->sum('likes_count'),
+            'total_saves' => $user->recipes()->withCount([
+                'users as saves_count' => function ($query) {
+                    $query->where('saved', true);
+                }
+            ])->get()->sum('saves_count'),
+            'posts' => $user->recipes()->get(),
+            'profile_image' => $user->profile_photo_path,
+            'user_name' => $user->name,
+            'user_description' => $user->description,
+        ], 200);
+
+    }
+
 }

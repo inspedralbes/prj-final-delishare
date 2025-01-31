@@ -11,8 +11,8 @@ class Recipe extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'category_id', 'cuisine_id', 'title', 'description', 
-        'ingredients', 'steps', 'image', 'prep_time', 'cook_time', 
+        'user_id', 'category_id', 'cuisine_id', 'title', 'description',
+        'ingredients', 'steps', 'image', 'prep_time', 'cook_time',
         'servings', 'nutrition'
     ];
 
@@ -48,5 +48,10 @@ class Recipe extends Model
     return $this->belongsToMany(User::class, 'recipe_user')->withPivot('saved', 'liked')->where('saved', true);
 }
 
-    
+
+    public function recipes()
+    {
+        return $this->hasMany(Recipe::class, 'user_id');
+    }
+
 }

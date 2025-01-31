@@ -38,6 +38,9 @@ Route::middleware('auth:sanctum')->post('/recipes/{id}/like', [RecipeController:
 // Ruta para quitar like a una receta
 Route::middleware('auth:sanctum')->post('/recipes/{id}/unlike', [RecipeController::class, 'unlikeRecipe']);
 
+//Ruta para el perfil de usuario
+Route::middleware('auth:sanctum')->get('/userStats', [AuthController::class, 'userStats']);
+
 Route::get('/', function () {
     return view('welcome');
 });

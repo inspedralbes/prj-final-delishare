@@ -7,13 +7,7 @@
       Guardar receta
     </button>
 
-    <!-- Botón de like -->
-    <button v-if="!isLiked" @click="likeRecipe(recipe.id)">
-      Dar like 
-    </button>
-    <button v-if="isLiked" @click="unlikeRecipe(recipe.id)">
-      Quitar like 
-    </button>
+
 
     <h1 class="recipe-title">{{ recipe.title }}</h1>
 

@@ -166,16 +166,23 @@ button:disabled {
   background-color: #fff;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.recipe-image-container {
-  text-align: center;
-  margin: 20px 0;
-}
+  height: 80vh;
+  overflow-y: auto; 
 
 .recipe-image {
-  max-width: 50%; /* Hace que la imagen sea más pequeña */
+  max-width: 100%;
   height: auto;
-  border-radius: 8px;
+  width: 70%;
+  margin: 0 auto;
+  display: block;
+}
+
+.recipe-info {
+  padding-bottom: 20px; 
+}
+
+.recipe-meta {
+  margin-top: 20px; 
+}
 }
 </style>

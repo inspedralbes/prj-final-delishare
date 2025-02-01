@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div>
     <h1>Crear Nueva Receta</h1>
     <div class="form-container">
       <form @submit.prevent="submitRecipe">
@@ -35,28 +35,25 @@
 
         <div>
           <label>Ingredientes:</label>
-          <div v-for="(ingredient, index) in recipe.ingredients" :key="index" class="inline-group">
+          <div v-for="(ingredient, index) in recipe.ingredients" :key="index">
             <input type="text" v-model="recipe.ingredients[index]" placeholder="Añadir ingrediente" />
-            <button type="button" @click="removeIngredient(index)">-</button>
           </div>
           <button type="button" @click="addIngredient">+</button>
         </div>
 
         <div>
           <label>Pasos:</label>
-          <div v-for="(step, index) in recipe.steps" :key="index" class="inline-group">
+          <div v-for="(step, index) in recipe.steps" :key="index">
             <input type="text" v-model="recipe.steps[index]" placeholder="Añadir paso" />
-            <button type="button" @click="removeStep(index)">-</button>
           </div>
           <button type="button" @click="addStep">+</button>
         </div>
 
         <div>
           <label>Información Nutricional:</label>
-          <div v-for="(nutrient, index) in recipe.nutrition" :key="index" class="inline-group">
+          <div v-for="(nutrient, index) in recipe.nutrition" :key="index">
             <input type="text" v-model="recipe.nutrition[index].key" placeholder="Nombre (ej. calorías)" />
             <input type="text" v-model="recipe.nutrition[index].value" placeholder="Valor (ej. 250)" />
-            <button type="button" @click="removeNutrition(index)">-</button>
           </div>
           <button type="button" @click="addNutrition">+</button>
         </div>
@@ -80,7 +77,7 @@
           <label for="image">Subir Imagen:</label>
           <input type="file" @change="onFileChange" />
           <button type="button" @click="uploadImage">Subir Imagen</button>
-          <img v-if="recipe.image" :src="recipe.image" alt="Imagen subida" class="preview-image" />
+          <img v-if="recipe.image" :src="recipe.image" alt="Imagen subida" />
         </div>
 
         <button type="submit">Crear Receta</button>
@@ -124,6 +121,7 @@ export default {
     const message = ref('');
     const messageClass = ref('');
 
+    // Cargar categorías, cocinas y usuario al montar el componente
     onMounted(async () => {
       try {
         user.value = await communicationManager.getUser();
@@ -134,17 +132,17 @@ export default {
       }
     });
 
+    // Métodos para agregar ingredientes, pasos e información nutricional
     const addIngredient = () => recipe.value.ingredients.push('');
-    const removeIngredient = (index) => recipe.value.ingredients.splice(index, 1);
     const addStep = () => recipe.value.steps.push('');
-    const removeStep = (index) => recipe.value.steps.splice(index, 1);
     const addNutrition = () => recipe.value.nutrition.push({ key: '', value: '' });
-    const removeNutrition = (index) => recipe.value.nutrition.splice(index, 1);
 
+    // Función para manejar el cambio de archivo (imagen)
     const onFileChange = (e) => {
       selectedFile.value = e.target.files[0];
     };
 
+    // Subir la imagen a Cloudinary
     const uploadImage = async () => {
       if (!selectedFile.value) return;
 
@@ -158,11 +156,13 @@ export default {
           formData
         );
         recipe.value.image = response.data.secure_url;
+        console.log("Imagen subida correctamente", response.data.secure_url);
       } catch (error) {
         console.error('Error al subir la imagen:', error);
       }
     };
 
+    // Función para crear la receta
     const submitRecipe = async () => {
       if (!user.value) {
         console.error("Usuario no autenticado");
@@ -170,16 +170,21 @@ export default {
       }
 
       try {
+        // Crear receta en la base de datos
         await communicationManager.createRecipe({
           ...recipe.value,
           user_id: user.value.id
         });
-        message.value = "Receta creada con éxito!";  // Establecer el mensaje de éxito
-        messageClass.value = 'success';  // Asignar la clase de éxito
+        
+        // Mostrar mensaje de éxito
+        message.value = "Receta creada con éxito!";
+        messageClass.value = 'success';
+        console.log("Receta creada con éxito");
       } catch (error) {
-        message.value = "Error creando receta!";  // Mensaje de error
-        messageClass.value = 'error';  // Asignar la clase de error
         console.error("Error creando receta:", error);
+        // Mostrar mensaje de error
+        message.value = "Error creando receta!";
+        messageClass.value = 'error';
       }
     };
 
@@ -188,11 +193,8 @@ export default {
       categories,
       cuisines,
       addIngredient,
-      removeIngredient,
       addStep,
-      removeStep,
       addNutrition,
-      removeNutrition,
       onFileChange,
       uploadImage,
       submitRecipe,
@@ -204,47 +206,18 @@ export default {
 </script>
 
 <style scoped>
-.container {
-  width: 100%;
-  max-width: 600px;
-  margin: auto;
-}
-
-.form-container {
-  max-height: 500px; /* Altura máxima */
-  overflow-y: auto; /* Permitir scroll */
-  padding: 15px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-}
-
-.inline-group {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 5px;
-}
-
-.preview-image {
-  max-width: 100%;
-  height: auto;
-  margin-top: 10px;
-}
-
-.message-container {
-  padding: 10px;
-  margin-top: 15px;
-  border-radius: 5px;
-  font-weight: bold;
-  text-align: center;
-}
-
 .success {
-  background-color: #d4edda;
-  color: #155724;
+  color: green;
 }
-
 .error {
-  background-color: #f8d7da;
-  color: #721c24;
+  color: red;
+}
+.form-container {
+  max-height: 80vh;
+  overflow-y: auto;
+}
+.message-container {
+  margin-top: 20px;
+  font-weight: bold;
 }
 </style>

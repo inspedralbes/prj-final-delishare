@@ -9,7 +9,7 @@ use App\Http\Controllers\SavedRecipeController;
 
 // Categorías
 Route::middleware('auth:sanctum')->post('/categories', [CategoryController::class, 'store']);
-Route::middleware('auth:sanctum')->get('/categories', [CategoryController::class, 'getAllCategory']);
+Route::middleware('auth:sanctum')->get('/categories', [CategoryController::class, 'index']);
 Route::middleware('auth:sanctum')->get('/categories/{id}', [CategoryController::class, 'show']);
 Route::middleware('auth:sanctum')->put('/categories/{id}', [CategoryController::class, 'update']);
 Route::middleware('auth:sanctum')->delete('/categories/{id}', [CategoryController::class, 'destroy']);

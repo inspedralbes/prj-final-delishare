@@ -92,6 +92,7 @@
 
 <script>
 import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router'; // Importar el router
 import axios from 'axios';
 import communicationManager from '@/services/communicationManager';
 
@@ -100,6 +101,7 @@ const uploadPreset = 'ejemplo1';
 
 export default {
   setup() {
+    const router = useRouter(); // Obtener acceso al router
     const user = ref(null);
     const categories = ref([]);
     const cuisines = ref([]);
@@ -162,7 +164,7 @@ export default {
       }
     };
 
-    // Función para crear la receta
+    // Función para crear la receta y redirigir a la landingPage
     const submitRecipe = async () => {
       if (!user.value) {
         console.error("Usuario no autenticado");
@@ -180,6 +182,10 @@ export default {
         message.value = "Receta creada con éxito!";
         messageClass.value = 'success';
         console.log("Receta creada con éxito");
+
+        // Redirigir a la landingPage después de crear la receta
+        router.push({ name: 'LandingPage' }); // Redirige a la página principal
+
       } catch (error) {
         console.error("Error creando receta:", error);
         // Mostrar mensaje de error

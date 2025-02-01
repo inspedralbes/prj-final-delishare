@@ -87,7 +87,9 @@
       </form>
     </div>
 
-    <div v-if="message" :class="messageClass">{{ message }}</div>
+    <div v-if="message" :class="messageClass" class="message-container">
+      {{ message }}
+    </div>
   </div>
 </template>
 
@@ -172,11 +174,11 @@ export default {
           ...recipe.value,
           user_id: user.value.id
         });
-        message.value = "Receta creada con éxito!";
-        messageClass.value = 'success';
+        message.value = "Receta creada con éxito!";  // Establecer el mensaje de éxito
+        messageClass.value = 'success';  // Asignar la clase de éxito
       } catch (error) {
-        message.value = "Error creando receta!";
-        messageClass.value = 'error';
+        message.value = "Error creando receta!";  // Mensaje de error
+        messageClass.value = 'error';  // Asignar la clase de error
         console.error("Error creando receta:", error);
       }
     };
@@ -228,11 +230,21 @@ export default {
   margin-top: 10px;
 }
 
+.message-container {
+  padding: 10px;
+  margin-top: 15px;
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+}
+
 .success {
-  color: green;
+  background-color: #d4edda;
+  color: #155724;
 }
 
 .error {
-  color: red;
+  background-color: #f8d7da;
+  color: #721c24;
 }
 </style>

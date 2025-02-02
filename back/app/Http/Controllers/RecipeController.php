@@ -178,6 +178,21 @@ public function filterByTime($time)
     ], 200);
 }
 
+public function getAllTimes()
+{
+    // Usar DB::table para la consulta, en lugar de la Eloquent de Recipe
+    $times = DB::table('recipes')
+        ->selectRaw('prep_time + cook_time as total_time')
+        ->distinct()
+        ->pluck('total_time');
+
+    // Devolver los tiempos únicos en formato JSON
+    return response()->json([
+        'times' => $times,
+    ], 200);
+}
+
+
 public function filterByCuisine($id){
     $recipes = Recipe::where('cuisine_id', $id)->get();
 

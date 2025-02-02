@@ -7,6 +7,14 @@
       <input type="text" v-model="searchQuery" placeholder="Buscar recetas..." />
     </div>
 
+    <!-- Botones adicionales -->
+    <div class="filter-buttons">
+      <button>Categoría</button>
+      <button>Cuisine</button>
+      <button>Tiempo</button>
+      <button>Usuario</button>
+    </div>
+
     <!-- Mostrar mensaje de carga mientras se obtienen las recetas -->
     <div v-if="loading" class="loading">
       Cargando recetas...
@@ -24,7 +32,7 @@
           <router-link :to="{ name: 'InfoReceta', params: { recipeId: recipe.id } }" class="recipe-link">
             <!-- Imagen de la receta -->
             <img v-if="recipe.image" :src="recipe.image" alt="Imagen de receta" class="recipe-image">
-            
+
             <div class="recipe-info">
               <!-- Título de la receta -->
               <h2 class="recipe-title">{{ recipe.title }}</h2>
@@ -101,7 +109,7 @@ h1 {
 
 .search-bar {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .search-bar input {
@@ -111,6 +119,26 @@ h1 {
   border-radius: 5px;
   border: 1px solid #ccc;
   font-size: 16px;
+}
+
+.filter-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.filter-buttons button {
+  padding: 8px 16px;
+  background-color: #358600;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.filter-buttons button:hover {
+  background-color: #2a6b00;
 }
 
 .loading {
@@ -127,9 +155,9 @@ h1 {
 
 .recipe-list {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 columnas */
-  gap: 20px; /* Aumento del espacio entre tarjetas */
-  justify-items: center; /* Centra las tarjetas en el contenedor */
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  justify-items: center;
   margin-top: 20px;
 }
 
@@ -145,7 +173,6 @@ h1 {
   margin-right: 5px;
 }
 
-
 .recipe-card .recipe-link {
   display: block;
   text-decoration: none;
@@ -153,7 +180,6 @@ h1 {
   height: 100%;
 }
 
-/* Efecto hover en la tarjeta */
 .recipe-card:hover {
   transform: scale(1.05);
 }
@@ -173,7 +199,7 @@ h1 {
 
 .recipe-title {
   font-weight: bold;
-  font-size: 12px; /* Título más pequeño */
+  font-size: 12px;
   color: #343330;
   margin-top: 5px;
 }
@@ -184,13 +210,10 @@ h1 {
   margin: 5px 0;
 }
 
-/* Ajustes para pantallas medianas y grandes */
 @media (min-width: 768px) {
   .recipe-list {
-    grid-template-columns: repeat(3, 1fr); /* 3 columnas en pantallas medianas */
+    grid-template-columns: repeat(3, 1fr);
   }
-
-
 
   .recipe-title {
     font-size: 14px;
@@ -199,14 +222,13 @@ h1 {
 
 @media (min-width: 1024px) {
   .recipe-list {
-    grid-template-columns: repeat(3, 1fr); /* 3 columnas en pantallas grandes */
+    grid-template-columns: repeat(3, 1fr);
   }
 
   .recipe-card {
     max-width: 220px;
     height: 250px;
     font-size: 16px;
-    
   }
 
   .recipe-title {

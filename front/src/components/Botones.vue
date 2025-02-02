@@ -15,7 +15,14 @@
             </button>
         </div>
 
-        <button>Tiempo</button>
+        <!-- Botón para obtener los tiempos -->
+        <button @click="obtenerTiempos">Tiempo</button>
+        <div v-if="tiempos.length">
+            <button v-for="tiempo in tiempos" :key="tiempo.id" class="button-secondary">
+                {{ tiempo.name }}
+            </button>
+        </div>
+
         <button @click="obtenerUsuarios">Usuario</button>
 
         <!-- Mostrar los nombres de los usuarios como botones -->
@@ -36,7 +43,8 @@ export default {
     setup() {
         const datos = ref([]);
         const countries = ref([]);
-        const usuarios = ref([]);  // Nuevo ref para almacenar los usuarios
+        const usuarios = ref([]);
+        const tiempos = ref([]);  // Nuevo ref para almacenar los tiempos
 
         // Función para obtener las categorías
         const obtenerCategorias = async () => {
@@ -63,11 +71,22 @@ export default {
         // Función para obtener los usuarios
         const obtenerUsuarios = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:8000/api/getAllUsers');  // Cambia esta URL si es necesario
-                usuarios.value = response.data.users;  // Acceder a la propiedad 'users' en la respuesta
-                console.log(response.data.users);  // Ver en consola el array de usuarios
+                const response = await axios.get('http://127.0.0.1:8000/api/getAllUsers');
+                usuarios.value = response.data.users;
+                console.log(response.data.users);
             } catch (error) {
                 console.error('Error fetching users:', error);
+            }
+        };
+
+        // Función para obtener los tiempos
+        const obtenerTiempos = async () => {
+            try {
+                const response = await axios.get('http://127.0.0.1:8000/api/times'); // Cambia esta URL si es necesario
+                tiempos.value = response.data;  // Asumimos que la respuesta es un array de tiempos
+                console.log(response.data);  // Ver en consola los tiempos obtenidos
+            } catch (error) {
+                console.error('Error fetching times:', error);
             }
         };
 
@@ -76,8 +95,10 @@ export default {
             obtenerCategorias,
             countries,
             obtenerCuisines,
-            usuarios,  // Exponer el ref usuarios para que se pueda usar en el template
-            obtenerUsuarios,  // Exponer la función de obtener usuarios
+            usuarios,
+            obtenerUsuarios,
+            tiempos,  // Exponer el ref tiempos para que se pueda usar en el template
+            obtenerTiempos,  // Exponer la función de obtener tiempos
         };
     }
 };

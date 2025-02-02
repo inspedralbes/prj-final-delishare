@@ -53,7 +53,7 @@ const routes = [
     name: 'Guardadas',
     component: Guardadas,
     meta: { requiresAuth: true },
-  }
+  },
 ];
 
 const router = createRouter({

@@ -16,7 +16,7 @@ Route::middleware('auth:sanctum')->delete('/categories/{id}', [CategoryControlle
 
 // Cocinas
 Route::middleware('auth:sanctum')->post('/cuisines', [CuisineController::class, 'store']);
-Route::middleware('auth:sanctum')->get('/cuisines', [CuisineController::class, 'index']);
+Route::get('/cuisines', [CuisineController::class, 'index']);
 Route::middleware('auth:sanctum')->get('/cuisines/{id}', [CuisineController::class, 'show']);
 Route::middleware('auth:sanctum')->put('/cuisines/{id}', [CuisineController::class, 'update']);
 Route::middleware('auth:sanctum')->delete('/cuisines/{id}', [CuisineController::class, 'destroy']);

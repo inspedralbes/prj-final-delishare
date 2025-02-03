@@ -137,8 +137,6 @@ export default {
 };
 </script>
 
-
-
 <style scoped>
 button {
   background-color: #63c132;
@@ -168,5 +166,23 @@ button:disabled {
   background-color: #fff;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  height: 80vh;
+  overflow-y: auto; 
+
+.recipe-image {
+  max-width: 100%;
+  height: auto;
+  width: 70%;
+  margin: 0 auto;
+  display: block;
+}
+
+.recipe-info {
+  padding-bottom: 20px; 
+}
+
+.recipe-meta {
+  margin-top: 20px; 
+}
 }
 </style>

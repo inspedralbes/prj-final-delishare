@@ -1,11 +1,9 @@
 <template>
   <div class="page-container">
-    <!-- Header -->
     <header class="header">
       <img src="@/assets/images/delishare-logo.jpg" alt="DeliShare Logo" class="header-logo">
     </header>
 
-    <!-- Carrusel de imágenes -->
     <div class="carousel">
       <div class="carousel-images" :style="{ transform: `translateX(-${currentSlide * 100}%)` }">
         <img v-for="(image, index) in carouselImages" 
@@ -18,19 +16,13 @@
       <button class="carousel-arrow right" @click="moveSlide('right')">→</button>
     </div>
 
-    <!-- Recetas más likes y más recientes -->
     <div class="likes">
       <section class="recent-recipes">
         <h2>Más Likes</h2>
         <div class="carousel-container">
           <button class="carousel-arrow left" @click="moveSlide('left', 'likes')">←</button>
           <div class="recipe-carousel">
-            <div
-              class="recipe-card"
-              v-for="(recipe, index) in displayedLikeRecipes"
-              :key="index"
-            >
-              <!-- Enlace a la página de detalles de la receta -->
+            <div class="recipe-card" v-for="(recipe, index) in displayedLikeRecipes" :key="index">
               <router-link :to="{ name: 'InfoReceta', params: { recipeId: recipe.id } }" class="recipe-link">
                 <img :src="recipe.image" :alt="recipe.title" class="recipe-image">
                 <div class="recipe-info">
@@ -50,12 +42,7 @@
         <div class="carousel-container">
           <button class="carousel-arrow left" @click="moveSlide('left', 'recents')">←</button>
           <div class="recipe-carousel">
-            <div
-              class="recipe-card"
-              v-for="(recipe, index) in displayedRecentRecipes"
-              :key="index"
-            >
-              <!-- Enlace a la página de detalles de la receta -->
+            <div class="recipe-card" v-for="(recipe, index) in displayedRecentRecipes" :key="index">
               <router-link :to="{ name: 'InfoReceta', params: { recipeId: recipe.id } }" class="recipe-link">
                 <img :src="recipe.image" :alt="recipe.title" class="recipe-image">
                 <div class="recipe-info">
@@ -72,11 +59,6 @@
 </template>
 
 <script>
-//  imágenes
-import img1 from '@/assets/images/receta1.jpg';
-import img2 from '@/assets/images/receta2.jpg';
-import img3 from '@/assets/images/receta3.jpg';
-
 import communicationManager from '@/services/communicationManager';
 
 export default {
@@ -92,120 +74,56 @@ export default {
       displayedRecentRecipes: [],
       recipesPerPage: 3,
       totalRecipesToShow: 9,
-      // Usar las imágenes de las recetas
-      carouselImages: [
-        { src: img1, alt: 'Imagen de Receta 1' },
-        { src: img2, alt: 'Imagen de Receta 2' },
-        { src: img3, alt: 'Imagen de Receta 3' }
-      ]
     };
   },
 
   async created() {
     try {
-      // Cargar recetas desde el backend
       const data = await communicationManager.fetchRecipes();
       this.recipes = data;
 
-      // Ordenar por likes
       this.sortedLikeRecipes = this.recipes
-        .map(recipe => ({
-          ...recipe,
-          totalLikes: recipe.likes_count || 0,
-        }))
+        .map(recipe => ({ ...recipe, totalLikes: recipe.likes_count || 0 }))
         .sort((a, b) => b.totalLikes - a.totalLikes)
         .slice(0, this.totalRecipesToShow);
 
-      // Ordenar por fecha más reciente
       this.sortedRecentRecipes = [...this.recipes]
         .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
         .slice(0, this.totalRecipesToShow);
 
-      // Asignar imágenes aleatorias a todas las recetas
-      this.randomizeImages();
-
-      // Actualizar las recetas que se mostrarán
       this.updateDisplayedLikeRecipes();
       this.updateDisplayedRecentRecipes();
-
-      // Mezclar las imágenes del carrusel
-      this.shuffleCarouselImages();
     } catch (error) {
       console.error('Error fetching recipes from the backend:', error);
     }
-
-    this.startCarousel();
   },
 
   methods: {
-    // Método para mezclar las imágenes del carrusel
-    shuffleCarouselImages() {
-      for (let i = this.carouselImages.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [this.carouselImages[i], this.carouselImages[j]] = [this.carouselImages[j], this.carouselImages[i]];
-      }
-    },
-
-    // Método para asignar imágenes aleatorias a todas las recetas
-    randomizeImages() {
-      this.recipes.forEach(recipe => {
-        const randomImage = [img1, img2, img3][Math.floor(Math.random() * 3)];
-        recipe.image = randomImage;  
-      });
-    },
-
-    startCarousel() {
-      setInterval(() => {
-        this.moveSlide('right');  
-      }, 3000);
-    },
-    
-    moveSlide(direction) {
-      if (direction === 'left') {
-        this.currentSlide = (this.currentSlide - 1 + this.carouselImages.length) % this.carouselImages.length;
-      } else if (direction === 'right') {
-        this.currentSlide = (this.currentSlide + 1) % this.carouselImages.length;
-      }
-    },
-
     moveSlide(direction, type) {
       if (type === 'likes') {
         const maxSlideIndex = Math.ceil(this.sortedLikeRecipes.length / this.recipesPerPage) - 1;
-        if (direction === 'left') {
-          this.currentSlideLikes = Math.max(0, this.currentSlideLikes - 1);
-        } else {
-          this.currentSlideLikes = Math.min(maxSlideIndex, this.currentSlideLikes + 1);
-        }
+        this.currentSlideLikes = direction === 'left' ? Math.max(0, this.currentSlideLikes - 1) : Math.min(maxSlideIndex, this.currentSlideLikes + 1);
         this.updateDisplayedLikeRecipes();
       } else if (type === 'recents') {
         const maxSlideIndex = Math.ceil(this.sortedRecentRecipes.length / this.recipesPerPage) - 1;
-        if (direction === 'left') {
-          this.currentSlideRecents = Math.max(0, this.currentSlideRecents - 1);
-        } else {
-          this.currentSlideRecents = Math.min(maxSlideIndex, this.currentSlideRecents + 1);
-        }
+        this.currentSlideRecents = direction === 'left' ? Math.max(0, this.currentSlideRecents - 1) : Math.min(maxSlideIndex, this.currentSlideRecents + 1);
         this.updateDisplayedRecentRecipes();
       }
     },
 
     updateDisplayedLikeRecipes() {
       const startIndex = this.currentSlideLikes * this.recipesPerPage;
-      this.displayedLikeRecipes = this.sortedLikeRecipes.slice(
-        startIndex,
-        startIndex + this.recipesPerPage
-      );
+      this.displayedLikeRecipes = this.sortedLikeRecipes.slice(startIndex, startIndex + this.recipesPerPage);
     },
 
     updateDisplayedRecentRecipes() {
       const startIndex = this.currentSlideRecents * this.recipesPerPage;
-      this.displayedRecentRecipes = this.sortedRecentRecipes.slice(
-        startIndex,
-        startIndex + this.recipesPerPage
-      );
-    },
+      this.displayedRecentRecipes = this.sortedRecentRecipes.slice(startIndex, startIndex + this.recipesPerPage);
+    }
   }
 };
 </script>
+
 
 
 

@@ -7,6 +7,7 @@ import AgregarReceta from '@/views/AgregarReceta.vue'; // Importa el componente 
 import login from '@/components/login.vue'; // Ajusta si el archivo tiene otro nombre o ruta
 import register from '@/components/register.vue'; // Ajusta si el archivo tiene otro nombre o ruta
 import Guardadas from '@/views/Guardadas.vue';
+
 const routes = [
   {
     path: '/recipes',
@@ -27,7 +28,7 @@ const routes = [
     name: 'AgregarReceta',
     component: AgregarReceta,  // El componente que se renderiza para la búsqueda
     meta: { requiresAuth: true },
-  }, 
+  },
   {
     path: '/search',  // Ruta de búsqueda
     name: 'SearchPage',

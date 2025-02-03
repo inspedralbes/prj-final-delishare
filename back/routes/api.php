@@ -9,7 +9,7 @@ use App\Http\Controllers\SavedRecipeController;
 
 // Categorías
 Route::middleware('auth:sanctum')->post('/categories', [CategoryController::class, 'store']);
-Route::middleware('auth:sanctum')->get('/categories', [CategoryController::class, 'getAllCategory']);
+Route::middleware('auth:sanctum')->get('/categories', [CategoryController::class, 'index']);
 Route::middleware('auth:sanctum')->get('/categories/{id}', [CategoryController::class, 'show']);
 Route::middleware('auth:sanctum')->put('/categories/{id}', [CategoryController::class, 'update']);
 Route::middleware('auth:sanctum')->delete('/categories/{id}', [CategoryController::class, 'destroy']);
@@ -50,10 +50,9 @@ Route::post('/login', [AuthController::class, 'login']);
 // Rutas protegidas con autenticación
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/updatePerfile', [AuthController::class, 'updatePerfil']);
-});   //ruta para update peril- http://127.0.0.1:8000/api/updatePerfile
+});   
 
 Route::middleware('auth:sanctum')->post('/cambiarContra', [AuthController::class, 'cambiarContra']);
-//ruta para cambiar contra- http://127.0.0.1:8000/api/cambiarContra
 
 
 //Ruta para obtener todos los usuarios("Hazta hacer el filtro")

@@ -12,11 +12,15 @@ const routes = [
     path: '/recipes',
     name: 'RecipesTable',
     component: RecipesTable,
+    meta: { requiresAuth: true },
+
   },
   {
     path: '/recetas',  // Ruta principal
     name: 'LandingPage',
     component: LandingPage,  // El componente que se renderiza para esta ruta
+    meta: { requiresAuth: true },
+
   },  
   {
     path: '/agregar',
@@ -28,30 +32,37 @@ const routes = [
     path: '/search',  // Ruta de búsqueda
     name: 'SearchPage',
     component: SearchPage,  // El componente que se renderiza para la búsqueda
+    meta: { requiresAuth: true },
+
   },
   {
     path: '/',  // Ruta con el parámetro de id de la receta
     name: 'login',
     component: login,
     props: true, // Habilita pasar el parámetro `recipeId` como prop al componente
+
   },
   {
     path: '/register',  // Ruta con el parámetro de id de la receta
     name: 'register',
     component: register,
     props: true, // Habilita pasar el parámetro `recipeId` como prop al componente
+
   },
   {
     path: '/info/:recipeId',  // Ruta con el parámetro de id de la receta
     name: 'InfoReceta',
     component: InfoReceta,
     props: true, // Habilita pasar el parámetro `recipeId` como prop al componente
+    meta: { requiresAuth: true },
+
   },
   {
     path: '/guardar',
     name: 'Guardadas',
     component: Guardadas,
     meta: { requiresAuth: true },
+
   }
 ];
 

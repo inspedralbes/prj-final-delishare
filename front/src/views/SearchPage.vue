@@ -54,7 +54,7 @@ export default {
     // Método para hacer la llamada a la API y obtener todas las recetas
     async fetchRecipes() {
       try {
-        const response = await fetch('http://127.0.0.1:8000/api/getAllRecipes'); // URL a tu API
+        const response = await fetch('http://delishare.daw.inspedralbes.cat/public/api/getAllRecipes'); // URL a tu API
         const data = await response.json();
         this.recipes = data.recipes; // Asumimos que la respuesta tiene una clave 'recipes'
       } catch (error) {

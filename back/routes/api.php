@@ -66,6 +66,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/saved-recipes', [SavedRecipeController::class, 'index']);
     Route::post('/saved-recipes/toggle/{recipeId}', [SavedRecipeController::class, 'toggleSave']);
 });
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) { // ✅ Pasa $request como parámetro
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) { 
     return response()->json($request->user());
 });

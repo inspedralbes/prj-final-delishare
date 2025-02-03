@@ -49,7 +49,7 @@ const communicationManager = {
       });
   },
 
-  fetchUsers() {
+  fetchUsers() { // ✅ Esta es la función correcta para obtener los usuarios
     return apiClient.get('/getAllUsers')
       .then(response => response.data.users)
       .catch(error => {
@@ -152,7 +152,7 @@ const communicationManager = {
         console.error('Error fetching user:', error);
         throw error;
       });
-  },
+  }
 };
 
 export default communicationManager;

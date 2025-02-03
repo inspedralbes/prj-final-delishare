@@ -38,6 +38,7 @@
 <script>
 import Botones from '@/components/Botones.vue';
 import RecipeCard from '@/components/RecipeCard.vue';
+import communicationManager from '@/services/communicationManager'; // Importamos communicationManager
 
 export default {
   components: {
@@ -57,13 +58,12 @@ export default {
   methods: {
     async fetchRecipes() {
       try {
-        const response = await fetch('http://127.0.0.1:8000/api/getAllRecipes');
-        const data = await response.json();
-        this.recipes = data.recipes;
+        this.loading = true; // Activamos el estado de carga
+        this.recipes = await communicationManager.fetchRecipes(); // Usamos communicationManager
       } catch (error) {
         console.error('Error al obtener las recetas:', error);
       } finally {
-        this.loading = false;
+        this.loading = false; // Finalizamos el estado de carga
       }
     }
   },

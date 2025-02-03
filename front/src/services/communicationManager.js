@@ -23,8 +23,8 @@ apiClient.interceptors.request.use(
 
 const communicationManager = {
   fetchRecipes() {
-    return apiClient.get('/recipes')
-      .then(response => response.data)
+    return apiClient.get('/getAllRecipes')
+      .then(response => response.data.recipes)
       .catch(error => {
         console.error('Error fetching recipes:', error);
         throw error;
@@ -45,6 +45,24 @@ const communicationManager = {
       .then(response => response.data)
       .catch(error => {
         console.error('Error fetching cuisines:', error);
+        throw error;
+      });
+  },
+
+  fetchUsers() {
+    return apiClient.get('/getAllUsers')
+      .then(response => response.data.users)
+      .catch(error => {
+        console.error('Error fetching users:', error);
+        throw error;
+      });
+  },
+
+  fetchTimes() {
+    return apiClient.get('/times')
+      .then(response => response.data)
+      .catch(error => {
+        console.error('Error fetching times:', error);
         throw error;
       });
   },
@@ -88,7 +106,6 @@ const communicationManager = {
       });
   },
 
-  // Obtener recetas guardadas
   getSavedRecipes() {
     return apiClient.get('/saved-recipes')
       .then(response => response.data)
@@ -98,7 +115,6 @@ const communicationManager = {
       });
   },
 
-  // Guardar o quitar una receta
   toggleSaveRecipe(recipeId) {
     return apiClient.post(`/saved-recipes/toggle/${recipeId}`)
       .then(response => response.data)
@@ -108,7 +124,6 @@ const communicationManager = {
       });
   },
 
-  // Método para dar like
   likeRecipe(recipeId) {
     return apiClient.post(`/recipes/${recipeId}/like`)
       .then(response => response.data)
@@ -118,7 +133,6 @@ const communicationManager = {
       });
   },
 
-  // Método para quitar like
   unlikeRecipe(recipeId) {
     return apiClient.post(`/recipes/${recipeId}/unlike`)
       .then(response => response.data)
@@ -128,39 +142,17 @@ const communicationManager = {
       });
   },
 
-  getUser: async () => {
-    try {
-      const token = localStorage.getItem('token');
-      if (!token) throw new Error("No token found");
+  getUser() {
+    const token = localStorage.getItem('token');
+    if (!token) return Promise.reject(new Error('No token found'));
 
-      const response = await axios.get('http://127.0.0.1:8000/api/user', {
-          headers: { Authorization: `Bearer ${token}` }
-      });
-      return response.data;
-    } catch (error) {
-      console.error("Error fetching user:", error);
-      throw error;
-    }
-  },
-
-  // Métodos nuevos para obtener categorías y cocinas
-  getCategories() {
-    return apiClient.get('/categories')
+    return apiClient.get('/user')
       .then(response => response.data)
       .catch(error => {
-        console.error('Error fetching categories:', error);
+        console.error('Error fetching user:', error);
         throw error;
       });
   },
-
-  getCuisines() {
-    return apiClient.get('/cuisines')
-      .then(response => response.data)
-      .catch(error => {
-        console.error('Error fetching cuisines:', error);
-        throw error;
-      });
-  }
 };
 
 export default communicationManager;

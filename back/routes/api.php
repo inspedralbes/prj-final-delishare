@@ -40,6 +40,9 @@ Route::middleware('auth:sanctum')->post('/recipes/{id}/unlike', [RecipeControlle
 //Ruta para el perfil de usuario
 Route::middleware('auth:sanctum')->get('/userStats', [AuthController::class, 'userStats']);
 
+//Ruta para editar perfil de usuario
+Route::middleware('auth')->post('/updateProfile', [AuthController::class, 'updatePerfil']);
+
 Route::get('/', function () {
     return view('welcome');
 });

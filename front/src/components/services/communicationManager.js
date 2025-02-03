@@ -23,6 +23,16 @@ const communicationManager = {
       });
   },
 
+// Guardar datos del usuario
+  fetchProfileData() {
+    return apiClient.post('/updateProfile')
+      .then(response => response.data)
+      .catch(error => {
+        console.error('Error fetching profile data:', error);
+        throw error;
+      });
+  },
+
   // Obtener todas las categorías
   fetchCategories() {
     return apiClient.get('/categories')

@@ -81,23 +81,40 @@ class AuthController extends Controller
 
     public function updatePerfil(Request $request)
     {
+        // Validación de los datos
         $validator = Validator::make($request->all(), [
-            'name' => 'sometimes|string|max:255|unique:users,name,' . $request->user()->id,
+            'name' => 'sometimes|string|max:30|unique:users,name,' . $request->user()->id,
             'email' => 'sometimes|email|max:255|unique:users,email,' . $request->user()->id,
+            'bio' => 'sometimes|string|max:150', // validación para bio
+            'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif|max:2048', // validación para imagen
         ]);
 
+        // Si la validación falla, devuelve los errores
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $user = $request->user();
-        $user->update($request->only(['name', 'email']));
+        $user = $request->user(); // Obtiene el usuario autenticado
+
+        // Actualiza los campos básicos (name, email, bio)
+        $user->update($request->only(['name', 'email', 'bio']));
+
+        // Si hay una nueva imagen, maneja la subida
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imagePath = $image->store('profile_pictures', 'public'); // Guarda la imagen en 'storage/app/public/profile_pictures'
+
+            // Actualiza la ruta de la imagen en la base de datos
+            $user->image = $imagePath;
+            $user->save();
+        }
 
         return response()->json([
             'message' => 'Perfil actualizado correctamente.',
             'user' => $user,
         ]);
     }
+
 
     public function cambiarContra(Request $request)
     {

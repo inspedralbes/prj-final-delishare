@@ -6,7 +6,7 @@
             <form @submit.prevent="register" class="register-form">
                 <div class="form-group">
                     <label for="user">Nom d'usuari</label>
-                    <input type="user" id="user" v-model="user" class="form-control" placeholder="username" required />
+                    <input type="user" id="user" v-model="user" maxlength="30" class="form-control" placeholder="username" required />
                 </div>
                 <div class="form-group">
                     <label for="email">Correu Electrònic</label>

@@ -6,8 +6,32 @@
             <div class="profile-info">
                 <h1 class="user-name">{{ user.name }}</h1>
                 <p class="user-bio">{{ user.bio }}</p>
-                <button class="edit-profile">Editar Perfil</button>
+                <button class="edit-profile" @click="toggleEditProfile">Editar Perfil</button>
             </div>
+        </div>
+
+        <div v-if="isEditing" class="edit-profile-form">
+            <h2>Editar Perfil</h2>
+            <form @submit.prevent="saveChanges">
+                <div>
+                    <label for="name">Nombre de usuario:</label>
+                    <input type="text" id="name" v-model="editedUser.name" maxlength="30" />
+                </div>
+                <div>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" v-model="editedUser.email" />
+                </div>
+                <div>
+                    <label for="bio">Biografía:</label>
+                    <textarea id="bio" v-model="editedUser.bio" maxlength="150"></textarea>
+                </div>
+                <div>
+                    <label for="image">Foto de perfil:</label>
+                    <input type="file" id="image" @change="onFileChange" />
+                </div>
+                <button type="submit">Guardar Cambios</button>
+                <button type="button" @click="cancelEdit">Cancelar</button>
+            </form>
         </div>
 
         <!-- Contenedor de estadísticas -->
@@ -40,6 +64,8 @@
 
 <script>
 import { useAuthStore } from '../stores/useAuthStore.js';
+import  communicationManager  from "./services/communicationManager.js";
+import axios from 'axios';
 
 export default {
     name: "Profile",
@@ -54,6 +80,13 @@ export default {
                 total_saves: 0,
                 postsData: [],
             },
+            isEditing: false,  // Controlar visibilidad del formulario de edición
+            editedUser: {
+                name: "",
+                email: "",
+                bio: "",
+                image: null,  // Para almacenar la imagen antes de subirla
+            }
         };
     },
     mounted() {
@@ -70,39 +103,118 @@ export default {
             }
 
             try {
-                const response = await fetch("http://localhost:8000/api/userStats", {
-                    method: "GET",
-                    headers: {
-                        "Authorization": `Bearer ${token}`,
-                        "Content-Type": "application/json",
-                    },
-                });
-
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-
-                const data = await response.json();
-                console.log(data);
-                
-                 this.user = {
-                     name: data.user_name,
-                     bio: data.user_description || "Aquest usuari no té cap descripció.",
-                     image: data.profile_image || "../../public/img/profile.jpeg",
-                     posts: data.post_count,
-                     followers: data.total_likes,
-                     following: data.total_saves,
-                     postsData: data.posts.map(post => ({
-                         image: post.image,
-                         title: post.title,
-                     })),
-                 };
+                const response = await communicationManager.fetchProfileData(token);
+                if (response.status === 200) {
+                    this.user = {
+                        name: response.data.user_name,
+                        bio: response.data.user_description,
+                        image: response.data.profile_image,
+                        posts: response.data.post_count,
+                        likes: response.data.total_likes,
+                        saves: response.data.total_saves,
+                        postsData: response.data.posts.map(post => ({
+                            image: post.image,
+                            title: post.title,
+                        })),
+                    };}
             } catch (error) {
                 console.error("Error al obtener los datos del usuario:", error);
             }
+
+            //Algo antiguo
+                // try {
+                //     const response = await fetch("http://localhost:8000/api/userStats", {
+                //         method: "GET",
+                //         headers: {
+                //             "Authorization": `Bearer ${token}`,
+                //             "Content-Type": "application/json",
+                //         },
+                //     });
+
+                //     if (!response.ok) {
+                //         throw new Error(`HTTP error! status: ${response.status}`);
+                //     }
+
+                //     const data = await response.json();
+                //     console.log(data);
+
+                //      this.user = {
+                //          name: data.user_name,
+                //          bio: data.user_description || "Aquest usuari no té cap descripció.",
+                //          image: data.profile_image || "../../public/img/profile.jpeg",
+                //          posts: data.post_count,
+                //          followers: data.total_likes,
+                //          following: data.total_saves,
+                //          postsData: data.posts.map(post => ({
+                //              image: post.image,
+                //              title: post.title,
+                //          })),
+                //      };
+                // } catch (error) {
+                //     console.error("Error al obtener los datos del usuario:", error);
+                // }
+            },
+            toggleEditProfile() {
+                this.isEditing = !this.isEditing;
+                // Pre-llenar el formulario con los datos actuales del usuario
+                if (this.isEditing) {
+                    this.editedUser = { ...this.user };
+                }
+            },
+            onFileChange(event) {
+                const file = event.target.files[0];
+                this.editedUser.image = file;
+            },
+        async saveChanges() {
+                const authStore = useAuthStore();
+                const token = authStore.token;
+
+                if (!token) {
+                    console.error("No token found");
+                    return;
+                }
+
+                const formData = new FormData();
+                formData.append('name', this.editedUser.name);
+                formData.append('email', this.editedUser.email);
+                formData.append('bio', this.editedUser.bio);
+                if (this.editedUser.image) {
+                    formData.append('image', this.editedUser.image);
+                }
+
+                try {
+                    const response = await fetch("http://localhost:8000/api/updateProfile", {
+                        method: "POST",
+                        headers: {
+                            "Authorization": `Bearer ${token}`,
+                        },
+                        body: formData,
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    this.user = {
+                        name: data.user.name,
+                        bio: data.user.bio,
+                        image: data.user.image,
+                        posts: this.user.posts,
+                        followers: this.user.followers,
+                        following: this.user.following,
+                        postsData: this.user.postsData,
+                    };
+                    this.isEditing = false;
+                } catch (error) {
+                    console.error("Error al actualizar el perfil:", error);
+                }
+            },
+            cancelEdit() {
+                this.isEditing = false;
+            },
         },
-    },
-};
+    };
 </script>
 
 <style scoped>
@@ -166,6 +278,86 @@ export default {
 .edit-profile:hover {
     background-color: #63c132;
 }
+
+/* Formulario de edición de perfil */
+.edit-profile-form {
+    background-color: #f7f7f7;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    margin: 20px auto;
+}
+
+.edit-profile-form h2 {
+    font-size: 24px;
+    color: #358600;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.edit-profile-form label {
+    display: block;
+    font-size: 16px;
+    color: #343330;
+    margin-bottom: 5px;
+}
+
+.edit-profile-form input,
+.edit-profile-form textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+.edit-profile-form input[type="file"] {
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    background-color: #fff;
+    color: #343330;
+}
+
+.edit-profile-form textarea {
+    resize: vertical;
+    height: 100px;
+}
+
+.edit-profile-form button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #63c132;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.edit-profile-form button:hover {
+    background-color: #9ee37d;
+}
+
+/* Botón de cancelar */
+.edit-profile-form button[type="button"] {
+    background-color: #ccc;
+    margin-top: 10px;
+}
+
+.edit-profile-form button[type="button"]:hover {
+    background-color: #aaa;
+}
+
 
 /* Estadísticas del perfil */
 .profile-stats {
